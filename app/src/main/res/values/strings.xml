@@ -1,0 +1,25 @@
+<resources>
+    <string name="soccer_app_title">GOLDESK</string>
+    <string name="login_subtitle">Ingresa tu código de equipo o invitado</string>
+
+    <string name="codigo_hint">Código de acceso</string>
+    <string name="invitado_hint">Código de invitado</string>
+
+    <string name="password_hint">Contraseña (solo organizadores)</string>
+    <string name="forgot_codigo">¿Olvidaste tu código?</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="login_button">ENTRAR</string>
+    <string name="or_text">O</string>
+    <string name="invitado_button">INGRESAR CON CÓDIGO INVITADO</string>
+    <string name="soccer_logo">Logo Goldesk</string>
+    <!-- Roles -->
+    <string name="select_role">Selecciona tu rol:</string>
+    <string name="role_organizer">Organizador</string>
+    <string name="role_delegate">Delegado</string>
+    <string name="role_guest">Invitado</string>
+    <string name="email_hint">Correo electrónico</string>
+    <string name="text_primary">#212121</string>
+    <!--Barra lateral-->
+    <string name="navigation_drawer_open">Abrir menú de navegación</string>
+    <string name="navigation_drawer_close">Cerrar menú de navegación</string>
+</resources>

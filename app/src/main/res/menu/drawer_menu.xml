@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Inicio" />
+
+        <item
+            android:id="@+id/nav_partidos"
+            android:icon="@drawable/ic_soccer_ball_small"
+            android:title="Partidos en Vivo" />
+
+        <item
+            android:id="@+id/nav_clasificacion"
+            android:icon="@drawable/ic_trophy"
+            android:title="Clasificación" />
+
+        <item
+            android:id="@+id/nav_resultados"
+            android:icon="@drawable/ic_scoreboard"
+            android:title="Resultados" />
+
+        <item
+            android:id="@+id/nav_goleadores"
+            android:icon="@drawable/ic_soccer_ball_small"
+            android:title="Goleadores" />
+
+        <item
+            android:id="@+id/nav_equipos"
+            android:icon="@drawable/ic_team"
+            android:title="Equipos" />
+    </group>
+
+    <item android:title="Cuenta">
+        <menu>
+            <item
+                android:id="@+id/nav_perfil"
+                android:icon="@drawable/ic_person"
+                android:title="Mi Perfil" />
+
+            <item
+                android:id="@+id/nav_favoritos"
+                android:icon="@drawable/ic_favorite"
+                android:title="Favoritos" />
+
+            <item
+                android:id="@+id/nav_configuracion"
+                android:icon="@drawable/ic_settings"
+                android:title="Configuración" />
+
+            <item
+                android:id="@+id/nav_salir"
+                android:icon="@drawable/ic_logout"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
+
+</menu>
