@@ -16,10 +16,10 @@ public interface AuthApiService {
     @POST("api/auth/acceso-codigo")
     Call<LoginCodigoResponse> loginPorCodigo(@Body Map<String, String> body);
 
-    @POST("/api/auth/login-organizador")
+    @POST("api/auth/login-organizador")
     Call<LoginOrganizadorResponse> loginOrganizador(@Body Map<String, String> credenciales);
 
-    @PATCH("/api/auth/actualizar-password/{email}")
+    @PATCH("api/auth/actualizar-password/{email}")
     Call<Void> recuperarContrasena(@Path("email") String email);
 
 }

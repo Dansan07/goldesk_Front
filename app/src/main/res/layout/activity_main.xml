@@ -159,12 +159,109 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/ic_soccer_ball_small"
-                                app:tint="#0D7C33"
+                                app:tint="@color/soccer_green"
                                 android:contentDescription="Estadio" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <!-- Grid primera fila -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:layout_marginBottom="16dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardProgramarPartidos"
+                            android:layout_width="0dp"
+                            android:layout_height="160dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="8dp"
+                            app:cardBackgroundColor="@color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="20dp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_calendar"
+                                    app:tint="@color/soccer_green"
+                                    android:contentDescription="@string/main_programarPartidos" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_programarPartidos"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:layout_marginTop="12dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_programarPartidos_aux"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/soccer_green"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardResultados"
+                            android:layout_width="0dp"
+                            android:layout_height="160dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="8dp"
+                            app:cardBackgroundColor="@color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="20dp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:src="@drawable/ic_scoreboard"
+                                    app:tint="@color/soccer_green"
+                                    android:contentDescription="@string/main_resultados" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_resultados"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:layout_marginTop="12dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_resultados_aux"
+                                    android:textSize="12sp"
+                                    android:textColor="@color/soccer_green"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <!-- Grid segunda fila -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -180,7 +277,7 @@
                             android:layout_marginEnd="8dp"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="8dp"
-                            app:cardBackgroundColor="#FFFFFF">
+                            app:cardBackgroundColor="@color/white">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -193,15 +290,15 @@
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
                                     android:src="@drawable/ic_trophy"
-                                    app:tint="#FFD700"
-                                    android:contentDescription="Trofeo" />
+                                    app:tint="@color/soccer_green"
+                                    android:contentDescription="@string/main_clasificacion" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Clasificación"
+                                    android:text="@string/main_clasificacion"
                                     android:textSize="16sp"
-                                    android:textColor="#1A1A1A"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textAlignment="center"
                                     android:layout_marginTop="12dp" />
@@ -209,22 +306,22 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ver tabla"
+                                    android:text="@string/main_clasificacion_aux"
                                     android:textSize="12sp"
-                                    android:textColor="#0D7C33"
+                                    android:textColor="@color/soccer_green"
                                     android:layout_marginTop="4dp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/cardResultados"
+                            android:id="@+id/cardContabilidad"
                             android:layout_width="0dp"
                             android:layout_height="160dp"
                             android:layout_weight="1"
                             android:layout_marginStart="8dp"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="8dp"
-                            app:cardBackgroundColor="#FFFFFF">
+                            app:cardBackgroundColor="@color/white">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -236,16 +333,16 @@
                                 <ImageView
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:src="@drawable/ic_scoreboard"
-                                    app:tint="#0D7C33"
-                                    android:contentDescription="Marcador" />
+                                    android:src="@drawable/ic_contabilidad"
+                                    app:tint="@color/soccer_green"
+                                    android:contentDescription="@string/main_contabilidad" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Resultados"
+                                    android:text="@string/main_contabilidad"
                                     android:textSize="16sp"
-                                    android:textColor="#1A1A1A"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textAlignment="center"
                                     android:layout_marginTop="12dp" />
@@ -253,15 +350,15 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ver marcadores"
+                                    android:text="@string/main_contabilidad_aux"
                                     android:textSize="12sp"
-                                    android:textColor="#0D7C33"
+                                    android:textColor="@color/soccer_green"
                                     android:layout_marginTop="4dp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
-                    <!-- Grid segunda fila -->
+                    <!-- Grid tercera fila -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -277,7 +374,7 @@
                             android:layout_marginEnd="8dp"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="8dp"
-                            app:cardBackgroundColor="#FFFFFF">
+                            app:cardBackgroundColor="@color/white">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -290,15 +387,15 @@
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
                                     android:src="@drawable/ic_soccer_ball_small"
-                                    app:tint="#0D7C33"
-                                    android:contentDescription="Goleadores" />
+                                    app:tint="@color/soccer_green"
+                                    android:contentDescription="@string/main_goleadores" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Goleadores"
+                                    android:text="@string/main_goleadores"
                                     android:textSize="16sp"
-                                    android:textColor="#1A1A1A"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textAlignment="center"
                                     android:layout_marginTop="12dp" />
@@ -306,9 +403,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ver tabla"
+                                    android:text="@string/main_goleadores_aux"
                                     android:textSize="12sp"
-                                    android:textColor="#0D7C33"
+                                    android:textColor="@color/soccer_green"
                                     android:layout_marginTop="4dp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -321,7 +418,7 @@
                             android:layout_marginStart="8dp"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="8dp"
-                            app:cardBackgroundColor="#FFFFFF">
+                            app:cardBackgroundColor="@color/white">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -335,14 +432,14 @@
                                     android:layout_height="48dp"
                                     android:src="@drawable/ic_team"
                                     app:tint="#0D7C33"
-                                    android:contentDescription="Equipos" />
+                                    android:contentDescription="@string/main_equipos" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Equipo"
+                                    android:text="@string/main_equipos"
                                     android:textSize="16sp"
-                                    android:textColor="#1A1A1A"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textAlignment="center"
                                     android:layout_marginTop="12dp" />
@@ -350,9 +447,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ver plantillas"
+                                    android:text="@string/main_equipos_aux"
                                     android:textSize="12sp"
-                                    android:textColor="#0D7C33"
+                                    android:textColor="@color/soccer_green"
                                     android:layout_marginTop="4dp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -378,8 +475,8 @@
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
                                 android:src="@drawable/ic_person"
-                                app:tint="#0D7C33"
-                                android:contentDescription="Perfil" />
+                                app:tint="@color/soccer_green"
+                                android:contentDescription="@string/main_perfil" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -391,17 +488,17 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Mi Perfil"
+                                    android:text="@string/main_perfil"
                                     android:textSize="18sp"
-                                    android:textColor="#1A1A1A"
+                                    android:textColor="@color/black"
                                     android:textStyle="bold" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Configuración y preferencias"
+                                    android:text="@string/main_perfil_aux"
                                     android:textSize="13sp"
-                                    android:textColor="#666666"
+                                    android:textColor="@color/text_secondary"
                                     android:layout_marginTop="2dp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -424,7 +521,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
-        app:itemIconTint="#0D7C33"
-        app:itemTextColor="#1A1A1A" />
+        app:itemIconTint="@color/soccer_green"
+        app:itemTextColor="@color/black" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

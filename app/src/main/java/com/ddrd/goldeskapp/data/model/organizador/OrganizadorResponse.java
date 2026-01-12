@@ -1,6 +1,6 @@
 package com.ddrd.goldeskapp.data.model.organizador;
 
-public class Organizador {
+public class OrganizadorResponse {
 
     private String cedula;
     private String nombre;

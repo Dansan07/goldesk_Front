@@ -1,17 +1,59 @@
 <resources>
+    <!--Login-->
     <string name="soccer_app_title">GOLDESK</string>
     <string name="login_subtitle">Ingresa tu código de equipo o invitado</string>
-
     <string name="codigo_hint">Código de acceso</string>
     <string name="invitado_hint">Código de invitado</string>
-
     <string name="password_hint">Contraseña (solo organizadores)</string>
     <string name="forgot_codigo">¿Olvidaste tu código?</string>
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="login_button">ENTRAR</string>
     <string name="or_text">O</string>
     <string name="invitado_button">INGRESAR CON CÓDIGO INVITADO</string>
+    <!--Global-->
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
+    <string name="ubicacion">📍 Ubicación</string>
+    <string name="seleccionar">Seleccionar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="btn_aceptar">Aceptar</string>
+    <string name="btn_rechazar">Rechazar</string>
+    <string name="btn_enviar">Enviar</string>
+    <string name="btn_aceptar_solicitud">Aceptar Solicitud</string>
+    <string name="btn_rechazar_solicitud">Rechazar Solicitud</string>
+    <string name="hint_cancha">Nombre del escenario</string>
+    <!--Main-->
     <string name="soccer_logo">Logo Goldesk</string>
+    <!--programar partidos-->
+    <string name="main_programarPartidos">Programar Partido</string>
+    <string name="main_programarPartidos_aux">nueva fecha</string>
+    <!--Programar Partidos Activity-->
+    <string name="activity_programarPartidos">⚽ Programar Partido</string>
+    <string name="activity_programarPartidos_aux">Configura los detalles del encuentro</string>
+    <string name="activity_programarPartidos_spinnerTorneo">🏆 Campeonato</string>
+    <string name="activity_programarPartidos_spinnerEquipos">👥 Equipos</string>
+    <string name="activity_programarPartidos_equipoLocal">Equipo Local</string>
+    <string name="activity_programarPartidos_equipoVisitante">Equipo Visitante</string>
+    <string name="activity_programarPartidos_fecha">📅 Fecha y Hora</string>
+    <!--resultados-->
+    <string name="main_resultados">Resultados</string>
+    <string name="main_resultados_aux">Ver marcadores</string>
+    <!--clasificacion-->
+    <string name="main_clasificacion">Clasificación</string>
+    <string name="main_clasificacion_aux">Tabla Posiciones</string>
+    <!--contabilidad-->
+    <string name="main_contabilidad">Contabilidad</string>
+    <string name="main_contabilidad_aux">Mis finanzas</string>
+    <!--goleadores-->
+    <string name="main_goleadores">Goleadores</string>
+    <string name="main_goleadores_aux">Ver tabla</string>
+    <!--equipos-->
+    <string name="main_equipos">Equipos</string>
+    <string name="main_equipos_aux">Ver plantillas</string>
+    <!--perfil-->
+    <string name="main_perfil">Mi Perfil</string>
+    <string name="main_perfil_aux">Configuración y preferencias</string>
     <!-- Roles -->
     <string name="select_role">Selecciona tu rol:</string>
     <string name="role_organizer">Organizador</string>

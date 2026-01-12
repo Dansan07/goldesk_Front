@@ -3,8 +3,6 @@ package com.ddrd.goldeskapp.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ddrd.goldeskapp.data.model.organizador.Organizador;
-
 public class TokenManager {
 
     private static final String PREF_NAME = "GOLDESK_PREFS";
@@ -12,7 +10,6 @@ public class TokenManager {
     private static final String KEY_ROL = "user_role";
     private static final String KEY_NOMBRE = "user_nombre";
     private static final String KEY_CODIGO = "user_codigo";
-    private static final String KEY_ORGANIZADOR = "organizador";
     private final SharedPreferences prefs;
 
     public TokenManager(Context context) {

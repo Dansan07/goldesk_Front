@@ -1,5 +1,6 @@
 package com.ddrd.goldeskapp.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -15,12 +17,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.api.AuthApiService;
+import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
 import com.ddrd.goldeskapp.util.TokenManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private AuthApiService apiService;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private TextView txtSaludoBienvenida;
+    private TokenManager tokenManager;
+
+    //CardView Navigation
+    private CardView cardProgramarPartidos, cardResultados,
+            cardClasificacion, cardContabilidad,
+            cardGoleadores, cardEquipos, cardPerfil;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +51,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void initComponents(){
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        TextView txtSaludoBienvenida= findViewById(R.id.txtSaludoBienvenida);
-        TokenManager tokenManager = new TokenManager(this);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        toolbar = findViewById(R.id.toolbar);
+        navigationView = findViewById(R.id.nav_view);
+        txtSaludoBienvenida= findViewById(R.id.txtSaludoBienvenida);
+        tokenManager = new TokenManager(this);
+
+        //CardView Navigation init
+        cardProgramarPartidos = findViewById(R.id.cardProgramarPartidos);
+        cardResultados = findViewById(R.id.cardResultados);
+        cardClasificacion = findViewById(R.id.cardClasificacion);
+        cardContabilidad = findViewById(R.id.cardContabilidad);
+        cardGoleadores = findViewById(R.id.cardGoleadores);
+        cardEquipos = findViewById(R.id.cardEquipos);
+        cardPerfil = findViewById(R.id.cardPerfil);
 
         //saludo de bienvenida personalizado
         txtSaludoBienvenida.setText("Bienvenido "+tokenManager.getNombre());
@@ -57,6 +80,17 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState(); // Esto sincroniza el icono con el estado del menú
         actualizarDatosHeader(tokenManager);
+        clicksettings();
+    }
+
+    public void clicksettings(){
+        cardProgramarPartidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, ProgramarPartidosActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 4. Manejar clics del menú (Auditoría y Navegación)
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -97,5 +131,4 @@ public class MainActivity extends AppCompatActivity {
             txtRole.setText(rolUsuario + " (ID: " + idRef + ")");
         }
     }
-
 }

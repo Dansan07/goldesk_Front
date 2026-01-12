@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,7 @@ import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.model.login.LoginCodigoResponse;
 import com.ddrd.goldeskapp.data.model.login.LoginOrganizadorResponse;
 import com.ddrd.goldeskapp.data.repository.AuthRepository;
+import com.ddrd.goldeskapp.ui.utilities.ProgressBar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -34,7 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     private AuthRepository authRepository;
     private MaterialButtonToggleGroup toggleRoleGroup;
     private TextView tvForgotPassword;
-    private androidx.appcompat.app.AlertDialog loadingDialog;
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         btnRoleDelegado=findViewById(R.id.btnRoleDelegado);
         btnRegistroInvitado = findViewById(R.id.btnRegistroInvitado);
         toggleRoleGroup = findViewById(R.id.toggleRoleGroup);
+        progressBar = new ProgressBar(this);
+
 
         // El repositorio necesita el contexto para inicializar TokenManager
         authRepository = new AuthRepository(this);
@@ -73,26 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         //estado inicial
         toggleRoleGroup.check(R.id.btnRoleOrganizador);
         actualizarUI(R.id.btnRoleOrganizador);
-    }
-    private void mostrarCargando(boolean mostrar) {
-        if (mostrar) {
-            // Crear el ProgressBar dinámicamente
-            ProgressBar progressBar = new ProgressBar(this);
-            progressBar.setPadding(50, 50, 50, 50);
-
-            // Crear el diálogo sin XML
-            loadingDialog = new androidx.appcompat.app.AlertDialog.Builder(this)
-                    .setTitle("Procesando")
-                    .setMessage("Por favor, espere...")
-                    .setCancelable(false) // Auditoría: evita que el usuario lo cierre tocando fuera [cite: 2025-12-28]
-                    .setView(progressBar)
-                    .create();
-            loadingDialog.show();
-        } else {
-            if (loadingDialog != null && loadingDialog.isShowing()) {
-                loadingDialog.dismiss();
-            }
-        }
     }
 
     private void sendEmailForgotPassword(){
@@ -107,11 +90,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         tvForgotPassword.setEnabled(false);
-        mostrarCargando(true);
+        progressBar.mostrarCargando(true);
         authRepository.recuperarContrasenaOrg(email, new AuthRepository.AuthCallback<Void>() {
             @Override
             public void onSuccess(Void response) {
-                mostrarCargando(false);
+                progressBar.mostrarCargando(false);
                 tvForgotPassword.setEnabled(true);
                 new AlertDialog.Builder(LoginActivity.this)
                         .setTitle("Correo Enviado")
@@ -121,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onError(String error) {
-                mostrarCargando(false);
+                progressBar.mostrarCargando(false);
                 tvForgotPassword.setEnabled(true);
                 Toast.makeText(LoginActivity.this, error, Toast.LENGTH_LONG).show();
             }
@@ -177,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void ejecutarLogin(String codigo_o_Email) {
         // Deshabilitar botón para evitar múltiples peticiones (Auditoría)
+        progressBar.mostrarCargando(true);
         btnLogin.setEnabled(false);
         btnLogin.setText("Validando...");
 
@@ -225,11 +209,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void resetLoginButton() {
+        progressBar.mostrarCargando(false);
         btnLogin.setEnabled(true);
         btnLogin.setText("ENTRAR");
     }
 
     private void irAMain() {
+        progressBar.mostrarCargando(false);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish(); // Destruye el Login para que no puedan volver atrás (Auditoría) [cite: 2025-12-28]
