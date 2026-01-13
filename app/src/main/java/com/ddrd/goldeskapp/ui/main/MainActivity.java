@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.api.AuthApiService;
+import com.ddrd.goldeskapp.ui.historialPartidos.HistorialPartidosActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
 import com.ddrd.goldeskapp.util.TokenManager;
 import com.google.android.material.navigation.NavigationView;
@@ -88,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this, ProgramarPartidosActivity.class);
+                startActivity(intent);
+            }
+        });
+        cardResultados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HistorialPartidosActivity.class);
                 startActivity(intent);
             }
         });

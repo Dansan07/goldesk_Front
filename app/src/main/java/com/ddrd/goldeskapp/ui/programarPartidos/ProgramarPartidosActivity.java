@@ -27,14 +27,12 @@ import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogProgramarPartido;
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
 import com.ddrd.goldeskapp.data.repository.TorneoRepository;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBar;
+import com.ddrd.goldeskapp.ui.utilities.formatos.FomatearFechaHora;
+import com.ddrd.goldeskapp.ui.utilities.spinnersContent.SpinnerTorneo;
 import com.ddrd.goldeskapp.util.TokenManager;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ProgramarPartidosActivity extends AppCompatActivity {
 
@@ -43,12 +41,15 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
     private EquipoRepository equipoRepository;
     private PartidoRepository partidoRepository;
     private Spinner spinnerChampionship, spinnerLocalTeam,spinnerVisitanteTeam;
+    private SpinnerTorneo spinnerTorneo;
     private DialogProgramarPartido dialogProgramarPartido;
     private ProgressBar progressBar;
     private List<SpinnerEquipoResponse> listaEquiposOriginal;
     private EditText editTextDate, editTextTime, editTextLocation;
     private Calendario calendario;
     private Button btnCancel, btnSave;
+    private FomatearFechaHora fomatearFechaHora;
+
 
 
 
@@ -71,11 +72,13 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
         tokenManager = new TokenManager(this);
         listaEquiposOriginal = new ArrayList<>();
         calendario = new Calendario(this);
+        fomatearFechaHora = new FomatearFechaHora();
         //repository init
         torneoRepository = new TorneoRepository(this);
         equipoRepository = new EquipoRepository(this);
         partidoRepository = new PartidoRepository(this);
         //spinner init
+        spinnerTorneo = new SpinnerTorneo();
         spinnerChampionship = findViewById(R.id.spinnerChampionship);
         spinnerLocalTeam = findViewById(R.id.spinnerLocalTeam);
         spinnerVisitanteTeam = findViewById(R.id.spinnerVisitanteTeam);
@@ -142,24 +145,15 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
             SpinnerEquipoResponse local = (SpinnerEquipoResponse) spinnerLocalTeam.getSelectedItem();
             SpinnerEquipoResponse visitante = (SpinnerEquipoResponse) spinnerVisitanteTeam.getSelectedItem();
 
-            // Formateadores para leer lo que hay en el EditText (Español)
-            SimpleDateFormat sdfLectura = new SimpleDateFormat("EEEE, dd/MM/yyyy", new Locale("es", "ES"));
-            SimpleDateFormat hfLectura = new SimpleDateFormat("hh:mm a", new Locale("es", "ES"));
-
-            // Formateadores para enviar al Servidor (Estándar ISO)
-            SimpleDateFormat sdfEscritura = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            SimpleDateFormat hfEscritura = new SimpleDateFormat("HH:mm:ss", Locale.US);
-
-            // Realizamos la conversión
-            String fechaISO = sdfEscritura.format(sdfLectura.parse(editTextDate.getText().toString()));
-            String horaISO = hfEscritura.format(hfLectura.parse(editTextTime.getText().toString()));
+            String fecha= editTextDate.getText().toString();
+            String hora= editTextTime.getText().toString();
 
             PartidoSave partidoSave= new PartidoSave(
                     torneo.getIdTorneo(),
-                    local.getIdEquipo(),
-                    visitante.getIdEquipo(),
-                    fechaISO, // Ahora es un String "2026-01-12"
-                    horaISO,  // Ahora es un String "15:30:00"
+                    local.getIdTorneoEquipo(),
+                    visitante.getIdTorneoEquipo(),
+                    fomatearFechaHora.formatearFecha(fecha), // Ahora es un String "2026-01-12"
+                    fomatearFechaHora.formatearHora(hora),  // Ahora es un String "15:30:00"
                     editTextLocation.getText().toString(),
                     "Fase de Inicial",
                     confirmarDuplicado
@@ -180,7 +174,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
             return;
         }
         progressBar.mostrarCargando(true);
-        partidoRepository.programarPartido(partido, new PartidoRepository.PartidoCalback() {
+        partidoRepository.programarPartido(partido, new PartidoRepository.PartidoGuardarCalback() {
             @Override
             public void onSuccess(PartidoResponseDuplicate response) {
                 progressBar.mostrarCargando(false);
@@ -232,7 +226,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
 
         for (SpinnerEquipoResponse e : listaEquiposOriginal) {
             // Filtramos por ID para asegurar la Limpieza de Documentos [cite: 2025-12-28]
-            if (!e.getIdEquipo().equals(equipoAExcluir.getIdEquipo())) {
+            if (!e.getIdTorneoEquipo().equals(equipoAExcluir.getIdTorneoEquipo())) {
                 listaFiltrada.add(e);
             }
         }
@@ -241,16 +235,6 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_item, listaFiltrada);
         adapterVisitante.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerVisitanteTeam.setAdapter(adapterVisitante);
-    }
-
-    private void actualizarSpinnerTorneos(List<SpinnerTorneoResponse> torneos) {
-        ArrayAdapter<SpinnerTorneoResponse> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                torneos
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerChampionship.setAdapter(adapter);
     }
 
     private void cargarEquipos(Integer idTorneo){
@@ -269,7 +253,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
             @Override
             public void onNoContent() {
                 progressBar.mostrarCargando(false);
-                dialogProgramarPartido.mostrarDialogoNoContent(
+                dialogProgramarPartido.mostrarDialogoNoContentEquipos(
                         "Sin Equipos",
                         "Este torneo no tiene equipos registrados o están inactivos.",
                         "Crear Equipo");
@@ -289,12 +273,12 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
         torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
-                actualizarSpinnerTorneos(torneos);
+                spinnerTorneo.actualizarSpinnerTorneos(torneos, ProgramarPartidosActivity.this, spinnerChampionship);
             }
 
             @Override
             public void onNoContent() {
-                dialogProgramarPartido.mostrarDialogoNoContent(
+                dialogProgramarPartido.mostrarDialogoNoContentTorneos(
                         "Torneos",
                         "No tienes torneos activos.",
                         "Crear Torneo");

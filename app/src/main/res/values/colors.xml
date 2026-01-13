@@ -7,4 +7,29 @@
     <color name="divider_color">#BDBDBD</color>
     <color name="text_secondary">#424242</color>
     <color name="dorado_trofeo">#FFD700</color>
+    <color name="plata_trofeo">#C0C0C0</color>
+    <color name="bronce_trofeo">#CD7F32</color>
+    <color name="oro_trofeo">#FFD700</color>
+    <color name="text_primary">#212121</color>
+    <color name="error">#B00020</color>
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FFC107</color>
+    <color name="info">#2196F3</color>
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#283593</color>
+    <color name="primary_light">#536DFE</color>
+    <color name="accent">#FF4081</color>
+    <color name="accent_dark">#BF366C</color>
+    <color name="accent_light">#FF79A3</color>
+    <color name="background">#FFFFFF</color>
+    <color name="divider">#E0E0E0</color>
+
+    <!-- Estados de Partidos -->
+    <color name="partido_programado">#03A9F4</color>  <!-- Azul cyan -->
+    <color name="partido_en_curso">#FF5722</color>    <!-- Naranja rojizo (más llamativo) -->
+    <color name="partido_finalizado">#4CAF50</color>  <!-- Verde estándar -->
+
+
+
+
 </resources>

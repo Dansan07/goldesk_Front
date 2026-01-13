@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 
 public class SpinnerEquipoResponse {
 
-    private Integer idEquipo;
+    private Integer idTorneoEquipo;
     private String nombreEquipo;
 
-    public SpinnerEquipoResponse(Integer idEquipo, String nombreEquipo) {
-        this.idEquipo = idEquipo;
+    public SpinnerEquipoResponse(Integer idTorneoEquipo, String nombreEquipo) {
+        this.idTorneoEquipo = idTorneoEquipo;
         this.nombreEquipo = nombreEquipo;
     }
 
@@ -18,8 +18,8 @@ public class SpinnerEquipoResponse {
         return nombreEquipo;
     }
 
-    public Integer getIdEquipo() {
-        return idEquipo;
+    public Integer getIdTorneoEquipo() {
+        return idTorneoEquipo;
     }
 
     public String getNombreEquipo() {

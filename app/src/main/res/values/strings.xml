@@ -36,6 +36,31 @@
     <string name="activity_programarPartidos_equipoLocal">Equipo Local</string>
     <string name="activity_programarPartidos_equipoVisitante">Equipo Visitante</string>
     <string name="activity_programarPartidos_fecha">📅 Fecha y Hora</string>
+    <!--Historial Partidos-->
+    <string name="historial_partidos">Historial de Partidos</string>
+    <string name="historial_partidos_aux">Consulta todos los partidos programados y jugados</string>
+    <string name="filtros">Filtros</string>
+    <string name="limpiar_filtros">Limpiar filtros</string>
+    <string name="campeonato">Campeonato</string>
+    <string name="equipo">Equipo</string>
+    <string name="buscar_equipo">Buscar por nombre de equipo</string>
+    <string name="rango_fechas">Rango de fechas</string>
+    <string name="fecha_inicio">Fecha inicio</string>
+    <string name="fecha_fin">Fecha fin</string>
+    <string name="aplicar_filtros">Aplicar Filtros</string>
+    <string name="mostrando_resultados">Mostrando %1$d partidos</string>
+    <string name="ordenar">Ordenar</string>
+    <string name="no_partidos_encontrados">No se encontraron partidos</string>
+    <string name="ajusta_filtros">Intenta ajustar los filtros para ver más resultados</string>
+    <string name="agregar_partido">Agregar nuevo partido</string>
+    <!--item Partido-->
+    <string name="escudo_equipo_local">Escudo equipo local</string>
+    <string name="escudo_equipo_visitante">Escudo equipo visitante</string>
+    <string name="local">LOCAL</string>
+    <string name="visitante">VISITANTE</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+
     <!--resultados-->
     <string name="main_resultados">Resultados</string>
     <string name="main_resultados_aux">Ver marcadores</string>
@@ -64,4 +89,5 @@
     <!--Barra lateral-->
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="navigation_drawer_close">Cerrar menú de navegación</string>
+
 </resources>

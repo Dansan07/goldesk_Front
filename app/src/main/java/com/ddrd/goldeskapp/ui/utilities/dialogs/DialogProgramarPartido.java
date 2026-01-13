@@ -14,7 +14,7 @@ public class DialogProgramarPartido {
         this.context = context;
     }
 
-    public void mostrarDialogoNoContent(String titulo, String mensaje, String accion) {
+    public void mostrarDialogoNoContentTorneos(String titulo, String mensaje, String accion) {
         new androidx.appcompat.app.AlertDialog.Builder(context)
                 .setTitle(titulo)
                 .setMessage(mensaje)
@@ -23,7 +23,40 @@ public class DialogProgramarPartido {
                     // Aquí pones la navegación a tu actividad de creación
                     // Intent intent = new Intent(this, CrearTorneoActivity.class);
                     // startActivity(intent);
-                    Toast.makeText(context, "Navegando a creación...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Navegando a creación de Torneos...", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+    public void mostrarDialogoNoContentEquipos(String titulo, String mensaje, String accion) {
+        new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton(accion, (dialog, which) -> {
+                    // Aquí pones la navegación a tu actividad de creación
+                    // Intent intent = new Intent(this, CrearTorneoActivity.class);
+                    // startActivity(intent);
+                    Toast.makeText(context, "Navegando a creación de Equipos...", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    public void mostrarDialogoNoContentPartidos(String titulo, String mensaje, String accion) {
+        new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton(accion, (dialog, which) -> {
+                    // Aquí pones la navegación a tu actividad de creación
+                    // Intent intent = new Intent(this, CrearTorneoActivity.class);
+                    // startActivity(intent);
+                    Toast.makeText(context, "Navegando a creación de Partidos...", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
                     dialog.dismiss();
