@@ -1,7 +1,6 @@
 package com.ddrd.goldeskapp.data.repository;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.ddrd.goldeskapp.data.api.ApiClient;
 import com.ddrd.goldeskapp.data.api.PartidoApiService;
@@ -9,6 +8,7 @@ import com.ddrd.goldeskapp.data.model.partido.FiltroHistorialPartidos;
 import com.ddrd.goldeskapp.data.model.partido.PartidoResponseDuplicate;
 import com.ddrd.goldeskapp.data.model.partido.PartidoSave;
 import com.ddrd.goldeskapp.data.model.partido.PartidosHistorialResponse;
+import com.ddrd.goldeskapp.data.model.planillaDigital.PlanillaDigitalResponse;
 
 import java.util.List;
 
@@ -40,11 +40,6 @@ public class PartidoRepository {
     }
 
     public void obtenerHistorialPartidos(FiltroHistorialPartidos filtro, PartidoHistorialCalback callback){
-        Log.d("Filtro enviado", "obtenerHistorialPartidos: "+filtro.toString());
-        Log.d("Filtro enviado", "obtenerHistorialPartidos: "+filtro.getIdTorneo());
-        Log.d("Filtro enviado", "obtenerHistorialPartidos: "+filtro.getNombreEquipo());
-        Log.d("Filtro enviado", "obtenerHistorialPartidos: "+filtro.getFechaInicio());
-        Log.d("Filtro enviado", "obtenerHistorialPartidos: "+filtro.getFechaFin());
 
         partidoApiService.obetenerHistorialPartidos(
                 filtro.getIdTorneo(),
@@ -54,8 +49,10 @@ public class PartidoRepository {
         ).enqueue(new Callback<List<PartidosHistorialResponse>>() {
             @Override
             public void onResponse(Call<List<PartidosHistorialResponse>> call, Response<List<PartidosHistorialResponse>> response) {
-                if (response.isSuccessful() && response.body()!=null){
+                if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body());
+                } else if (response.code() == 204) {
+                    callback.onNoContent();
                 }else {
                     callback.onError("Error al obtener historial: " + response.errorBody());
                 }
@@ -67,6 +64,24 @@ public class PartidoRepository {
         });
     }
 
+    public void abrirPlanillaDigital(Integer idPartido, PartidoBuscarCalback partidoBuscarCalback){
+
+        partidoApiService.obtenerPlanillaDigital(idPartido).enqueue(new Callback<PlanillaDigitalResponse>() {
+            @Override
+            public void onResponse(Call<PlanillaDigitalResponse> call, Response<PlanillaDigitalResponse> response) {
+                if (response.isSuccessful() && response.body()!=null){
+                    partidoBuscarCalback.onSuccess(response.body());
+                }else {
+                    partidoBuscarCalback.onError("Error al obtener Planilla Digital: " + response.errorBody());
+                }
+            }
+            @Override
+            public void onFailure(Call<PlanillaDigitalResponse> call, Throwable t) {
+                partidoBuscarCalback.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface PartidoGuardarCalback {
         void onSuccess(PartidoResponseDuplicate response);
         void onError(String mensaje);
@@ -74,6 +89,10 @@ public class PartidoRepository {
     public interface PartidoHistorialCalback{
         void onSuccess(List<PartidosHistorialResponse> partidos);
         void onNoContent();
+        void onError(String mensaje);
+    }
+    public interface PartidoBuscarCalback {
+        void onSuccess(PlanillaDigitalResponse response);
         void onError(String mensaje);
     }
 }

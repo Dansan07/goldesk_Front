@@ -29,6 +29,45 @@
     <color name="partido_en_curso">#FF5722</color>    <!-- Naranja rojizo (más llamativo) -->
     <color name="partido_finalizado">#4CAF50</color>  <!-- Verde estándar -->
 
+    <!--DIALOGS-->
+
+    <!-- Colores principales del tema de fútbol -->
+    <!--<color name="soccer_green">#10b981</color> &lt;!&ndash; Verde campo de fútbol &ndash;&gt;-->
+    <color name="soccer_green_dark">#059669</color>
+    <color name="soccer_green_light">#34d399</color>
+
+    <!-- Colores de texto del diálogo -->
+    <color name="dialog_text_primary">#1f2937</color> <!-- Gris oscuro para títulos -->
+    <color name="dialog_text_secondary">#6b7280</color> <!-- Gris medio para mensajes -->
+
+    <!-- Colores de divider -->
+    <color name="dialog_divider">#e5e7eb</color>
+    <color name="blaco_trasparente">#00FFFFFF</color> <!-- Blanco transparente -->
+
+    <!-- Colores de stroke para botones -->
+    <color name="dialog_button_stroke">#d1d5db</color>
+
+    <!-- Colores de ripple para botones -->
+    <color name="button_ripple_positive">#80ffffff</color> <!-- Blanco semi-transparente -->
+    <color name="button_ripple_negative">#1a000000</color> <!-- Negro muy transparente -->
+    <color name="button_ripple_neutral">#1a6b7280</color>
+    <color name="button_ripple_destructive">#80ffffff</color>
+
+    <!-- Color para acciones destructivas (eliminar, borrar) -->
+    <color name="error_red">#ef4444</color>
+    <color name="error_red_dark">#dc2626</color>
+
+    <!-- Colores para tema oscuro del diálogo -->
+    <color name="dialog_dark_background">#1f2937</color>
+    <color name="dialog_dark_text_secondary">#9ca3af</color>
+    <color name="dialog_dark_stroke">#4b5563</color>
+    <color name="button_ripple_negative_dark">#1affffff</color>
+
+    <!-- Colores adicionales para variantes -->
+    <color name="dialog_info_blue">#3b82f6</color>
+    <color name="dialog_warning_yellow">#f59e0b</color>
+    <color name="dialog_success_green">#10b981</color>
+
 
 
 

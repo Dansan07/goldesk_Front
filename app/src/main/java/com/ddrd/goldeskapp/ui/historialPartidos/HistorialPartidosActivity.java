@@ -1,10 +1,16 @@
 package com.ddrd.goldeskapp.ui.historialPartidos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,33 +21,47 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ddrd.goldeskapp.R;
+import com.ddrd.goldeskapp.data.model.equipo.SpinnerEquipoResponse;
 import com.ddrd.goldeskapp.data.model.partido.FiltroHistorialPartidos;
-import com.ddrd.goldeskapp.data.model.partido.PartidoResponseDuplicate;
 import com.ddrd.goldeskapp.data.model.partido.PartidosHistorialResponse;
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
+import com.ddrd.goldeskapp.data.repository.EquipoRepository;
 import com.ddrd.goldeskapp.data.repository.PartidoRepository;
 import com.ddrd.goldeskapp.data.repository.TorneoRepository;
-import com.ddrd.goldeskapp.ui.utilities.ProgressBar;
-import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogProgramarPartido;
-import com.ddrd.goldeskapp.ui.utilities.formatos.FomatearFechaHora;
+import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
+import com.ddrd.goldeskapp.ui.utilities.Calendario;
+import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
+import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
+import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraServer;
+import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraUser;
 import com.ddrd.goldeskapp.ui.utilities.spinnersContent.SpinnerTorneo;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HistorialPartidosActivity extends AppCompatActivity {
 
     private PartidoRepository partidoRepository;
     private TorneoRepository torneoRepository;
+    private EquipoRepository equipoRepository;
     private SpinnerTorneo spinnerTorneo;
     private Spinner spinnerFilterChampionship;
-    private DialogProgramarPartido dialogProgramarPartido;
-    private TextInputEditText editTextFilterTeam;
+    private DialogsResponse dialogsResponse;
+    private AutoCompleteTextView editTextFilterTeam;
     private EditText editTextFechaInicio, editTextFechaFin;
-    private FomatearFechaHora fomatearFechaHora;
-    private ProgressBar progressBar;
+    private TextView textViewResultCount;
+    private FormatearFechaHoraServer formatearFechaHoraServer;
+    private FormatearFechaHoraUser formatearFechaHoraUser;
+    private ProgressBarGoldesk progressBarGoldesk;
     private RecyclerView recyclerViewPartidos;
+    private Calendario calendario;
+    private Button btnApplyFilters;
+    private ImageButton btnClearFilters;
+    private FloatingActionButton fabAddMatch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +79,23 @@ public class HistorialPartidosActivity extends AppCompatActivity {
     }
 
     private void initComponents(){
-        fomatearFechaHora = new FomatearFechaHora();
-        progressBar = new ProgressBar(this);
+        formatearFechaHoraServer = new FormatearFechaHoraServer();
+        formatearFechaHoraUser = new FormatearFechaHoraUser();
+        progressBarGoldesk = new ProgressBarGoldesk(this);
+        calendario = new Calendario(this);
+        textViewResultCount = findViewById(R.id.textViewResultCount);
+        //buttons init
+        btnApplyFilters = findViewById(R.id.btnApplyFilters);
+        btnClearFilters = findViewById(R.id.btnClearFilters);
+        fabAddMatch = findViewById(R.id.fabAddMatch);
         //repository init
         partidoRepository= new PartidoRepository(this);
         torneoRepository = new TorneoRepository(this);
+        equipoRepository = new EquipoRepository(this);
         //spinner init
         spinnerTorneo = new SpinnerTorneo();
         spinnerFilterChampionship = findViewById(R.id.spinnerFilterChampionship);
-        dialogProgramarPartido = new DialogProgramarPartido(this);
+        dialogsResponse = new DialogsResponse(this);
         //edittext init
         editTextFilterTeam = findViewById(R.id.editTextFilterTeam);
         editTextFechaInicio = findViewById(R.id.editTextFechaInicio);
@@ -95,7 +123,28 @@ public class HistorialPartidosActivity extends AppCompatActivity {
 
             }
         });
-
+        btnApplyFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FiltroHistorialPartidos filtro=obtenerDatosFiltro();
+                obtenerHistorialPartidos(filtro);
+            }
+        });
+        btnClearFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                limpiarFiltros();
+            }
+        });
+        fabAddMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(HistorialPartidosActivity.this, ProgramarPartidosActivity.class);
+                startActivity(intent);
+            }
+        });
+        editTextFechaInicio.setOnClickListener(v -> calendario.abrirCalendario(editTextFechaInicio));
+        editTextFechaFin.setOnClickListener(v -> calendario.abrirCalendario(editTextFechaFin));
     }
 
     private void mostrarSpinnerTorneos(){
@@ -106,7 +155,7 @@ public class HistorialPartidosActivity extends AppCompatActivity {
             }
             @Override
             public void onNoContent() {
-                dialogProgramarPartido.mostrarDialogoNoContentTorneos(
+                dialogsResponse.mostrarDialogoNoContentTorneos(
                         "Torneos",
                         "No tienes torneos activos.",
                         "Crear Torneo"
@@ -114,11 +163,35 @@ public class HistorialPartidosActivity extends AppCompatActivity {
             }
             @Override
             public void onError(String mensaje) {
-                dialogProgramarPartido.mostrarDialogoError(mensaje);
+                dialogsResponse.mostrarDialogoError(mensaje);
             }
         });
     }
+    //sugiere una lista de equipos en base al torneo seleccionado
+    private void crearlistaEquipos(){
+        SpinnerTorneoResponse torneo= (SpinnerTorneoResponse) spinnerFilterChampionship.getSelectedItem();
+        equipoRepository.obtenerEquiposSpinner(torneo.getIdTorneo(), new EquipoRepository.EquipoCallback() {
+            @Override
+            public void onSuccess(List<SpinnerEquipoResponse> equipos) {
+                ArrayAdapter<SpinnerEquipoResponse> adapter = new ArrayAdapter<>(
+                        HistorialPartidosActivity.this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        equipos
+                );
+                editTextFilterTeam.setAdapter(adapter);
+            }
 
+            @Override
+            public void onNoContent() {
+
+            }
+
+            @Override
+            public void onError(String mensaje) {
+
+            }
+        });
+    }
     private FiltroHistorialPartidos obtenerDatosFiltro() {
         //implementar logica para obtener los datos del filtro
         SpinnerTorneoResponse torneo= (SpinnerTorneoResponse) spinnerFilterChampionship.getSelectedItem();
@@ -130,10 +203,15 @@ public class HistorialPartidosActivity extends AppCompatActivity {
                 null: editTextFechaFin.getText().toString().trim();
 
         if (fechaInicio != null){
-            fechaInicio=fomatearFechaHora.formatearFecha(fechaInicio);
+            fechaInicio= formatearFechaHoraServer.formatearFechaServer(fechaInicio);
         }
         if (fechaFin != null){
-            fechaFin=fomatearFechaHora.formatearFecha(fechaFin);
+            fechaFin= formatearFechaHoraServer.formatearFechaServer(fechaFin);
+        }
+        if (fechaInicio!=null && (fechaFin==null || fechaFin.isEmpty())){
+            fechaFin = new SimpleDateFormat(
+                    "yyyy-MM-dd", Locale.US).format(new Date());
+            editTextFechaFin.setText(formatearFechaHoraUser.formatearFechaUser(fechaFin));
         }
         //crear objeto con los datos
         return new FiltroHistorialPartidos(
@@ -143,32 +221,47 @@ public class HistorialPartidosActivity extends AppCompatActivity {
                 fechaFin
         );
     }
-
     private void obtenerHistorialPartidos(FiltroHistorialPartidos filtro){
-        progressBar.mostrarCargando(true);
+        progressBarGoldesk.mostrarCargando(true);
         partidoRepository.obtenerHistorialPartidos(filtro, new PartidoRepository.PartidoHistorialCalback() {
             @Override
             public void onSuccess(List<PartidosHistorialResponse> partidos) {
                 if (!isFinishing()){
-                    progressBar.mostrarCargando(false);
+                    progressBarGoldesk.mostrarCargando(false);
+                    String cantidadPartidos = getString(R.string.mostrando_resultados,partidos.size());
+                    textViewResultCount.setText(cantidadPartidos);
+                    actualizarRecyclerView(partidos);
+                    crearlistaEquipos();
                 }
             }
-
             @Override
             public void onNoContent() {
-                progressBar.mostrarCargando(false);
-                dialogProgramarPartido.mostrarDialogoNoContentPartidos(
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoNoContentPartidos(
                         "Sin Partidos",
                         "No tienes partidos registrados",
                         "Programar un Partido"
                 );
+                recyclerViewPartidos.setAdapter(null);
             }
             @Override
             public void onError(String mensaje) {
-                progressBar.mostrarCargando(false);
-                dialogProgramarPartido.mostrarDialogoError(mensaje);
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+                recyclerViewPartidos.setAdapter(null);
             }
         });
+    }
+
+    private void actualizarRecyclerView(List<PartidosHistorialResponse> partidos) {
+        AdapterHistorialPartidos adapter = new AdapterHistorialPartidos(this, partidos);
+        recyclerViewPartidos.setAdapter(adapter);
+    }
+    private void limpiarFiltros(){
+        spinnerFilterChampionship.setSelection(0);
+        editTextFilterTeam.setText("");
+        editTextFechaInicio.setText("");
+        editTextFechaFin.setText("");
     }
 
 }

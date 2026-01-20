@@ -23,7 +23,8 @@ public class Calendario {
         int mes = c.get(Calendar.MONTH);
         int dia = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
+                (view, year, monthOfYear, dayOfMonth) -> {
             Calendar calSeleccionada = Calendar.getInstance();
             calSeleccionada.set(year, monthOfYear, dayOfMonth);
 
@@ -36,7 +37,7 @@ public class Calendario {
             editTextDate.setText(fechaFormateada);
         }, anio, mes, dia);
 
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
     public void abrirReloj(EditText editTextTime) {

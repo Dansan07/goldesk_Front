@@ -39,4 +39,8 @@ public class FiltroHistorialPartidos {
     public String getFechaFin() {
         return fechaFin;
     }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
+    }
 }

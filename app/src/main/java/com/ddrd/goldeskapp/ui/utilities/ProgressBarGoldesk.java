@@ -5,12 +5,12 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class ProgressBar {
+public class ProgressBarGoldesk {
 
     private AlertDialog loadingDialog;
     private final Context context;
 
-    public ProgressBar(Context context) {
+    public ProgressBarGoldesk(Context context) {
         this.context = context;
         setupDialog();
     }

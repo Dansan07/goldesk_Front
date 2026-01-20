@@ -5,6 +5,7 @@ import android.content.Context;
 import com.ddrd.goldeskapp.data.api.ApiClient;
 import com.ddrd.goldeskapp.data.api.TorneoApiService;
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
+import com.ddrd.goldeskapp.data.model.torneo.TorneoResponse;
 import com.ddrd.goldeskapp.util.TokenManager;
 
 import java.util.List;
@@ -41,11 +42,31 @@ public class TorneoRepository {
             }
         });
     }
+    public void obtenerTorneoPorId(Integer idTorneo, TorneoBuscarCallback torneoBuscarCallback){
+        apiService.obtenerTorneoPorId(idTorneo).enqueue(new Callback<TorneoResponse>() {
+            @Override
+            public void onResponse(Call<TorneoResponse> call, Response<TorneoResponse> response) {
+                if (response.isSuccessful()){
+                    torneoBuscarCallback.onSuccess(response.body());
+                } else {
+                    torneoBuscarCallback.onError("Error al obtener torneo");
+                }
+            }
+            @Override
+            public void onFailure(Call<TorneoResponse> call, Throwable t) {
+                torneoBuscarCallback.onError(t.getMessage());
+            }
+        });
+    }
 
     // Interfaz para comunicar los resultados a la UI
     public interface TorneoCallback {
         void onSuccess(List<SpinnerTorneoResponse> torneos);
         void onNoContent();
+        void onError(String mensaje);
+    }
+    public interface TorneoBuscarCallback {
+        void onSuccess(TorneoResponse response);
         void onError(String mensaje);
     }
 }

@@ -49,4 +49,6 @@ dependencies {
 
     // OkHttp Logging Interceptor: Muy útil para ver en el Logcat qué está enviando el celular
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    implementation("com.google.android.material:material:1.11.0")
 }

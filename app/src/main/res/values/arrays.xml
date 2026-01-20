@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="periodo_partido">
+        <item>Primer Tiempo</item>
+        <item>Segundo Tiempo</item>
+    </string-array>
+</resources>

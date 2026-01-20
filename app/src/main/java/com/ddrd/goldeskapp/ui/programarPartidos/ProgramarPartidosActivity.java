@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,11 +22,11 @@ import com.ddrd.goldeskapp.data.model.partido.PartidoSave;
 import com.ddrd.goldeskapp.data.repository.EquipoRepository;
 import com.ddrd.goldeskapp.data.repository.PartidoRepository;
 import com.ddrd.goldeskapp.ui.utilities.Calendario;
-import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogProgramarPartido;
+import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
 import com.ddrd.goldeskapp.data.repository.TorneoRepository;
-import com.ddrd.goldeskapp.ui.utilities.ProgressBar;
-import com.ddrd.goldeskapp.ui.utilities.formatos.FomatearFechaHora;
+import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
+import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraServer;
 import com.ddrd.goldeskapp.ui.utilities.spinnersContent.SpinnerTorneo;
 import com.ddrd.goldeskapp.util.TokenManager;
 
@@ -42,13 +41,13 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
     private PartidoRepository partidoRepository;
     private Spinner spinnerChampionship, spinnerLocalTeam,spinnerVisitanteTeam;
     private SpinnerTorneo spinnerTorneo;
-    private DialogProgramarPartido dialogProgramarPartido;
-    private ProgressBar progressBar;
+    private DialogsResponse dialogsResponse;
+    private ProgressBarGoldesk progressBarGoldesk;
     private List<SpinnerEquipoResponse> listaEquiposOriginal;
     private EditText editTextDate, editTextTime, editTextLocation;
     private Calendario calendario;
     private Button btnCancel, btnSave;
-    private FomatearFechaHora fomatearFechaHora;
+    private FormatearFechaHoraServer formatearFechaHoraServer;
 
 
 
@@ -72,7 +71,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
         tokenManager = new TokenManager(this);
         listaEquiposOriginal = new ArrayList<>();
         calendario = new Calendario(this);
-        fomatearFechaHora = new FomatearFechaHora();
+        formatearFechaHoraServer = new FormatearFechaHoraServer();
         //repository init
         torneoRepository = new TorneoRepository(this);
         equipoRepository = new EquipoRepository(this);
@@ -87,8 +86,8 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
         editTextTime = findViewById(R.id.editTextTime);
         editTextLocation = findViewById(R.id.editTextLocation);
         //dialog init
-        dialogProgramarPartido = new DialogProgramarPartido(this);
-        progressBar = new ProgressBar(this);
+        dialogsResponse = new DialogsResponse(this);
+        progressBarGoldesk = new ProgressBarGoldesk(this);
         //button init
         btnCancel = findViewById(R.id.btnCancel);
         btnSave = findViewById(R.id.btnSave);
@@ -128,7 +127,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
         btnCancel.setOnClickListener(v -> {
-            dialogProgramarPartido.mostrarDialogoCancelar(
+            dialogsResponse.mostrarDialogoCancelar(
                     "Cancelar Partido",
                     "Si cancelas se limpiará toda la información para este partido" +
                             "¿Estás seguro de cancelar?",
@@ -152,13 +151,13 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
                     torneo.getIdTorneo(),
                     local.getIdTorneoEquipo(),
                     visitante.getIdTorneoEquipo(),
-                    fomatearFechaHora.formatearFecha(fecha), // Ahora es un String "2026-01-12"
-                    fomatearFechaHora.formatearHora(hora),  // Ahora es un String "15:30:00"
+                    formatearFechaHoraServer.formatearFechaServer(fecha), // Ahora es un String "2026-01-12"
+                    formatearFechaHoraServer.formatearHoraServer(hora),  // Ahora es un String "15:30:00"
                     editTextLocation.getText().toString(),
                     "Fase de Inicial",
                     confirmarDuplicado
             );
-            Log.d("Datos Partido", "obtenerDatosPartido: "+partidoSave.toString());
+            //Log.d("Datos Partido", "obtenerDatosPartido: "+partidoSave.toString());
             return partidoSave;
 
         } catch (Exception e) {
@@ -169,33 +168,37 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
 
     public void guardarPartido(boolean confirmarDuplicado){
         PartidoSave partido = obtenerDatosPartido(confirmarDuplicado);
-        if (partido == null) {
-            Toast.makeText(this, "Por favor, completa la información correctamente", Toast.LENGTH_SHORT).show();
+        if (partido == null ||partido.getFecha() == null || partido.getCancha() == null || partido.getHora() == null) {
+            dialogsResponse.mostrarDialogoInformacion(
+                    "Advertencia",
+                    "Por favor, completa toda la información correctamente",
+                    ProgramarPartidosActivity.this
+            );
             return;
         }
-        progressBar.mostrarCargando(true);
+        progressBarGoldesk.mostrarCargando(true);
         partidoRepository.programarPartido(partido, new PartidoRepository.PartidoGuardarCalback() {
             @Override
             public void onSuccess(PartidoResponseDuplicate response) {
-                progressBar.mostrarCargando(false);
+                progressBarGoldesk.mostrarCargando(false);
 
                 switch (response.getStatus()){
                     case "SUCCESS":
-                        dialogProgramarPartido.mostrarDialogoInformacion(
+                        dialogsResponse.mostrarDialogoPartidoProgramado(
                                 "Partido Guardado",
                                 response.getMessage(),
                                 ProgramarPartidosActivity.this
                         );
                         break;
                     case "WARNING_DUPLICATE":
-                        dialogProgramarPartido.mostrarDialogoDuplicado(
+                        dialogsResponse.mostrarDialogoDuplicado(
                                 "Partido Duplicado",
                                 response.getMessage(),
                                 ProgramarPartidosActivity.this
                         );
                         break;
                     case "ERROR":
-                        dialogProgramarPartido.mostrarDialogoError(
+                        dialogsResponse.mostrarDialogoError(
                                 response.getMessage()
                         );
                     default:
@@ -204,7 +207,8 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
             }
             @Override
             public void onError(String mensaje) {
-
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
             }
         });
     }
@@ -240,20 +244,20 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
     private void cargarEquipos(Integer idTorneo){
         if (isFinishing() || isDestroyed()) return;
 
-        progressBar.mostrarCargando(true);
+        progressBarGoldesk.mostrarCargando(true);
         equipoRepository.obtenerEquiposSpinner(idTorneo, new EquipoRepository.EquipoCallback() {
             @Override
             public void onSuccess(List<SpinnerEquipoResponse> equipos) {
                 if (!isFinishing()){
-                    progressBar.mostrarCargando(false);
+                    progressBarGoldesk.mostrarCargando(false);
                     actualizarSpinnerEquipos(equipos);
                 }
             }
 
             @Override
             public void onNoContent() {
-                progressBar.mostrarCargando(false);
-                dialogProgramarPartido.mostrarDialogoNoContentEquipos(
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoNoContentEquipos(
                         "Sin Equipos",
                         "Este torneo no tiene equipos registrados o están inactivos.",
                         "Crear Equipo");
@@ -261,8 +265,8 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
             }
             @Override
             public void onError(String mensaje) {
-                progressBar.mostrarCargando(false);
-                dialogProgramarPartido.mostrarDialogoError(mensaje);
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
                 limpiarSpinnerEquipos();
             }
         });
@@ -278,7 +282,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
 
             @Override
             public void onNoContent() {
-                dialogProgramarPartido.mostrarDialogoNoContentTorneos(
+                dialogsResponse.mostrarDialogoNoContentTorneos(
                         "Torneos",
                         "No tienes torneos activos.",
                         "Crear Torneo");
@@ -286,7 +290,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
 
             @Override
             public void onError(String mensaje) {
-                dialogProgramarPartido.mostrarDialogoError(mensaje);
+                dialogsResponse.mostrarDialogoError(mensaje);
             }
         });
     }

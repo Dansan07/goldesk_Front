@@ -58,8 +58,34 @@
     <string name="escudo_equipo_visitante">Escudo equipo visitante</string>
     <string name="local">LOCAL</string>
     <string name="visitante">VISITANTE</string>
-    <string name="editar">Editar</string>
+    <string name="editar">Ver Planilla</string>
     <string name="eliminar">Eliminar</string>
+    <!--Planilla Digital-->
+    <string name="planilla_digital">Planilla Digital</string>
+    <string name="partido_no_iniciado">Partido no iniciado</string>
+    <string name="partido_en_curso">Partido en curso</string>
+    <string name="partido_finalizado">Partido finalizado</string>
+    <string name="informacion_partido">Información del Partido</string>
+    <string name="campeonato_nombre">Campeonato Clausura 2025</string>
+    <string name="fecha_hora_partido">Sábado, 13 de Enero - 16:00</string>
+    <string name="estadio_nombre">Estadio Municipal</string>
+    <string name="iniciar_partido">Iniciar Partido</string>
+    <string name="finalizar_partido">Finalizar Partido</string>
+    <string name="guardar_planilla">Guardar Planilla</string>
+    <string name="equipo_1">Equipo 1</string>
+    <string name="equipo_2">Equipo 2</string>
+    <string name="agregar_jugador">Agregar Jugador</string>
+    <string name="pago_arbitraje">Pago de Arbitraje</string>
+    <string name="arbitro_principal">Árbitro Principal:</string>
+    <string name="nombre_arbitro">Juan Pérez</string>
+    <string name="monto_arbitraje">Monto:</string>
+    <string name="monto_default">$50.000</string>
+    <string name="estado_pago">Estado del Pago:</string>
+    <string name="pagado">Pagado</string>
+    <string name="pendiente">Pendiente</string>
+    <string name="notas_pago">Notas sobre el pago (opcional)</string>
+    <string name="pago_arbitraje_equipo">Pago de Arbitraje</string>
+    <string name="monto_mitad">$25.000</string>
 
     <!--resultados-->
     <string name="main_resultados">Resultados</string>

@@ -1,6 +1,7 @@
 package com.ddrd.goldeskapp.data.api;
 
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
+import com.ddrd.goldeskapp.data.model.torneo.TorneoResponse;
 
 import java.util.List;
 
@@ -12,4 +13,9 @@ public interface TorneoApiService {
 
     @GET("api/organizadores/{cedula}/torneos")
     Call<List<SpinnerTorneoResponse>> obtenerTorneosDelOrganizador(@Path("cedula") String cedula);
+
+    @GET("api/torneos/{idTorneo}")
+    Call<TorneoResponse> obtenerTorneoPorId(@Path("idTorneo") Integer idTorneo);
+
+
 }

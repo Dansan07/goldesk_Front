@@ -4,64 +4,75 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class DialogProgramarPartido {
+public class DialogsResponse {
 
-    private Context context;
+    private final Context context;
 
-    public DialogProgramarPartido(Context context) {
+    public DialogsResponse(Context context) {
         this.context = context;
     }
 
     public void mostrarDialogoNoContentTorneos(String titulo, String mensaje, String accion) {
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
                 .setMessage(mensaje)
                 .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton(accion, (dialog, which) -> {
+                .setPositiveButton(accion, (d, which) -> {
                     // Aquí pones la navegación a tu actividad de creación
                     // Intent intent = new Intent(this, CrearTorneoActivity.class);
                     // startActivity(intent);
                     Toast.makeText(context, "Navegando a creación de Torneos...", Toast.LENGTH_SHORT).show();
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton("Cancelar", (d, which) -> {
+                    d.dismiss();
                 })
-                .show();
+
+                .create();
+        configurarYMostrar(dialog);
+
     }
     public void mostrarDialogoNoContentEquipos(String titulo, String mensaje, String accion) {
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
                 .setMessage(mensaje)
                 .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton(accion, (dialog, which) -> {
+                .setPositiveButton(accion, (d, which) -> {
                     // Aquí pones la navegación a tu actividad de creación
                     // Intent intent = new Intent(this, CrearTorneoActivity.class);
                     // startActivity(intent);
                     Toast.makeText(context, "Navegando a creación de Equipos...", Toast.LENGTH_SHORT).show();
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton("Cancelar", (d, which) -> {
+                    d.dismiss();
                 })
-                .show();
+                .create();
+        configurarYMostrar(dialog);
+
     }
 
     public void mostrarDialogoNoContentPartidos(String titulo, String mensaje, String accion) {
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
                 .setMessage(mensaje)
                 .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton(accion, (dialog, which) -> {
+                .setPositiveButton(accion, (d, which) -> {
                     // Aquí pones la navegación a tu actividad de creación
                     // Intent intent = new Intent(this, CrearTorneoActivity.class);
                     // startActivity(intent);
                     Toast.makeText(context, "Navegando a creación de Partidos...", Toast.LENGTH_SHORT).show();
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton("Cancelar", (d, which) -> {
+                    d.dismiss();
                 })
-                .show();
+                .create();
+        configurarYMostrar(dialog);
+
     }
 
     public void mostrarDialogoError(String error) {
@@ -73,49 +84,82 @@ public class DialogProgramarPartido {
             }
         }
 
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Destructive)
                 .setTitle("Error de Conexión")
                 .setMessage("No pudimos conectar con el servidor: " + error)
-                .setNegativeButton("Salir", (dialog, which) -> dialog.dismiss())
-                .show();
+                .setNegativeButton("Salir", (d, which) -> d.dismiss())
+                .create();
+        configurarYMostrar(dialog);
+
     }
 
-    public void mostrarDialogoInformacion(String titulo, String mensaje, ProgramarPartidosActivity activity) {
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+    public void mostrarDialogoSuccess(String titulo, String mensaje) {
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Info)
                 .setTitle(titulo)
                 .setMessage(mensaje)
                 .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton("Continuar", (dialog, which) -> {
+                .setPositiveButton("Continuar", (d, which) -> {
+                    d.dismiss();
+                    ((Activity) context).finish();
+                })
+                .create();
+        configurarYMostrar(dialog);
+
+    }
+
+    public void mostrarDialogoPartidoProgramado(String titulo, String mensaje, ProgramarPartidosActivity activity) {
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Info)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton("Continuar", (d, which) -> {
                     // Llamamos de nuevo al guardado pero con el flag en TRUE
                     activity.limpiarTablero();
                 })
-                .setNegativeButton("Salir", (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton("Salir", (d, which) -> {
+                    d.dismiss();
                     activity.finish();
                 })
-                .show();
+                .create();
+        configurarYMostrar(dialog);
+
+    }
+
+    public void mostrarDialogoInformacion(String titulo, String mensaje, ProgramarPartidosActivity activity) {
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Info)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton("Entiendo", (d, which) -> {
+                    // Llamamos de nuevo al guardado pero con el flag en TRUE
+                })
+                .create();
+        configurarYMostrar(dialog);
+
     }
 
     public void mostrarDialogoDuplicado(String titulo, String mensaje, ProgramarPartidosActivity activity) {
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
                 .setMessage(mensaje)
-                .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton("Sí, Programar", (dialog, which) -> {
-                    // Llamamos de nuevo al guardado pero con el flag en TRUE
+                .setCancelable(false)
+                .setPositiveButton("Sí, Programar", (d, which) -> {
                     activity.guardarPartido(true);
                 })
-                .setNegativeButton("No, revisar", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .show();
+                .setNegativeButton("No, revisar", (d, which) -> d.dismiss())
+                .create(); // Cambiamos .show() por .create()
+
+        // ESTA LÍNEA ES LA QUE HACE APARECER EL BORDE
+        configurarYMostrar(dialog);
+
+
     }
     public void mostrarDialogoCancelar(String titulo, String mensaje, String accion) {
-        new androidx.appcompat.app.AlertDialog.Builder(context)
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
                 .setMessage(mensaje)
                 .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton(accion, (dialog, which) -> {
+                .setPositiveButton(accion, (d, which) -> {
                     // Aquí pones la navegación a tu actividad de creación
                     // Intent intent = new Intent(context, CrearTorneoActivity.class);
                     // startActivity(intent);
@@ -123,9 +167,17 @@ public class DialogProgramarPartido {
                     ((Activity) context).finish();
                     ((ProgramarPartidosActivity) context).limpiarTablero();
                 })
-                .setNegativeButton("No, continuar", (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton("No, continuar", (d, which) -> {
+                    d.dismiss();
                 })
-                .show();
+                .create();
+
+        configurarYMostrar(dialog);
+
+
+    }
+
+    private void configurarYMostrar(AlertDialog dialog) {
+        dialog.show();
     }
 }

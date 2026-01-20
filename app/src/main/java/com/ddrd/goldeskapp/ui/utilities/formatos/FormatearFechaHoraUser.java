@@ -4,17 +4,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class FomatearFechaHora {
+public class FormatearFechaHoraUser {
 
-    public FomatearFechaHora() {
+    public FormatearFechaHoraUser() {
     }
 
-    public String formatearFecha(String fecha){
+    public String formatearFechaUser(String fecha){
 
         try {
             SimpleDateFormat sdfLectura = new SimpleDateFormat("EEEE, dd/MM/yyyy", new Locale("es", "ES"));
             SimpleDateFormat sdfEscritura = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            return sdfEscritura.format(sdfLectura.parse(fecha));
+            return sdfLectura.format(sdfEscritura.parse(fecha));
         } catch (ParseException e) {
             // Auditoría: Registrar que el formato de entrada fue inválido
             return null;
@@ -22,7 +22,7 @@ public class FomatearFechaHora {
 
     }
 
-    public String formatearHora(String hora){
+    public String formatearHoraUser(String hora){
 
         try {
             // Formateadores para leer lo que hay en el EditText (Español)
@@ -30,7 +30,7 @@ public class FomatearFechaHora {
             // Formateadores para enviar al Servidor (Estándar ISO)
             SimpleDateFormat hfEscritura = new SimpleDateFormat("HH:mm:ss", Locale.US);
             // Realizamos la conversión
-            return hfEscritura.format(hfLectura.parse(hora));
+            return hfLectura.format(hfEscritura.parse(hora));
         }catch (ParseException e){
             // Auditoría: Registrar que el formato de entrada fue inválido
             return null;

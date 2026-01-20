@@ -20,7 +20,7 @@ import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.model.login.LoginCodigoResponse;
 import com.ddrd.goldeskapp.data.model.login.LoginOrganizadorResponse;
 import com.ddrd.goldeskapp.data.repository.AuthRepository;
-import com.ddrd.goldeskapp.ui.utilities.ProgressBar;
+import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private AuthRepository authRepository;
     private MaterialButtonToggleGroup toggleRoleGroup;
     private TextView tvForgotPassword;
-    private ProgressBar progressBar;
+    private ProgressBarGoldesk progressBarGoldesk;
 
 
     @Override
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRoleDelegado=findViewById(R.id.btnRoleDelegado);
         btnRegistroInvitado = findViewById(R.id.btnRegistroInvitado);
         toggleRoleGroup = findViewById(R.id.toggleRoleGroup);
-        progressBar = new ProgressBar(this);
+        progressBarGoldesk = new ProgressBarGoldesk(this);
 
 
         // El repositorio necesita el contexto para inicializar TokenManager
@@ -90,11 +90,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         tvForgotPassword.setEnabled(false);
-        progressBar.mostrarCargando(true);
+        progressBarGoldesk.mostrarCargando(true);
         authRepository.recuperarContrasenaOrg(email, new AuthRepository.AuthCallback<Void>() {
             @Override
             public void onSuccess(Void response) {
-                progressBar.mostrarCargando(false);
+                progressBarGoldesk.mostrarCargando(false);
                 tvForgotPassword.setEnabled(true);
                 new AlertDialog.Builder(LoginActivity.this)
                         .setTitle("Correo Enviado")
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onError(String error) {
-                progressBar.mostrarCargando(false);
+                progressBarGoldesk.mostrarCargando(false);
                 tvForgotPassword.setEnabled(true);
                 Toast.makeText(LoginActivity.this, error, Toast.LENGTH_LONG).show();
             }
@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void ejecutarLogin(String codigo_o_Email) {
         // Deshabilitar botón para evitar múltiples peticiones (Auditoría)
-        progressBar.mostrarCargando(true);
+        progressBarGoldesk.mostrarCargando(true);
         btnLogin.setEnabled(false);
         btnLogin.setText("Validando...");
 
@@ -208,14 +208,15 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
     }
+
     private void resetLoginButton() {
-        progressBar.mostrarCargando(false);
+        progressBarGoldesk.mostrarCargando(false);
         btnLogin.setEnabled(true);
         btnLogin.setText("ENTRAR");
     }
 
     private void irAMain() {
-        progressBar.mostrarCargando(false);
+        progressBarGoldesk.mostrarCargando(false);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish(); // Destruye el Login para que no puedan volver atrás (Auditoría) [cite: 2025-12-28]

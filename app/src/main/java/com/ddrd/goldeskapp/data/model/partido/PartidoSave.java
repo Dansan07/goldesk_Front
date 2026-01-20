@@ -38,4 +38,36 @@ public class PartidoSave {
                 ", confirmarDuplicado=" + confirmarDuplicado +
                 '}';
     }
+
+    public Integer getIdTorneo() {
+        return idTorneo;
+    }
+
+    public Integer getIdEquipoLocal() {
+        return idEquipoLocal;
+    }
+
+    public Integer getIdEquipoVisitante() {
+        return idEquipoVisitante;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public String getCancha() {
+        return cancha;
+    }
+
+    public String getFase() {
+        return fase;
+    }
+
+    public boolean isConfirmarDuplicado() {
+        return confirmarDuplicado;
+    }
 }
