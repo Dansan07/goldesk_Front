@@ -43,6 +43,10 @@ public class AdapterJugadoresPlanilla extends RecyclerView.Adapter<AdapterJugado
         holder.textViewYellowCards.setText(String.valueOf(jugador.getCantAmarillas()));
         holder.textViewBlueCards.setText(String.valueOf(jugador.getCantAzules()));
         holder.textViewRedCards.setText(String.valueOf(jugador.getCantRojas()));
+        /*//configurar click
+        if (!jugador.getCantRojas().equals(0)){
+            holder.itemView.setEnabled(false);
+        }*/
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

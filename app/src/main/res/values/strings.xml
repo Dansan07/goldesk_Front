@@ -115,5 +115,6 @@
     <!--Barra lateral-->
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="navigation_drawer_close">Cerrar menú de navegación</string>
+    <string name="no_hay_registros">No hay registros aún</string>
 
 </resources>

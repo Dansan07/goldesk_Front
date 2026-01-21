@@ -125,7 +125,7 @@ public class DialogsResponse {
 
     }
 
-    public void mostrarDialogoInformacion(String titulo, String mensaje, ProgramarPartidosActivity activity) {
+    public void mostrarDialogoInformacion(String titulo, String mensaje) {
         AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Info)
                 .setTitle(titulo)
                 .setMessage(mensaje)

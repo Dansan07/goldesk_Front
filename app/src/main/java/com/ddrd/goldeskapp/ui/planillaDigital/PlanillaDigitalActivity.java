@@ -2,9 +2,11 @@ package com.ddrd.goldeskapp.ui.planillaDigital;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,19 +23,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.model.gol.GolCreate;
+import com.ddrd.goldeskapp.data.model.gol.GolResponse;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorPlanillaResponse;
 import com.ddrd.goldeskapp.data.model.planillaDigital.PlanillaDigitalResponse;
 import com.ddrd.goldeskapp.data.model.tarjeta.TarjetaCreate;
+import com.ddrd.goldeskapp.data.model.tarjeta.TarjetasResponse;
 import com.ddrd.goldeskapp.data.model.torneo.TorneoResponse;
 import com.ddrd.goldeskapp.data.repository.GolRepository;
 import com.ddrd.goldeskapp.data.repository.PartidoRepository;
 import com.ddrd.goldeskapp.data.repository.TarjetaRepository;
 import com.ddrd.goldeskapp.data.repository.TorneoRepository;
+import com.ddrd.goldeskapp.ui.goles.AdapterGolesParticipacion;
+import com.ddrd.goldeskapp.ui.tarjetas.AdapterTarjetasParticipacion;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
 import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraUser;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.List;
 import java.util.Objects;
 
 public class PlanillaDigitalActivity extends AppCompatActivity {
@@ -118,7 +125,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
 
 
     }
-
     public void obtenerDatosPartido(Integer idPartido){
         progressBarGoldesk.mostrarCargando(true);
         partidoRepository.abrirPlanillaDigital(idPartido, new PartidoRepository.PartidoBuscarCalback() {
@@ -136,7 +142,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
 
     }
-
     private void llenarPlanilla(PlanillaDigitalResponse planillaDigitalResponse){
         //información general del partido
         textViewMatchStatus.setText(planillaDigitalResponse.getEstado());
@@ -194,7 +199,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
 
     }
-
     private void registrarTarjeta(TarjetaCreate tarjetaCreate){
         progressBarGoldesk.mostrarCargando(true);
         tarjetaRepository.registrarTarjeta(tarjetaCreate, new TarjetaRepository.TarjetaCallback() {
@@ -204,6 +208,71 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                 dialogsResponse.mostrarDialogoSuccess(
                         "Tarjeta registrada",
                         "Tarjeta registrada correctamente");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+
+    private void listaTarjetas(Integer idParticipacion, String tipoTarjeta, RecyclerView recyclerView, TextView tvEmptyMessage){
+        if (tipoTarjeta.isEmpty()){
+            dialogsResponse.mostrarDialogoError("Error al listar tarjetas");
+            return;
+        }
+        progressBarGoldesk.mostrarCargando(true);
+        tarjetaRepository.buscarTarjetasPorJugador(idParticipacion,tipoTarjeta, new TarjetaRepository.ListaTarjetasCallback() {
+            @Override
+            public void onSuccess(List<TarjetasResponse> responses) {
+                progressBarGoldesk.mostrarCargando(false);
+                if (responses.isEmpty()){
+                    tvEmptyMessage.setVisibility(View.VISIBLE);
+                }else {
+                    tvEmptyMessage.setVisibility(View.GONE);
+                }
+                AdapterTarjetasParticipacion adapterTarjetasParticipacion = new AdapterTarjetasParticipacion(
+                        PlanillaDigitalActivity.this,
+                        responses);
+                recyclerView.setAdapter(adapterTarjetasParticipacion);
+            }
+            @Override
+            public void onNoContent() {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoInformacion(
+                        "Sin tarjetas",
+                        "Aún No hay tarjetas registradas");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+    private void listarGoles(Integer idParticipacion, RecyclerView recyclerView, TextView tvEmptyMessage){
+        progressBarGoldesk.mostrarCargando(true);
+        golRepository.listarGolesPorParticipacion(idParticipacion, new GolRepository.ListaGolesCallback() {
+            @Override
+            public void onSuccess(List<GolResponse> responses) {
+                progressBarGoldesk.mostrarCargando(false);
+                if (responses.isEmpty()){
+                    tvEmptyMessage.setVisibility(View.VISIBLE);
+                }else {
+                    tvEmptyMessage.setVisibility(View.GONE);
+                }
+                AdapterGolesParticipacion adapterGolesParticipacion = new AdapterGolesParticipacion(
+                        PlanillaDigitalActivity.this,
+                        responses);
+                recyclerView.setAdapter(adapterGolesParticipacion);
+            }
+            @Override
+            public void onNoContent() {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoInformacion(
+                        "Sin Goles",
+                        "Aún No hay goles registrados");
             }
             @Override
             public void onError(String mensaje) {
@@ -245,13 +314,24 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         btnSumarRoja.setOnClickListener(b->mostrarVentanaRegistrarTiempo(nombreJugador, golCreate, tarjetaCreate, btnSumarRoja));
 
         //configurar click textviews
+        tvGolesParticipante.setOnClickListener(
+                b->mostrarVentanaListaEventos(
+                        nombreJugador, tvGolesParticipante, golCreate.getIdParticipacion()));
+        tvAmarillasParticipante.setOnClickListener(
+                b->mostrarVentanaListaEventos(
+                        nombreJugador, tvAmarillasParticipante, golCreate.getIdParticipacion()));
+        tvAzulesParticipante.setOnClickListener(
+                b->mostrarVentanaListaEventos(
+                        nombreJugador, tvAzulesParticipante, golCreate.getIdParticipacion()));
+        tvRojasParticipante.setOnClickListener(
+                b->mostrarVentanaListaEventos(
+                        nombreJugador, tvRojasParticipante, golCreate.getIdParticipacion()));
 
         builder.setView(view);
         AlertDialog dialog = builder.create();
         btnCancelar.setOnClickListener(b->dialog.dismiss());
         dialog.show();
     }
-
     public void mostrarVentanaRegistrarTiempo(String nombreJugador, GolCreate golCreate, TarjetaCreate tarjetaCreate, ImageButton btn){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_registrar_tiempo, null);
@@ -340,6 +420,55 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
 
     }
 
+    public void mostrarVentanaListaEventos(String nombreJugador, TextView textView, Integer idParticipacion){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_estadisticas_lista, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+
+        //init Texviews
+        TextView tvEquipo = view.findViewById(R.id.tvEquipo);
+        TextView tvJugador = view.findViewById(R.id.tvJugador);
+        TextView tvTituloSeccion = view.findViewById(R.id.tvTituloSeccion);
+        TextView tvEmptyMessage = view.findViewById(R.id.tvEmptyMessage);
+
+        tvEquipo.setText(textViewTeam1Name.getText().toString());
+        tvJugador.setText(nombreJugador);
+        tvTituloSeccion.setText(textView.getText().toString());
+
+        //init RecyclerView
+        RecyclerView rvEstadisticas = view.findViewById(R.id.rvEstadisticas);
+        rvEstadisticas.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        if (textView.getId() == R.id.tvGolesParticipante){
+            listarGoles(idParticipacion, rvEstadisticas, tvEmptyMessage);
+        }else {
+            String tipoTarjeta="";
+            if (textView.getId() == R.id.tvAmarillasParticipante){
+                tipoTarjeta= "amarilla";
+            } else if (textView.getId() == R.id.tvAzulesParticipante) {
+                tipoTarjeta = "azul";
+            } else if (textView.getId() == R.id.tvRojasParticipante) {
+                tipoTarjeta = "roja";
+            }
+            listaTarjetas(idParticipacion, tipoTarjeta, rvEstadisticas, tvEmptyMessage);
+        }
+
+
+        //init Buttons
+        Button btnCerrar = view.findViewById(R.id.btnCerrar);
+
+
+        btnCerrar.setOnClickListener(b->dialog.dismiss());
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+    }
+
     private void buscarDatosTorneo(PlanillaDigitalResponse planilla){
         progressBarGoldesk.mostrarCargando(true);
         torneoRepository.obtenerTorneoPorId(planilla.getIdTorneo(), new TorneoRepository.TorneoBuscarCallback() {
@@ -357,7 +486,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             }
         });
     }
-
     private void configBotones(PlanillaDigitalResponse planillaDigitalResponse){
         if(planillaDigitalResponse.getEstado().equals("FINALIZADO")){
             textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(

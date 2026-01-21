@@ -171,9 +171,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
         if (partido == null ||partido.getFecha() == null || partido.getCancha() == null || partido.getHora() == null) {
             dialogsResponse.mostrarDialogoInformacion(
                     "Advertencia",
-                    "Por favor, completa toda la información correctamente",
-                    ProgramarPartidosActivity.this
-            );
+                    "Por favor, completa toda la información correctamente");
             return;
         }
         progressBarGoldesk.mostrarCargando(true);
