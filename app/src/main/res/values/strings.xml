@@ -116,5 +116,20 @@
     <string name="navigation_drawer_open">Abrir menú de navegación</string>
     <string name="navigation_drawer_close">Cerrar menú de navegación</string>
     <string name="no_hay_registros">No hay registros aún</string>
+    <string name="fase_eliminatoria">Partidos para Eliminatorias</string>
+    <string name="partidos_Totales">Partidos Totales</string>
+    <string name="progreso_fase">Progreso</string>
+    <string name="posicion_abrev">N°</string>
+    <string name="pj_abrev">PJ</string>
+    <string name="pg_abrev">PG</string>
+    <string name="pe_abrev">PE</string>
+    <string name="pp_abrev">PP</string>
+    <string name="pts_abrev">PTS</string>
+    <string name="gf_abrev">GF</string>
+    <string name="gc_abrev">GC</string>
+    <string name="df_abrev">DF</string>
+    <string name="clasificacion_directa">clasificacion directa</string>
+    <string name="zona_eliminacion">zona eliminacion</string>
+    <string name="leyenda">Leyenda</string>
 
 </resources>

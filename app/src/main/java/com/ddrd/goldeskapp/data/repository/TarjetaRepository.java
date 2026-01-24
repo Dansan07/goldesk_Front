@@ -39,6 +39,23 @@ public class TarjetaRepository {
 
     }
 
+    public void eliminarTarjeta(Integer idTarjeta, TarjetaCallback callback){
+        tarjetaApiService.eliminarTarjeta(idTarjeta).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    callback.onSuccess();
+                } else {
+                    callback.onError("Error al eliminar tarjeta");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onError("Error al eliminar tarjeta");
+            }
+        });
+    }
+
     public void buscarTarjetasPorJugador(Integer idParticipacion, String tipoTarjeta, ListaTarjetasCallback callback){
         tarjetaApiService.buscarTarjetasPorJugador(idParticipacion, tipoTarjeta).enqueue(new Callback<List<TarjetasResponse>>() {
             @Override

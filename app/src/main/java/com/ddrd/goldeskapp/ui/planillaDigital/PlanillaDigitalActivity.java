@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,6 +37,7 @@ import com.ddrd.goldeskapp.ui.tarjetas.AdapterTarjetasParticipacion;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
 import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraUser;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
@@ -62,6 +62,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
     private Button btnStartMatch, btnEndMatch;
     private RecyclerView recyclerViewTeam1Players, recyclerViewTeam2Players;
     private double valorAmarilla, valorAzul, valorRoja;
+    private Integer idPartido=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,12 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        idPartido = getIntent().getIntExtra("idPartido", 0);
+        obtenerDatosPartido(idPartido);
     }
 
     private void initComponents(){
@@ -118,12 +125,19 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
 
 
         //recibir intent
-        Integer idPartido = getIntent().getIntExtra("idPartido", 0);
-        obtenerDatosPartido(idPartido);
+        idPartido = getIntent().getIntExtra("idPartido", 0);
+        configClickListener(idPartido);
 
 
 
 
+    }
+    private void configClickListener(Integer idPartido){
+        btnStartMatch.setOnClickListener(b->iniciarPartido(idPartido));
+        btnEndMatch.setOnClickListener(b->dialogsResponse.dialogFinalizarPartido(
+                "Finalizar Partido",
+                "Si finalizas el partido ya no podrás Editar más su información",
+                idPartido));
     }
     public void obtenerDatosPartido(Integer idPartido){
         progressBarGoldesk.mostrarCargando(true);
@@ -164,7 +178,8 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             //jugadores equipo local
         AdapterJugadoresPlanilla adapterJugadoresLocal = new AdapterJugadoresPlanilla(
                 PlanillaDigitalActivity.this,
-                planillaDigitalResponse.getJugadoresLocal());
+                planillaDigitalResponse.getJugadoresLocal(),
+                planillaDigitalResponse.getEstado());
         recyclerViewTeam1Players.setAdapter(adapterJugadoresLocal);
 
         //información equipo visitante
@@ -177,8 +192,50 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             //jugadores equipo visitante
         AdapterJugadoresPlanilla adapterJugadoresVisitante = new AdapterJugadoresPlanilla(
                 PlanillaDigitalActivity.this,
-                planillaDigitalResponse.getJugadoresVisitante());
+                planillaDigitalResponse.getJugadoresVisitante(),
+                planillaDigitalResponse.getEstado());
         recyclerViewTeam2Players.setAdapter(adapterJugadoresVisitante);
+    }
+    private void iniciarPartido(Integer idPartido){
+        progressBarGoldesk.mostrarCargando(true);
+        partidoRepository.iniciarPartido(idPartido, new PartidoRepository.StatusPartidoCallback() {
+            @Override
+            public void onSuccess(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Partido iniciado",
+                        "Ahora puedes editar la información del partido." +
+                                "pulsa en cada jugador para editar sus goles o tarjetas");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+
+    }
+    public void finalizarPartido(Integer idPartido){
+        progressBarGoldesk.mostrarCargando(true);
+        partidoRepository.finalizarPartido(idPartido, new PartidoRepository.StatusPartidoCallback() {
+            @Override
+            public void onSuccess(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Partido finalizado",
+                        "El partido ha sido finalizado. " +
+                                "Ahora no podrá editar la información del partido."
+                );
+                onResume();
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
     }
 
     private void registrarGol(GolCreate golCreate){
@@ -187,6 +244,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
                 dialogsResponse.mostrarDialogoSuccess(
                         "Gol registrado",
                         "Gol registrado correctamente");
@@ -205,6 +263,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
                 dialogsResponse.mostrarDialogoSuccess(
                         "Tarjeta registrada",
                         "Tarjeta registrada correctamente");
@@ -215,6 +274,44 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                 dialogsResponse.mostrarDialogoError(mensaje);
             }
         });
+    }
+
+    public void eliminarGol(Integer idGol){
+        progressBarGoldesk.mostrarCargando(true);
+        golRepository.eliminarGol(idGol, new GolRepository.GolCallback() {
+            @Override
+            public void onSuccess() {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Gol eliminado",
+                        "Gol eliminado correctamente");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+    public void eliminarTarjeta(Integer idTarjeta){
+        progressBarGoldesk.mostrarCargando(true);
+        tarjetaRepository.eliminarTarjeta(idTarjeta, new TarjetaRepository.TarjetaCallback() {
+            @Override
+            public void onSuccess() {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Tarjeta eliminada",
+                        "Tarjeta eliminada correctamente");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+
     }
 
     private void listaTarjetas(Integer idParticipacion, String tipoTarjeta, RecyclerView recyclerView, TextView tvEmptyMessage){
@@ -378,6 +475,8 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             tarjetaCreate.setTipoTarjeta("ROJA");
             valorTarjeta = valorRoja;
         }
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
 
         //configurar botones
         double finalValorTarjeta = valorTarjeta;
@@ -403,11 +502,9 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                     tarjetaCreate.setValorTarjeta(finalValorTarjeta);
                     registrarTarjeta(tarjetaCreate);
                 }
+                dialog.dismiss();
             }
         });
-
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -419,7 +516,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         dialog.show();
 
     }
-
     public void mostrarVentanaListaEventos(String nombreJugador, TextView textView, Integer idParticipacion){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_estadisticas_lista, null);
@@ -468,6 +564,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void buscarDatosTorneo(PlanillaDigitalResponse planilla){
         progressBarGoldesk.mostrarCargando(true);

@@ -8,10 +8,13 @@ public class SpinnerTorneoResponse {
     private Integer idTorneo;
     @SerializedName("nombreTorneo")
     private String nombreTorneo;
+    @SerializedName("partidosInicial")
+    private Integer cantPartidos;
 
-    public SpinnerTorneoResponse(Integer idTorneo, String nombreTorneo) {
+    public SpinnerTorneoResponse(Integer idTorneo, String nombreTorneo, Integer cantPartidos) {
         this.idTorneo = idTorneo;
         this.nombreTorneo = nombreTorneo;
+        this.cantPartidos = cantPartidos;
     }
 
     @Override
@@ -25,5 +28,9 @@ public class SpinnerTorneoResponse {
 
     public Integer getIdTorneo() {
         return idTorneo;
+    }
+
+    public Integer getCantPartidos() {
+        return cantPartidos;
     }
 }

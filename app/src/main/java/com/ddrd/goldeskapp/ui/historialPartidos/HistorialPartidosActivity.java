@@ -59,7 +59,7 @@ public class HistorialPartidosActivity extends AppCompatActivity {
     private RecyclerView recyclerViewPartidos;
     private Calendario calendario;
     private Button btnApplyFilters;
-    private ImageButton btnClearFilters;
+    private ImageButton btnClearFilters, btnRefreshPartidos;
     private FloatingActionButton fabAddMatch;
 
 
@@ -78,6 +78,16 @@ public class HistorialPartidosActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mostrarSpinnerTorneos();
+    }
+
+    private void refreshPartidos(){
+        obtenerHistorialPartidos(obtenerDatosFiltro());
+    }
+
     private void initComponents(){
         formatearFechaHoraServer = new FormatearFechaHoraServer();
         formatearFechaHoraUser = new FormatearFechaHoraUser();
@@ -87,6 +97,7 @@ public class HistorialPartidosActivity extends AppCompatActivity {
         //buttons init
         btnApplyFilters = findViewById(R.id.btnApplyFilters);
         btnClearFilters = findViewById(R.id.btnClearFilters);
+        btnRefreshPartidos = findViewById(R.id.btnRefreshPartidos);
         fabAddMatch = findViewById(R.id.fabAddMatch);
         //repository init
         partidoRepository= new PartidoRepository(this);
@@ -107,7 +118,6 @@ public class HistorialPartidosActivity extends AppCompatActivity {
 
         //click listeners
         clickListener();
-        mostrarSpinnerTorneos();
 
     }
     private void clickListener(){
@@ -130,11 +140,10 @@ public class HistorialPartidosActivity extends AppCompatActivity {
                 obtenerHistorialPartidos(filtro);
             }
         });
-        btnClearFilters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                limpiarFiltros();
-            }
+        btnClearFilters.setOnClickListener(v -> {limpiarFiltros();});
+        btnRefreshPartidos.setOnClickListener(v -> {
+            v.animate().rotationBy(360).setDuration(1000).start();
+            refreshPartidos();
         });
         fabAddMatch.setOnClickListener(new View.OnClickListener() {
             @Override

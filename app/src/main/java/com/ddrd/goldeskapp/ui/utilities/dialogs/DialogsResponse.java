@@ -1,12 +1,16 @@
 package com.ddrd.goldeskapp.ui.utilities.dialogs;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.ddrd.goldeskapp.R;
+import com.ddrd.goldeskapp.ui.planillaDigital.PlanillaDigitalActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -55,7 +59,6 @@ public class DialogsResponse {
         configurarYMostrar(dialog);
 
     }
-
     public void mostrarDialogoNoContentPartidos(String titulo, String mensaje, String accion) {
         AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
@@ -63,9 +66,8 @@ public class DialogsResponse {
                 .setCancelable(false) // Obliga al usuario a elegir una opción
                 .setPositiveButton(accion, (d, which) -> {
                     // Aquí pones la navegación a tu actividad de creación
-                    // Intent intent = new Intent(this, CrearTorneoActivity.class);
-                    // startActivity(intent);
-                    Toast.makeText(context, "Navegando a creación de Partidos...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ProgramarPartidosActivity.class);
+                    context.startActivity(intent);
                 })
                 .setNegativeButton("Cancelar", (d, which) -> {
                     d.dismiss();
@@ -100,8 +102,27 @@ public class DialogsResponse {
                 .setCancelable(false) // Obliga al usuario a elegir una opción
                 .setPositiveButton("Continuar", (d, which) -> {
                     d.dismiss();
-                    ((Activity) context).finish();
+                    //((Activity) context).finish();
                 })
+                .create();
+        configurarYMostrar(dialog);
+
+    }
+
+    public void mostrarDialogEliminarEvento(String titulo, String mensaje, Integer idButton, Integer idEvento){
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Destructive)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton("Aceptar", (d, which) -> {
+                    if (idButton.equals(R.id.btnEliminarGoles)){
+                        ((PlanillaDigitalActivity) context).eliminarGol(idEvento);
+                    } else if (idButton.equals(R.id.btnEliminarTarjeta)) {
+                        ((PlanillaDigitalActivity) context).eliminarTarjeta(idEvento);
+                    }
+                    d.dismiss();
+                })
+                .setNegativeButton("Cancelar", (d, which) -> {d.dismiss();})
                 .create();
         configurarYMostrar(dialog);
 
@@ -135,7 +156,18 @@ public class DialogsResponse {
                 })
                 .create();
         configurarYMostrar(dialog);
-
+    }
+    public void dialogFinalizarPartido(String titulo, String mensaje, Integer idPartido) {
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Info)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton("Sí, Finalizar", (d, which) -> {
+                    ((PlanillaDigitalActivity) context).finalizarPartido(idPartido);
+                })
+                .setNegativeButton("Cancelar", (d, witch)->d.dismiss())
+                .create();
+        configurarYMostrar(dialog);
     }
 
     public void mostrarDialogoDuplicado(String titulo, String mensaje, ProgramarPartidosActivity activity) {

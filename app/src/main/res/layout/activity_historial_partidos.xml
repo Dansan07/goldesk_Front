@@ -224,11 +224,11 @@
                     android:textSize="14sp" />
 
                 <ImageButton
-                    android:id="@+id/btnSortBy"
+                    android:id="@+id/btnRefreshPartidos"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_sort"
+                    android:src="@drawable/ic_refresh"
                     android:contentDescription="@string/ordenar"
                     app:tint="@color/text_secondary" />
             </LinearLayout>

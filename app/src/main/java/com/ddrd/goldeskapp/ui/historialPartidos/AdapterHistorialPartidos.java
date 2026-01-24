@@ -2,6 +2,7 @@ package com.ddrd.goldeskapp.ui.historialPartidos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class AdapterHistorialPartidos extends RecyclerView.Adapter<AdapterHistor
     @NonNull
     @Override
     public AdapterHistorialPartidos.PartidoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_partido_historial, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_partido_historial, parent, false);
         return new PartidoViewHolder(view);
     }
 

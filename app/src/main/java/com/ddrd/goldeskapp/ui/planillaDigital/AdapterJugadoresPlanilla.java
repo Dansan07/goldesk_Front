@@ -1,6 +1,7 @@
 package com.ddrd.goldeskapp.ui.planillaDigital;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,17 +19,19 @@ import java.util.List;
 public class AdapterJugadoresPlanilla extends RecyclerView.Adapter<AdapterJugadoresPlanilla.JugadoresPlanillaViewHolder> {
     private final Context context;
     private final List<JugadorPlanillaResponse> jugadores;
+    private final String statusPartido;
 
 
-    public AdapterJugadoresPlanilla(Context context, List<JugadorPlanillaResponse> jugadores) {
+    public AdapterJugadoresPlanilla(Context context, List<JugadorPlanillaResponse> jugadores, String statusPartido) {
         this.context = context;
         this.jugadores = jugadores;
+        this.statusPartido = statusPartido;
     }
 
     @NonNull
     @Override
     public AdapterJugadoresPlanilla.JugadoresPlanillaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_jugadores_planilla, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_jugadores_planilla, parent, false);
         return new JugadoresPlanillaViewHolder(view);
     }
 
@@ -47,6 +50,9 @@ public class AdapterJugadoresPlanilla extends RecyclerView.Adapter<AdapterJugado
         if (!jugador.getCantRojas().equals(0)){
             holder.itemView.setEnabled(false);
         }*/
+
+        holder.itemView.setEnabled(statusPartido.equals("EN CURSO"));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

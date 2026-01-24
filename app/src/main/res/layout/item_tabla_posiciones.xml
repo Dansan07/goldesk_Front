@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="2dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="1dp"
+    android:id="@+id/cardViewItem">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="13"
+        android:gravity="center_vertical"
+        android:background="@color/white">
+
+        <!-- Posición -->
+        <TextView
+            android:id="@+id/tvPosicion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textColor="@color/soccer_green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <!-- Indicador de clasificación -->
+        <View
+            android:id="@+id/viewIndicadorClasificacion"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:background="@color/clasificacion_directa"/>
+
+        <!-- Equipo -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNombreEquipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Equipo"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tvpuntosGanados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+15"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <!-- Partidos Jugados -->
+        <TextView
+            android:id="@+id/tvPartidosJugados"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- Partidos Ganados -->
+        <TextView
+            android:id="@+id/tvPartidosGanados"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="7"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- Partidos Empatados -->
+        <TextView
+            android:id="@+id/tvPartidosEmpatados"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- Partidos Perdidos -->
+        <TextView
+            android:id="@+id/tvPartidosPerdidos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- goles a favor -->
+        <TextView
+            android:id="@+id/tvGolesAFavor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- goles en contra -->
+        <TextView
+            android:id="@+id/golesEnContra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- diferencia de goles -->
+        <TextView
+            android:id="@+id/diferenciaGoles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <!-- Puntos -->
+        <TextView
+            android:id="@+id/tvPuntos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="23"
+            android:textColor="@color/soccer_green"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -33,4 +33,10 @@ public interface PartidoApiService {
 
     @GET("api/partidos/{idPartido}/ver-planilla")
     Call<PlanillaDigitalResponse> obtenerPlanillaDigital(@Path("idPartido") Integer idPartido);
+
+    @POST("api/partidos/{idPartido}/iniciar")
+    Call<Void> iniciarPartido(@Path("idPartido")Integer idPartido);
+
+    @POST("api/partidos/{idPartido}/finalizar")
+    Call<Void> finalizarPartido(@Path("idPartido")Integer idPartido);
 }

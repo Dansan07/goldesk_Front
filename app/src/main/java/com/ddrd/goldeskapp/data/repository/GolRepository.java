@@ -38,6 +38,23 @@ public class GolRepository {
         });
     }
 
+    public void eliminarGol(Integer idGol, GolCallback callback){
+        golApiService.eliminarGol(idGol).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    callback.onSuccess();
+                } else {
+                    callback.onError("Error al eliminar gol");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
+    }
+
     public void listarGolesPorParticipacion(Integer idParticipacion, ListaGolesCallback callback){
         golApiService.buscarGolesPorJugador(idParticipacion).enqueue(new Callback<List<GolResponse>>() {
             @Override

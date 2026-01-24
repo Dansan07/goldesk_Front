@@ -82,6 +82,39 @@ public class PartidoRepository {
         });
     }
 
+    public void iniciarPartido(Integer idPartido, StatusPartidoCallback partidoIniciadoCallback){
+        partidoApiService.iniciarPartido(idPartido).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    partidoIniciadoCallback.onSuccess("Partido iniciado correctamente. Las participaciones han sido generadas.");
+                }else {
+                    partidoIniciadoCallback.onError("Error al iniciar partido: " + response.errorBody());
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                partidoIniciadoCallback.onError(t.getMessage());
+            }
+        });
+    }
+    public void finalizarPartido(Integer idpartido, StatusPartidoCallback statusPartidoCallback){
+        partidoApiService.finalizarPartido(idpartido).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    statusPartidoCallback.onSuccess("Partido finalizado correctamente.");
+                }else {
+                    statusPartidoCallback.onError("Error al finalizar partido");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                statusPartidoCallback.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface PartidoGuardarCalback {
         void onSuccess(PartidoResponseDuplicate response);
         void onError(String mensaje);
@@ -93,6 +126,10 @@ public class PartidoRepository {
     }
     public interface PartidoBuscarCalback {
         void onSuccess(PlanillaDigitalResponse response);
+        void onError(String mensaje);
+    }
+    public interface StatusPartidoCallback {
+        void onSuccess(String mensaje);
         void onError(String mensaje);
     }
 }
