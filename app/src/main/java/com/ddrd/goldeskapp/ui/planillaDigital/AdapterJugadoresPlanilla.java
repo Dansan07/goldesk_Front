@@ -4,9 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ddrd.goldeskapp.R;
@@ -52,10 +56,17 @@ public class AdapterJugadoresPlanilla extends RecyclerView.Adapter<AdapterJugado
         }*/
 
         holder.itemView.setEnabled(statusPartido.equals("EN CURSO"));
+        holder.textViewPlayerNumber.setEnabled(statusPartido.equals("EN CURSO"));
+
+        holder.textViewPlayerNumber.setOnClickListener(v -> {
+            mostrarVentadaDorsalJugador(jugador);
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RecyclerView recyclerView= (RecyclerView) holder.itemView.getParent();
+                Integer idRecicler = recyclerView.getId();
                 ((PlanillaDigitalActivity)context).mostrarVentadaInsertEvent(
                         new GolCreate(jugador.getIdReferencia(),
                                 null,
@@ -64,7 +75,8 @@ public class AdapterJugadoresPlanilla extends RecyclerView.Adapter<AdapterJugado
                                 null,null,null,
                                 null, null),
                         String.valueOf(jugador.getDorsal()),
-                        jugador.getNombreJugador()
+                        jugador.getNombreJugador(),
+                        idRecicler
                 );
             }
         });
@@ -73,6 +85,37 @@ public class AdapterJugadoresPlanilla extends RecyclerView.Adapter<AdapterJugado
     @Override
     public int getItemCount() {
         return jugadores.size();
+    }
+
+    private void mostrarVentadaDorsalJugador(JugadorPlanillaResponse jugador){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_dorsal_jugador, null);
+
+        //init elements
+        TextView tvNombreJugador = view.findViewById(R.id.tvNombreJugador);
+        NumberPicker numberPickerDorsal = view.findViewById(R.id.numberPickerDorsal);
+        Button btnCancelar = view.findViewById(R.id.btnCancelar);
+        Button btnAplicar = view.findViewById(R.id.btnAplicar);
+
+        //config numero Dorsal
+        numberPickerDorsal.setMinValue(0);
+        numberPickerDorsal.setMaxValue(100);
+        numberPickerDorsal.setValue(10);
+
+        //config nombre jugador
+        tvNombreJugador.setText(jugador.getNombreJugador());
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        btnCancelar.setOnClickListener(v -> {dialog.dismiss();});
+        btnAplicar.setOnClickListener(v -> {
+            numberPickerDorsal.clearFocus();
+            String numberjugador = String.valueOf(numberPickerDorsal.getValue());
+            jugador.setDorsal(numberjugador);
+            ((PlanillaDigitalActivity)context).actualizarDorsal(jugador);
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
     public static class JugadoresPlanillaViewHolder extends RecyclerView.ViewHolder {

@@ -9,6 +9,7 @@ public class PlanillaDigitalResponse {
     private Integer idPartido;
     private Integer idTorneo;
     private String nombreTorneo;
+    private Double ArbitrajeTotal;
     private String fechaPartido;
     private String horaPartido;
     private String nombreCancha;
@@ -23,6 +24,7 @@ public class PlanillaDigitalResponse {
     private Integer idEquipoLocal;
     private String nombreEquipoLocal;
     private List<JugadorPlanillaResponse> jugadoresLocal;
+    private Integer idPagoArbLocal;
     private Double pagoArbitrajeLocal;
     private Boolean arbPagadoLocal;
 
@@ -30,35 +32,11 @@ public class PlanillaDigitalResponse {
     private Integer idEquipoVisitante;
     private String nombreEquipoVisitante;
     private List<JugadorPlanillaResponse> jugadoresVisitante;
+    private Integer idPagoArbVisitante;
     private Double pagoArbitrajeVisitante;
     private Boolean arbPagadoVisitante;
 
     public PlanillaDigitalResponse() {
-    }
-
-    public PlanillaDigitalResponse(Integer idPartido, Integer idTorneo, String nombreTorneo, String fechaPartido, String horaPartido, String nombreCancha, Integer golesLocal, Integer golesVisitante, Integer penalesLocal, Integer penalesVisitante, String faseTorneo, String estado, Integer idEquipoLocal, String nombreEquipoLocal, List<JugadorPlanillaResponse> jugadoresLocal, Double pagoArbitrajeLocal, Boolean arbPagadoLocal, Integer idEquipoVisitante, String nombreEquipoVisitante, List<JugadorPlanillaResponse> jugadoresVisitante, Double pagoArbitrajeVisitante, Boolean arbPagadoVisitante) {
-        this.idPartido = idPartido;
-        this.idTorneo = idTorneo;
-        this.nombreTorneo = nombreTorneo;
-        this.fechaPartido = fechaPartido;
-        this.horaPartido = horaPartido;
-        this.nombreCancha = nombreCancha;
-        this.golesLocal = golesLocal;
-        this.golesVisitante = golesVisitante;
-        this.penalesLocal = penalesLocal;
-        this.penalesVisitante = penalesVisitante;
-        this.faseTorneo = faseTorneo;
-        this.estado = estado;
-        this.idEquipoLocal = idEquipoLocal;
-        this.nombreEquipoLocal = nombreEquipoLocal;
-        this.jugadoresLocal = jugadoresLocal;
-        this.pagoArbitrajeLocal = pagoArbitrajeLocal;
-        this.arbPagadoLocal = arbPagadoLocal;
-        this.idEquipoVisitante = idEquipoVisitante;
-        this.nombreEquipoVisitante = nombreEquipoVisitante;
-        this.jugadoresVisitante = jugadoresVisitante;
-        this.pagoArbitrajeVisitante = pagoArbitrajeVisitante;
-        this.arbPagadoVisitante = arbPagadoVisitante;
     }
 
     public Integer getIdPartido() {
@@ -71,6 +49,10 @@ public class PlanillaDigitalResponse {
 
     public String getNombreTorneo() {
         return nombreTorneo;
+    }
+
+    public Double getArbitrajeTotal() {
+        return ArbitrajeTotal;
     }
 
     public String getFechaPartido() {
@@ -147,5 +129,13 @@ public class PlanillaDigitalResponse {
 
     public Boolean getArbPagadoVisitante() {
         return arbPagadoVisitante;
+    }
+
+    public Integer getIdPagoArbLocal() {
+        return idPagoArbLocal;
+    }
+
+    public Integer getIdPagoArbVisitante() {
+        return idPagoArbVisitante;
     }
 }

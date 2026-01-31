@@ -19,6 +19,7 @@ import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.api.AuthApiService;
 import com.ddrd.goldeskapp.data.api.TablaPosicionesApiService;
 import com.ddrd.goldeskapp.ui.TablaPosiciones.TablaPosicionesActivity;
+import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
 import com.ddrd.goldeskapp.ui.historialPartidos.HistorialPartidosActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
 import com.ddrd.goldeskapp.util.TokenManager;
@@ -105,6 +106,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TablaPosicionesActivity.class);
+                startActivity(intent);
+            }
+        });
+        cardEquipos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EquiposActivity.class);
                 startActivity(intent);
             }
         });

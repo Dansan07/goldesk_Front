@@ -5,7 +5,7 @@
     <color name="red">#DC1515</color>
     <color name="soccer_green">#2E7D32</color>
     <color name="divider_color">#BDBDBD</color>
-    <color name="text_secondary">#424242</color>
+    <color name="text_secondary">#757575</color>
     <color name="dorado_trofeo">#FFD700</color>
     <color name="plata_trofeo">#C0C0C0</color>
     <color name="bronce_trofeo">#CD7F32</color>
@@ -71,7 +71,7 @@
     <color name="dialog_info_blue">#3b82f6</color>
     <color name="dialog_warning_yellow">#f59e0b</color>
     <color name="dialog_success_green">#10b981</color>
-    <color name="yellowCard">#E0CA1B</color>
+    <color name="yellowCard">#FFDE00</color>
     <color name="blueCard">#1734D5</color>
     <color name="redCard">#E91E1E</color>
 

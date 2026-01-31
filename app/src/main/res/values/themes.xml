@@ -17,6 +17,22 @@
 
     <!-- styles.xml -->
 
+    <!-- Agrega esto a tu archivo res/values/styles.xml -->
+
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/soccer_green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="colorControlNormal">@color/soccer_green</item>
+    </style>
+
+    <!-- Si quieres personalizar más el NumberPicker, también puedes crear este estilo -->
+    <style name="NumberPickerTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/soccer_green</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Tema principal del diálogo -->
     <style name="CustomDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <!-- Fondo del diálogo -->

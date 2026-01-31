@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.ddrd.goldeskapp.R;
+import com.ddrd.goldeskapp.data.model.jugador.JugadorResponse;
+import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
 import com.ddrd.goldeskapp.ui.planillaDigital.PlanillaDigitalActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -76,6 +78,41 @@ public class DialogsResponse {
         configurarYMostrar(dialog);
 
     }
+    public void mostrarDialogoNoContentJugadores(String titulo, String mensaje, String accion) {
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton(accion, (d, which) -> {
+                    // Aquí pones la navegación a tu actividad de creación
+                    ((EquiposActivity) context).ventanaIncripcionJugador();
+                })
+                .setNegativeButton("Cancelar", (d, which) -> {
+                    d.dismiss();
+                })
+                .create();
+        configurarYMostrar(dialog);
+
+    }
+    public void mostrarDialogoIncribirJugadores(String titulo, String mensaje, String accion, JugadorResponse responses) {
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton(accion, (d, which) -> {
+                    // Aquí pones la navegación a tu actividad de creación
+                    if (accion.equals("Inscribir")) {
+                        ((EquiposActivity) context).llenarDatosJugador(responses);
+                    }
+                    ((EquiposActivity) context).animarDialogInscripcion();
+                })
+                .setNegativeButton("Cancelar", (d, which) -> {
+                    d.dismiss();
+                })
+                .create();
+        configurarYMostrar(dialog);
+
+    }
 
     public void mostrarDialogoError(String error) {
         // Verificación de seguridad profesional
@@ -97,6 +134,18 @@ public class DialogsResponse {
 
     public void mostrarDialogoSuccess(String titulo, String mensaje) {
         AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Info)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton("Continuar", (d, which) -> {
+                    d.dismiss();
+                    //((Activity) context).finish();
+                })
+                .create();
+        configurarYMostrar(dialog);
+    }
+    public void mostrarDialogoWarning(String titulo, String mensaje) {
+        AlertDialog dialog=new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
                 .setTitle(titulo)
                 .setMessage(mensaje)
                 .setCancelable(false) // Obliga al usuario a elegir una opción

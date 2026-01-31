@@ -123,7 +123,7 @@
                     app:startIconTint="@color/soccer_green"
                     app:boxStrokeColor="@color/soccer_green"
                     app:hintTextColor="@color/soccer_green"
-                    >
+                    android:hint="@string/email_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etAccessCode"

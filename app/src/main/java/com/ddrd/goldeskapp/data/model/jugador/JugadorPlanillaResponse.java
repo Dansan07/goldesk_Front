@@ -39,6 +39,11 @@ public class JugadorPlanillaResponse {
         return dorsal;
     }
 
+    public void setDorsal(String dorsal) {
+        this.dorsal = dorsal;
+    }
+
+
     public Integer getCantGoles() {
         return cantGoles;
     }

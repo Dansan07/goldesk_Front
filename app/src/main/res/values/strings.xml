@@ -132,4 +132,41 @@
     <string name="zona_eliminacion">zona eliminacion</string>
     <string name="leyenda">Leyenda</string>
 
+    <!-- Strings para Dialog Pago Arbitraje -->
+    <string name="registrar_pago">Registrar Pago</string>
+    <string name="monto_pago">Monto a Pagar</string>
+    <string name="hint_monto">Ingrese el monto</string>
+    <string name="info_pago_parcial">Puede realizar pagos parciales o abonos</string>
+    <string name="observaciones">Observacion sobre el pago (opcional)</string>
+
+    <!-- Strings para Dialog Número Jugador -->
+    <string name="asignar_numero">Asignar Número</string>
+    <string name="seleccione_numero_camiseta">Seleccione el número de camiseta</string>
+    <string name="jugador">Jugador</string>
+    <string name="numero_camiseta">Número de Camiseta</string>
+    <string name="rango_numeros">Del 0 al 100</string>
+    <string name="btn_aplicar">Aplicar</string>
+
+
+    <!-- Gestión de Equipos -->
+    <string name="gestion_equipos">Gestión de Equipos</string>
+    <string name="gestion_equipos_aux">Administra equipos y jugadores de tus torneos</string>
+    <string name="seleccionar_torneo">Seleccionar Torneo</string>
+    <string name="datos_equipo">Datos del Equipo</string>
+    <string name="nombre_equipo">Nombre del Equipo</string>
+    <string name="hint_nombre_equipo">Actualiza el nombre del equipo</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="Inscribir_a_mi_Equipo">Inscribir</string>
+    <string name="jugadores_inscritos">Jugadores Inscritos</string>
+    <string name="no_jugadores">No hay jugadores inscritos en este equipo</string>
+    <string name="selecciona_equipo">Selecciona o busca un equipo</string>
+    <string name="busca_crea_equipo">Busca un equipo existente o crea uno nuevo</string>
+    <string name="nuevo_equipo">Nuevo Equipo</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="buscar">Buscar</string>
+    <string name="descripcion_traspaso">Escribe aquí una breve descripción de la razón de esta solicitud.
+        \nLuego se descargará un formulario que deberás firmar y presentar ante el organizador."</string>
+
+
 </resources>

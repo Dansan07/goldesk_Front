@@ -115,6 +115,23 @@ public class PartidoRepository {
         });
     }
 
+    public void actualizarDorsal(Integer idParticipacion, String dorsal, PartidoCallback partidoCallback){
+        partidoApiService.actualizarDorsal(idParticipacion, dorsal).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    partidoCallback.onSuccess("Dorsal actualizado correctamente.");
+                }else {
+                    partidoCallback.onError("Error al actualizar dorsal");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                partidoCallback.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface PartidoGuardarCalback {
         void onSuccess(PartidoResponseDuplicate response);
         void onError(String mensaje);
@@ -129,6 +146,11 @@ public class PartidoRepository {
         void onError(String mensaje);
     }
     public interface StatusPartidoCallback {
+        void onSuccess(String mensaje);
+        void onError(String mensaje);
+    }
+
+    public interface PartidoCallback {
         void onSuccess(String mensaje);
         void onError(String mensaje);
     }

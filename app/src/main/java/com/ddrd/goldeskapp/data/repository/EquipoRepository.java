@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ddrd.goldeskapp.data.api.ApiClient;
 import com.ddrd.goldeskapp.data.api.EquipoApiService;
+import com.ddrd.goldeskapp.data.model.equipo.ActualizarNombreEquipo;
 import com.ddrd.goldeskapp.data.model.equipo.SpinnerEquipoResponse;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class EquipoRepository {
         this.equipoApiService = ApiClient.getClient(context).create(EquipoApiService.class);
     }
 
-    public void obtenerEquiposSpinner( Integer idTorneo, EquipoCallback callback) {
+    public void obtenerEquiposSpinner(Integer idTorneo, EquipoCallback callback) {
         equipoApiService.obtenerEquiposDelSpinner(idTorneo).enqueue(new Callback<List<SpinnerEquipoResponse>>() {
             @Override
             public void onResponse(Call<List<SpinnerEquipoResponse>> call, Response<List<SpinnerEquipoResponse>> response) {
@@ -38,11 +39,32 @@ public class EquipoRepository {
             }
         });
     }
+    public void actualizarNombreEquipo(ActualizarNombreEquipo actualizarNombreEquipo, ResponseSuccesCallback callback){
+        equipoApiService.actualizarNombreEquipo(actualizarNombreEquipo).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()){
+                    callback.onSuccess();
+                }else{
+                    callback.onError("Error al actualizar el nombre del equipo");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
+    }
 
     // Interfaz para comunicar los resultados a la UI
     public interface EquipoCallback {
         void onSuccess(List<SpinnerEquipoResponse> equipos);
         void onNoContent();
+        void onError(String mensaje);
+    }
+
+    public interface ResponseSuccesCallback{
+        void onSuccess();
         void onError(String mensaje);
     }
 }

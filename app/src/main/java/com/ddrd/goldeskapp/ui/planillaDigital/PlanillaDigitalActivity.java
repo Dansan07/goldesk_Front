@@ -1,11 +1,14 @@
 package com.ddrd.goldeskapp.ui.planillaDigital;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,10 +27,13 @@ import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.model.gol.GolCreate;
 import com.ddrd.goldeskapp.data.model.gol.GolResponse;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorPlanillaResponse;
+import com.ddrd.goldeskapp.data.model.pagosArbitraje.PagoArbitrajeCreate;
+import com.ddrd.goldeskapp.data.model.pagosArbitraje.PagoArbitrajeUpdate;
 import com.ddrd.goldeskapp.data.model.planillaDigital.PlanillaDigitalResponse;
 import com.ddrd.goldeskapp.data.model.tarjeta.TarjetaCreate;
 import com.ddrd.goldeskapp.data.model.tarjeta.TarjetasResponse;
 import com.ddrd.goldeskapp.data.model.torneo.TorneoResponse;
+import com.ddrd.goldeskapp.data.repository.ArbitrajeRepository;
 import com.ddrd.goldeskapp.data.repository.GolRepository;
 import com.ddrd.goldeskapp.data.repository.PartidoRepository;
 import com.ddrd.goldeskapp.data.repository.TarjetaRepository;
@@ -37,9 +43,9 @@ import com.ddrd.goldeskapp.ui.tarjetas.AdapterTarjetasParticipacion;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
 import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraUser;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,6 +58,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
     private PartidoRepository partidoRepository;
     private GolRepository golRepository;
     private TarjetaRepository tarjetaRepository;
+    private ArbitrajeRepository arbitrajeRepository;
     private ProgressBarGoldesk progressBarGoldesk;
     private DialogsResponse dialogsResponse;
     private TextView textViewMatchStatus, textViewChampionship, textViewMatchDate, textViewStadium,
@@ -61,8 +68,14 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
     private SwitchCompat switchTeam1Payment, switchTeam2Payment;
     private Button btnStartMatch, btnEndMatch;
     private RecyclerView recyclerViewTeam1Players, recyclerViewTeam2Players;
+    private LinearLayout layoutArbitrajeTeam1, layoutArbitrajeTeam2;
     private double valorAmarilla, valorAzul, valorRoja;
     private Integer idPartido=0;
+    //variables dialog
+    private RecyclerView rvEstadisticas;
+    private Integer idParticipacion;
+    private TextView tvEmptyMessage;
+    private String tipoTarjeta="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +102,9 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         progressBarGoldesk = new ProgressBarGoldesk(this);
         dialogsResponse = new DialogsResponse(this);
         formatearFechaHoraUser = new FormatearFechaHoraUser();
+        //init LinearLayouts
+        layoutArbitrajeTeam1 = findViewById(R.id.layoutArbitrajeTeam1);
+        layoutArbitrajeTeam2 = findViewById(R.id.layoutArbitrajeTeam2);
         //data object init
         planillaDigitalResponse = new PlanillaDigitalResponse();
         jugadorPlanillaResponse = new JugadorPlanillaResponse();
@@ -97,6 +113,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         partidoRepository = new PartidoRepository(PlanillaDigitalActivity.this);
         golRepository = new GolRepository(PlanillaDigitalActivity.this);
         tarjetaRepository = new TarjetaRepository(PlanillaDigitalActivity.this);
+        arbitrajeRepository = new ArbitrajeRepository(PlanillaDigitalActivity.this);
         //textviews init
         textViewMatchStatus = findViewById(R.id.textViewMatchStatus);
         textViewChampionship = findViewById(R.id.textViewChampionship);
@@ -138,6 +155,51 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                 "Finalizar Partido",
                 "Si finalizas el partido ya no podrás Editar más su información",
                 idPartido));
+        switchTeam1Payment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ColorStateList colorStateList;
+                String statusPago;
+                if (isChecked){
+                    colorStateList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                    PlanillaDigitalActivity.this,R.color.soccer_green));
+                    statusPago = "Pagado";
+                }else {
+                    colorStateList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                    PlanillaDigitalActivity.this,R.color.button_ripple_destructive)
+                    );
+                    statusPago = "Pendiente";
+                }
+                switchTeam1Payment.setTrackTintList(colorStateList);
+                switchTeam1Payment.setText(statusPago);
+            }
+        });
+        switchTeam2Payment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ColorStateList colorStateList;
+                String statusPago;
+                if (isChecked){
+                    colorStateList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                    PlanillaDigitalActivity.this,R.color.soccer_green)
+                    );
+                    statusPago = "Pagado";
+                }else {
+                    colorStateList = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                    PlanillaDigitalActivity.this,R.color.button_ripple_destructive)
+                    );
+                    statusPago = "Pendiente";
+                }
+                switchTeam2Payment.setTrackTintList(colorStateList);
+                switchTeam2Payment.setText(statusPago);
+            }
+        });
+        layoutArbitrajeTeam1.setOnClickListener(v -> {mostrarVentanaPagosArbitraje(planillaDigitalResponse, R.id.layoutArbitrajeTeam1);});
+        layoutArbitrajeTeam2.setOnClickListener(v -> {mostrarVentanaPagosArbitraje(planillaDigitalResponse, R.id.layoutArbitrajeTeam2);});
     }
     public void obtenerDatosPartido(Integer idPartido){
         progressBarGoldesk.mostrarCargando(true);
@@ -156,8 +218,84 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
 
     }
+    private void buscarDatosTorneo(PlanillaDigitalResponse planilla){
+        progressBarGoldesk.mostrarCargando(true);
+        torneoRepository.obtenerTorneoPorId(planilla.getIdTorneo(), new TorneoRepository.TorneoBuscarCallback() {
+            @Override
+            public void onSuccess(TorneoResponse response) {
+                progressBarGoldesk.mostrarCargando(false);
+                valorAmarilla = response.getValorAmarilla();
+                valorAzul = response.getValorAzul();
+                valorRoja = response.getValorRoja();
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+    public void actualizarDorsal(JugadorPlanillaResponse jugador){
+        progressBarGoldesk.mostrarCargando(true);
+        partidoRepository.actualizarDorsal(jugador.getIdReferencia(), jugador.getDorsal(), new PartidoRepository.PartidoCallback() {
+            @Override
+            public void onSuccess(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Dorsal actualizado",
+                        "Dorsal actualizado correctamente");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+
+    private void configBotones(PlanillaDigitalResponse planillaDigitalResponse){
+        if(planillaDigitalResponse.getEstado().equals("FINALIZADO")){
+            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
+                    PlanillaDigitalActivity.this,R.color.partido_finalizado
+            ));
+            btnStartMatch.setEnabled(false);
+            btnEndMatch.setEnabled(false);
+            //ocultar boton iniciar y finalizar partido
+            btnStartMatch.setVisibility(View.GONE);
+            btnEndMatch.setVisibility(View.GONE);
+            //deshabilitar campos de pago arbitraje y jugadores
+            layoutArbitrajeTeam1.setEnabled(false);
+            layoutArbitrajeTeam2.setEnabled(false);
+        } else if (planillaDigitalResponse.getEstado().equals("EN CURSO")) {
+            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
+                    PlanillaDigitalActivity.this,R.color.partido_en_curso
+            ));
+            btnStartMatch.setEnabled(false);
+            btnEndMatch.setEnabled(true);
+            //ocultar boton iniciar partido
+            btnStartMatch.setVisibility(View.GONE);
+            btnEndMatch.setVisibility(View.VISIBLE);
+            //deshabilitar campos de pago arbitraje y jugadores
+            layoutArbitrajeTeam1.setEnabled(true);
+            layoutArbitrajeTeam2.setEnabled(true);
+        } else if (planillaDigitalResponse.getEstado().equals("PROGRAMADO")) {
+            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
+                    PlanillaDigitalActivity.this,R.color.partido_programado
+            ));
+            btnStartMatch.setEnabled(true);
+            btnEndMatch.setEnabled(false);
+            //mostrar boton finalizar partido
+            btnStartMatch.setVisibility(View.VISIBLE);
+            btnEndMatch.setVisibility(View.GONE);
+            //habilitar campos de pago arbitraje y jugadores
+            layoutArbitrajeTeam1.setEnabled(true);
+            layoutArbitrajeTeam2.setEnabled(true);
+        }
+    }
     private void llenarPlanilla(PlanillaDigitalResponse planillaDigitalResponse){
         //información general del partido
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
         textViewMatchStatus.setText(planillaDigitalResponse.getEstado());
         String fecha = formatearFechaHoraUser.formatearFechaUser(planillaDigitalResponse.getFechaPartido());
         String hora = formatearFechaHoraUser.formatearHoraUser(planillaDigitalResponse.getHoraPartido());
@@ -165,30 +303,40 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         textViewChampionship.setText(planillaDigitalResponse.getNombreTorneo());
         textViewMatchDate.setText(fechaHora);
         textViewStadium.setText(planillaDigitalResponse.getNombreCancha());
+
         //estado del partido
         configBotones(planillaDigitalResponse);
 
         //información equipo local
         textViewTeam1Score.setText(String.valueOf(planillaDigitalResponse.getGolesLocal()));
         textViewTeam1Name.setText(planillaDigitalResponse.getNombreEquipoLocal());
-        textViewTeam1pagoArbitraje.setText(String.valueOf(planillaDigitalResponse.getPagoArbitrajeLocal()));
+        textViewTeam1pagoArbitraje.setText(decimalFormat.format(planillaDigitalResponse.getPagoArbitrajeLocal()));
             //estado pago arbitraje equipo local
         switchTeam1Payment.setChecked(planillaDigitalResponse.getArbPagadoLocal());
-
-            //jugadores equipo local
+        if (switchTeam1Payment.isChecked()) {
+            switchTeam1Payment.setText(R.string.pagado);
+        } else {
+            switchTeam1Payment.setText(R.string.pendiente);
+        }
+        //jugadores equipo local
         AdapterJugadoresPlanilla adapterJugadoresLocal = new AdapterJugadoresPlanilla(
                 PlanillaDigitalActivity.this,
                 planillaDigitalResponse.getJugadoresLocal(),
                 planillaDigitalResponse.getEstado());
         recyclerViewTeam1Players.setAdapter(adapterJugadoresLocal);
 
+
         //información equipo visitante
         textViewTeam2Score.setText(String.valueOf(planillaDigitalResponse.getGolesVisitante()));
         textViewTeam2Name.setText(planillaDigitalResponse.getNombreEquipoVisitante());
-        textViewTeam2pagoArbitraje.setText(String.valueOf(planillaDigitalResponse.getPagoArbitrajeVisitante()));
+        textViewTeam2pagoArbitraje.setText(decimalFormat.format(planillaDigitalResponse.getPagoArbitrajeVisitante()));
             //estado pago arbitraje equipo visitante
         switchTeam2Payment.setChecked(planillaDigitalResponse.getArbPagadoVisitante());
-
+        if (switchTeam2Payment.isChecked()){
+            switchTeam2Payment.setText(R.string.pagado);
+        }else {
+            switchTeam2Payment.setText(R.string.pendiente);
+        }
             //jugadores equipo visitante
         AdapterJugadoresPlanilla adapterJugadoresVisitante = new AdapterJugadoresPlanilla(
                 PlanillaDigitalActivity.this,
@@ -196,6 +344,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                 planillaDigitalResponse.getEstado());
         recyclerViewTeam2Players.setAdapter(adapterJugadoresVisitante);
     }
+
     private void iniciarPartido(Integer idPartido){
         progressBarGoldesk.mostrarCargando(true);
         partidoRepository.iniciarPartido(idPartido, new PartidoRepository.StatusPartidoCallback() {
@@ -276,6 +425,43 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
     }
 
+    private void registrarArbitraje(PagoArbitrajeCreate pagoArbitrajeCreate){
+        progressBarGoldesk.mostrarCargando(true);
+        arbitrajeRepository.registrarPagoArbitraje(pagoArbitrajeCreate, new ArbitrajeRepository.ArbitrajeCallback() {
+            @Override
+            public void onSuccess() {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Arbitraje registrado",
+                        "Arbitraje registrado correctamente");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+    private void actualizarPagoArbitraje(PagoArbitrajeUpdate pagoArbitrajeUpdate){
+        progressBarGoldesk.mostrarCargando(true);
+        arbitrajeRepository.actualizarPagoArbitraje(pagoArbitrajeUpdate, new ArbitrajeRepository.ArbitrajeCallback() {
+            @Override
+            public void onSuccess() {
+                progressBarGoldesk.mostrarCargando(false);
+                obtenerDatosPartido(idPartido);
+                dialogsResponse.mostrarDialogoSuccess(
+                        "Arbitraje actualizado",
+                        "Arbitraje actualizado correctamente");
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoError(mensaje);
+            }
+        });
+    }
+
     public void eliminarGol(Integer idGol){
         progressBarGoldesk.mostrarCargando(true);
         golRepository.eliminarGol(idGol, new GolRepository.GolCallback() {
@@ -283,6 +469,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             public void onSuccess() {
                 progressBarGoldesk.mostrarCargando(false);
                 obtenerDatosPartido(idPartido);
+                listarGoles(idParticipacion, rvEstadisticas, tvEmptyMessage);
                 dialogsResponse.mostrarDialogoSuccess(
                         "Gol eliminado",
                         "Gol eliminado correctamente");
@@ -301,6 +488,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             public void onSuccess() {
                 progressBarGoldesk.mostrarCargando(false);
                 obtenerDatosPartido(idPartido);
+                listaTarjetas(idParticipacion, tipoTarjeta, rvEstadisticas, tvEmptyMessage);
                 dialogsResponse.mostrarDialogoSuccess(
                         "Tarjeta eliminada",
                         "Tarjeta eliminada correctamente");
@@ -379,7 +567,9 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
     }
 
-    public void mostrarVentadaInsertEvent(GolCreate golCreate, TarjetaCreate tarjetaCreate, String dorsal, String nombreJugador){
+    public void mostrarVentadaInsertEvent(
+            GolCreate golCreate, TarjetaCreate tarjetaCreate,
+            String dorsal, String nombreJugador, Integer idRecicler){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_config_goles_tarjetas, null);
 
@@ -399,9 +589,18 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         ImageButton btnSumarRoja = view.findViewById(R.id.btnSumarRoja);
         Button btnCancelar = view.findViewById(R.id.btnCancelar);
 
+        String nombreEquipo;
+        if (idRecicler.equals(R.id.recyclerViewTeam1Players)){
+            nombreEquipo = textViewTeam1Name.getText().toString();
+        } else if(idRecicler.equals(R.id.recyclerViewTeam2Players)){
+            nombreEquipo = textViewTeam2Name.getText().toString();
+        }else {
+            nombreEquipo = "Sin Nombre";
+        }
+
         //llenar textViews
-        textViewEquipo.setText(textViewTeam1Name.getText().toString());
-        textViewDorsal.setText(dorsal);
+        textViewEquipo.setText(nombreEquipo);
+        textViewDorsal.setText(dorsal.equals("null")?"-":dorsal);
         textViewNombre.setText(nombreJugador);
 
         //configurar botones
@@ -411,25 +610,26 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         btnSumarRoja.setOnClickListener(b->mostrarVentanaRegistrarTiempo(nombreJugador, golCreate, tarjetaCreate, btnSumarRoja));
 
         //configurar click textviews
+        idParticipacion = golCreate.getIdParticipacion();
         tvGolesParticipante.setOnClickListener(
                 b->mostrarVentanaListaEventos(
-                        nombreJugador, tvGolesParticipante, golCreate.getIdParticipacion()));
+                        nombreJugador, nombreEquipo, tvGolesParticipante, idParticipacion));
         tvAmarillasParticipante.setOnClickListener(
                 b->mostrarVentanaListaEventos(
-                        nombreJugador, tvAmarillasParticipante, golCreate.getIdParticipacion()));
+                        nombreJugador, nombreEquipo, tvAmarillasParticipante, idParticipacion));
         tvAzulesParticipante.setOnClickListener(
                 b->mostrarVentanaListaEventos(
-                        nombreJugador, tvAzulesParticipante, golCreate.getIdParticipacion()));
+                        nombreJugador, nombreEquipo, tvAzulesParticipante, idParticipacion));
         tvRojasParticipante.setOnClickListener(
                 b->mostrarVentanaListaEventos(
-                        nombreJugador, tvRojasParticipante, golCreate.getIdParticipacion()));
+                        nombreJugador, nombreEquipo, tvRojasParticipante, idParticipacion));
 
         builder.setView(view);
         AlertDialog dialog = builder.create();
         btnCancelar.setOnClickListener(b->dialog.dismiss());
         dialog.show();
     }
-    public void mostrarVentanaRegistrarTiempo(String nombreJugador, GolCreate golCreate, TarjetaCreate tarjetaCreate, ImageButton btn){
+    private void mostrarVentanaRegistrarTiempo(String nombreJugador, GolCreate golCreate, TarjetaCreate tarjetaCreate, ImageButton btn){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_registrar_tiempo, null);
 
@@ -516,7 +716,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         dialog.show();
 
     }
-    public void mostrarVentanaListaEventos(String nombreJugador, TextView textView, Integer idParticipacion){
+    private void mostrarVentanaListaEventos(String nombreJugador, String nombreEquipo, TextView textView, Integer idParticipacion){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_estadisticas_lista, null);
         builder.setView(view);
@@ -526,19 +726,18 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         TextView tvEquipo = view.findViewById(R.id.tvEquipo);
         TextView tvJugador = view.findViewById(R.id.tvJugador);
         TextView tvTituloSeccion = view.findViewById(R.id.tvTituloSeccion);
-        TextView tvEmptyMessage = view.findViewById(R.id.tvEmptyMessage);
+        tvEmptyMessage = view.findViewById(R.id.tvEmptyMessage);
 
-        tvEquipo.setText(textViewTeam1Name.getText().toString());
+        tvEquipo.setText(nombreEquipo);
         tvJugador.setText(nombreJugador);
         tvTituloSeccion.setText(textView.getText().toString());
 
         //init RecyclerView
-        RecyclerView rvEstadisticas = view.findViewById(R.id.rvEstadisticas);
+        rvEstadisticas = view.findViewById(R.id.rvEstadisticas);
         rvEstadisticas.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         if (textView.getId() == R.id.tvGolesParticipante){
             listarGoles(idParticipacion, rvEstadisticas, tvEmptyMessage);
         }else {
-            String tipoTarjeta="";
             if (textView.getId() == R.id.tvAmarillasParticipante){
                 tipoTarjeta= "amarilla";
             } else if (textView.getId() == R.id.tvAzulesParticipante) {
@@ -548,7 +747,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             }
             listaTarjetas(idParticipacion, tipoTarjeta, rvEstadisticas, tvEmptyMessage);
         }
-
 
         //init Buttons
         Button btnCerrar = view.findViewById(R.id.btnCerrar);
@@ -564,68 +762,74 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         }
 
     }
+    private void mostrarVentanaPagosArbitraje(PlanillaDigitalResponse planillaDigitalResponse, Integer idLayout){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_pago_arbitraje, null);
+
+        PagoArbitrajeCreate pagoArbitrajeCreate = new PagoArbitrajeCreate();
+        pagoArbitrajeCreate.setIdPartido(planillaDigitalResponse.getIdPartido());
+
+        PagoArbitrajeUpdate pagoArbitrajeUpdate = new PagoArbitrajeUpdate();
 
 
-    private void buscarDatosTorneo(PlanillaDigitalResponse planilla){
-        progressBarGoldesk.mostrarCargando(true);
-        torneoRepository.obtenerTorneoPorId(planilla.getIdTorneo(), new TorneoRepository.TorneoBuscarCallback() {
-            @Override
-            public void onSuccess(TorneoResponse response) {
-                progressBarGoldesk.mostrarCargando(false);
-                valorAmarilla = response.getValorAmarilla();
-                valorAzul = response.getValorAzul();
-                valorRoja = response.getValorRoja();
-            }
-            @Override
-            public void onError(String mensaje) {
-                progressBarGoldesk.mostrarCargando(false);
-                dialogsResponse.mostrarDialogoError(mensaje);
-            }
-        });
-    }
-    private void configBotones(PlanillaDigitalResponse planillaDigitalResponse){
-        if(planillaDigitalResponse.getEstado().equals("FINALIZADO")){
-            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
-                    PlanillaDigitalActivity.this,R.color.partido_finalizado
-            ));
-            btnStartMatch.setEnabled(false);
-            btnEndMatch.setEnabled(false);
-            //ocultar boton iniciar y finalizar partido
-            btnStartMatch.setVisibility(View.GONE);
-            btnEndMatch.setVisibility(View.GONE);
-            //deshabilitar campos de pago arbitraje y jugadores
-            switchTeam1Payment.setEnabled(false);
-            switchTeam2Payment.setEnabled(false);
-            textViewTeam1pagoArbitraje.setEnabled(false);
-            textViewTeam2pagoArbitraje.setEnabled(false);
-        } else if (planillaDigitalResponse.getEstado().equals("EN CURSO")) {
-            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
-                    PlanillaDigitalActivity.this,R.color.partido_en_curso
-            ));
-            btnStartMatch.setEnabled(false);
-            btnEndMatch.setEnabled(true);
-            //ocultar boton iniciar partido
-            btnStartMatch.setVisibility(View.GONE);
-            btnEndMatch.setVisibility(View.VISIBLE);
-            //deshabilitar campos de pago arbitraje y jugadores
-            switchTeam1Payment.setEnabled(true);
-            switchTeam2Payment.setEnabled(true);
-            textViewTeam1pagoArbitraje.setEnabled(true);
-            textViewTeam2pagoArbitraje.setEnabled(true);
-        } else if (planillaDigitalResponse.getEstado().equals("PROGRAMADO")) {
-            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
-                    PlanillaDigitalActivity.this,R.color.partido_programado
-            ));
-            btnStartMatch.setEnabled(true);
-            btnEndMatch.setEnabled(false);
-            //mostrar boton finalizar partido
-            btnStartMatch.setVisibility(View.VISIBLE);
-            btnEndMatch.setVisibility(View.GONE);
-            //habilitar campos de pago arbitraje y jugadores
-            switchTeam1Payment.setEnabled(true);
-            switchTeam2Payment.setEnabled(true);
-            textViewTeam1pagoArbitraje.setEnabled(true);
-            textViewTeam2pagoArbitraje.setEnabled(true);
+        //init Texviews
+        TextView tvNombreEquipo = view.findViewById(R.id.tvNombreEquipo);
+
+        //init EditText
+        TextInputEditText editTextMonto = view.findViewById(R.id.editTextMonto);
+        TextInputEditText editTextObservciones = view.findViewById(R.id.editTextObservciones);
+
+        //init Buttons
+        Button btnCancelar = view.findViewById(R.id.btnCancelar);
+        Button btnGuardar = view.findViewById(R.id.btnGuardar);
+
+        if (idLayout.equals(layoutArbitrajeTeam1.getId())){
+            pagoArbitrajeCreate.setIdTorneoEquipo(planillaDigitalResponse.getIdEquipoLocal());
+            tvNombreEquipo.setText(planillaDigitalResponse.getNombreEquipoLocal());
+            pagoArbitrajeUpdate.setIdPagoArbitraje(planillaDigitalResponse.getIdPagoArbLocal());
+        } else if(idLayout.equals(layoutArbitrajeTeam2.getId())){
+            pagoArbitrajeCreate.setIdTorneoEquipo(planillaDigitalResponse.getIdEquipoVisitante());
+            tvNombreEquipo.setText(planillaDigitalResponse.getNombreEquipoVisitante());
+            pagoArbitrajeUpdate.setIdPagoArbitraje(planillaDigitalResponse.getIdPagoArbVisitante());
+        }else {
+            dialogsResponse.mostrarDialogoError("Error al mostrar ventana de pago arbitraje");
+            return;
         }
+
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        btnCancelar.setOnClickListener(b->dialog.dismiss());
+        btnGuardar.setOnClickListener(v -> {
+            if (Objects.requireNonNull(editTextMonto.getText()).toString().isEmpty()){
+                editTextMonto.setError("El monto es obligatorio");
+                return;
+            }
+            if (editTextMonto.getText().toString().equals("0")){
+                editTextMonto.setError("El valor debe ser Mayor a $0");
+                return;
+            }
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            Double arbitrajeTotal = planillaDigitalResponse.getArbitrajeTotal();
+            Double arbitrajeAbonado = Double.parseDouble(editTextMonto.getText().toString());
+            if (arbitrajeAbonado>arbitrajeTotal){
+                editTextMonto.setError("El monto no puede ser mayor a "+decimalFormat.format(arbitrajeTotal));
+                return;
+            }
+            //registrar pago arbitraje
+            pagoArbitrajeCreate.setMonto(Double.parseDouble(editTextMonto.getText().toString()));
+            pagoArbitrajeCreate.setObservacion(String.valueOf(editTextObservciones.getText()));
+            //actualizar pago arbitraje
+            pagoArbitrajeUpdate.setMonto(Double.parseDouble(editTextMonto.getText().toString()));
+            pagoArbitrajeUpdate.setObservacion(editTextObservciones.getText().toString().trim());
+
+            if (pagoArbitrajeUpdate.getIdPagoArbitraje() != null){
+                actualizarPagoArbitraje(pagoArbitrajeUpdate);
+            }else {
+                registrarArbitraje(pagoArbitrajeCreate);
+            }
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 }

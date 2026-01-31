@@ -1,5 +1,6 @@
 package com.ddrd.goldeskapp.data.api;
 
+import com.ddrd.goldeskapp.data.model.equipo.ActualizarNombreEquipo;
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
 import com.ddrd.goldeskapp.data.model.torneo.TorneoResponse;
 
@@ -16,6 +17,4 @@ public interface TorneoApiService {
 
     @GET("api/torneos/{idTorneo}")
     Call<TorneoResponse> obtenerTorneoPorId(@Path("idTorneo") Integer idTorneo);
-
-
 }

@@ -192,12 +192,15 @@ public class HistorialPartidosActivity extends AppCompatActivity {
 
             @Override
             public void onNoContent() {
-
+                dialogsResponse.mostrarDialogoNoContentEquipos(
+                        "Equipos",
+                        "No tienes equipos registrados.",
+                        "Crear Equipo"
+                );
             }
-
             @Override
             public void onError(String mensaje) {
-
+                dialogsResponse.mostrarDialogoError(mensaje);
             }
         });
     }
