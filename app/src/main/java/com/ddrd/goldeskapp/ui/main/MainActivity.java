@@ -20,8 +20,11 @@ import com.ddrd.goldeskapp.data.api.AuthApiService;
 import com.ddrd.goldeskapp.data.api.TablaPosicionesApiService;
 import com.ddrd.goldeskapp.ui.TablaPosiciones.TablaPosicionesActivity;
 import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
+import com.ddrd.goldeskapp.ui.goleadores.GoleadoresActivity;
 import com.ddrd.goldeskapp.ui.historialPartidos.HistorialPartidosActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
+import com.ddrd.goldeskapp.ui.traspasos.TraspasosActivity;
+import com.ddrd.goldeskapp.ui.usuarios.PerfilUsuarioActivity;
 import com.ddrd.goldeskapp.util.TokenManager;
 import com.google.android.material.navigation.NavigationView;
 
@@ -116,17 +119,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        cardGoleadores.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, GoleadoresActivity.class);
+            startActivity(intent);
+        });
+        cardPerfil.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
+            startActivity(intent);
+        });
 
         // 4. Manejar clics del menú (Auditoría y Navegación)
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-
-            /*if (id == R.id.nav_traspasos) {
+            if (id == R.id.nav_traspasos) {
                 // Ir a la pantalla de traspasos
-            } else if (id == R.id.nav_logout) {
-                cerrarSesion();
-            }*/
-
+                Intent intent = new Intent(MainActivity.this, TraspasosActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_cerrar_sesion) {
+                //cerrarSesion();
+            }
             drawerLayout.closeDrawers(); // Cerrar el menú después de hacer clic
             return true;
         });

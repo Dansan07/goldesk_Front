@@ -2,6 +2,8 @@ package com.ddrd.goldeskapp.ui.utilities.formatos;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class FormatearFechaHoraUser {
@@ -36,5 +38,35 @@ public class FormatearFechaHoraUser {
             return null;
         }
 
+    }
+
+    public String formatearFechaDesdeJSON(String fechaJSON) {
+        if (fechaJSON == null || fechaJSON.isEmpty()) return "Sin fecha";
+
+        try {
+            // 1. Manejo para Android 8.0+ (API 26)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                // LocalDateTime entiende el formato con 'T' automáticamente
+                LocalDateTime fecha = LocalDateTime.parse(fechaJSON);
+                DateTimeFormatter formatoDestino = DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy", new Locale("es", "ES"));
+                return fecha.format(formatoDestino);
+            }
+
+            // 2. Manejo para teléfonos antiguos (API 24/25)
+            // Cortamos el String antes de los nanosegundos y quitamos la 'T'
+            String[] partes = fechaJSON.split("T");
+            String fecha = partes[0];
+            String hora = partes[1].split("\\.")[0];
+
+            // Retornamos el formato deseado
+            String fechaFormateada = formatearFechaUser(fecha);
+            String horaFormateada = formatearHoraUser(hora);
+
+
+            return fechaFormateada + " " + horaFormateada; // Retorna
+
+        } catch (Exception e) {
+            return fechaJSON; // Retorna el original si algo falla
+        }
     }
 }

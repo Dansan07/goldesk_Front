@@ -1,6 +1,7 @@
 package com.ddrd.goldeskapp.data.api;
 
 import com.ddrd.goldeskapp.data.model.jugador.EstadisticasJugador;
+import com.ddrd.goldeskapp.data.model.jugador.JugadorCarnet;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorCreate;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorResponse;
 
@@ -30,5 +31,8 @@ public interface JugadorApiService {
 
     @PATCH("api/jugadores/dar-de-baja/{idInscripcion}")
     Call<ResponseBody> eliminarJugadorDeEquipo(@Path("idInscripcion") Integer idInscripcion);
+
+    @GET("api/jugadores/carnet/{idInscripcion}")
+    Call<JugadorCarnet> obtenerCarnetJugador(@Path("idInscripcion") Integer idInscripcion);
 
 }

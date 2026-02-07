@@ -349,7 +349,7 @@
                 app:backgroundTint="@null"/>
 
             <Button
-                android:id="@+id/btnGuardar"
+                android:id="@+id/btnGuardarInsJugador"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_weight="1"

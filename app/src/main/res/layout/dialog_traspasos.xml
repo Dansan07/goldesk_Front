@@ -24,6 +24,7 @@
             android:textSize="32sp" />
 
         <TextView
+            android:id="@+id/textViewTitleTraspaso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Solicitud de Traspaso"
@@ -44,6 +45,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/textViewDescripcionTraspaso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -59,7 +61,6 @@
             app:hintTextColor="@color/soccer_green"
             app:counterEnabled="true"
             app:counterMaxLength="150"
-            android:hint="Escribe una descripción detallada..."
             android:layout_marginVertical="10dp">
 
             <com.google.android.material.textfield.TextInputEditText

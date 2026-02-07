@@ -40,6 +40,13 @@ public class AdapterEstadisticasJugadores extends RecyclerView.Adapter<AdapterEs
         holder.textYellowCards.setText(String.valueOf(estadisticasJugador.getAmarillas()));
         holder.textBlueCards.setText(String.valueOf(estadisticasJugador.getAzules()));
         holder.textRedCards.setText(String.valueOf(estadisticasJugador.getRojas()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((EquiposActivity) context).obtenerCarnetJugador(estadisticasJugador.getIdTorneoEquipoJugador());
+            }
+        });
     }
 
     @Override

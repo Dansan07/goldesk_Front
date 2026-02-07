@@ -522,7 +522,6 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
         app:itemIconTint="@color/soccer_green"
-        app:itemTextColor="@color/black"
-        android:visibility="gone"/>
+        app:itemTextColor="@color/black" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

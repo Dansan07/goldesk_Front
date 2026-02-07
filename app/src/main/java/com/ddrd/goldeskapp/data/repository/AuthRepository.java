@@ -67,9 +67,7 @@ public class AuthRepository {
 
                     // 2. Extraemos y guardamos los datos del objeto anidado
                     if (res.getPerfil() != null) {
-                        tokenManager.saveNombre(res.getPerfil().getNombre());
-                        tokenManager.saveRole(res.getPerfil().getRol());
-                        tokenManager.saveCodigo(res.getPerfil().getCedula());
+                        tokenManager.saveOrganizador(res.getPerfil());
                     }
                     // Usamos un objeto genérico para el callback o manejamos la respuesta según necesites
                     callback.onSuccess(response.body());

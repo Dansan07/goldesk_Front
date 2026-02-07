@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/soccer_green"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="center">
+
+                <!-- Logo del Usuario -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:cardCornerRadius="60dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="12dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_person"
+                        android:contentDescription="@string/logo_usuario" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/perfil_usuario"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/perfil_usuario_aux"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:alpha="0.7"/>
+
+                <Button
+                    android:id="@+id/btnCambiarLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/btn_secondary"
+                    android:text="@string/cambiar_logo"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Información Básica -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/informacion_basica"
+                    android:textColor="@color/soccer_green"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Nombre -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/nombre"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/editTextNombreUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/hint_nombre"
+                    android:inputType="textPersonName"
+                    android:padding="12dp"
+                    android:textColorHint="@color/text_secondary" />
+
+                <!-- Apellidos del Organizador -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/apellidos"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/editTextApellidosUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/hint_apellidos"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="@color/text_secondary" />
+
+                <!-- Email -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/email"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/editTextEmailUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textColorHint="@color/text_secondary" />
+
+                <!-- telefono -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/telefono"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/editTextTelefonoUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/hint_telefono"
+                    android:inputType="phone"
+                    android:padding="12dp"
+                    android:textColorHint="@color/text_secondary" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/btn_primary"
+                    android:text="@string/btn_Actualizar_datos"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Seguridad -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seguridad"
+                    android:textColor="@color/soccer_green"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Nombre del Organizador -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/cambiar_contrasena"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/editTextActualizarPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/hint_contrasena"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="@color/text_secondary" />
+
+                <Button
+                    android:id="@+id/btnCambiarPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/btn_secondary"
+                    android:text="@string/actualizar_contrasena"
+                    android:textColor="@color/soccer_green"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Estado de la Cuenta -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/estado_cuenta"
+                    android:textColor="@color/soccer_green"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textViewCuentaStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/cuenta_activa"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchStatusCuenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false">
+
+                    </androidx.appcompat.widget.SwitchCompat>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/estado_cuenta_info"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:alpha="0.6" />
+
+                <!-- Código de Invitado -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/codigo_invitado"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewCodigoInvitado"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edittext"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="XXXXXX"
+                        android:textColor="@color/soccer_green"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnCopiarCodigoInvitado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/btn_primary"
+                        android:text="@string/copiar"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

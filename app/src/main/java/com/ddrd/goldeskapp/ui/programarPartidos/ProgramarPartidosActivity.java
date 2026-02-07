@@ -110,7 +110,6 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
                     cargarEquipos(selection.getIdTorneo());
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 

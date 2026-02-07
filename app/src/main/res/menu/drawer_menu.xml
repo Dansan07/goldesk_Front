@@ -41,9 +41,9 @@
                 android:title="Mi Perfil" />
 
             <item
-                android:id="@+id/nav_favoritos"
-                android:icon="@drawable/ic_favorite"
-                android:title="Favoritos" />
+                android:id="@+id/nav_traspasos"
+                android:icon="@drawable/ic_traspasos"
+                android:title="Traspasos" />
 
             <item
                 android:id="@+id/nav_configuracion"
@@ -51,7 +51,7 @@
                 android:title="Configuración" />
 
             <item
-                android:id="@+id/nav_salir"
+                android:id="@+id/nav_cerrar_sesion"
                 android:icon="@drawable/ic_logout"
                 android:title="Cerrar Sesión" />
         </menu>

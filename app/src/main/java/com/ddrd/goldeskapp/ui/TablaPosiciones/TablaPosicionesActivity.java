@@ -23,6 +23,7 @@ import com.ddrd.goldeskapp.data.repository.TablaPosicionesRepository;
 import com.ddrd.goldeskapp.data.repository.TorneoRepository;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
+import com.ddrd.goldeskapp.ui.utilities.spinnersContent.SpinnerTorneo;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -37,6 +38,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     //elementos utiles
     private ProgressBarGoldesk progressBarGoldesk;
     private DialogsResponse dialogsResponse;
+    private SpinnerTorneo spinnerTorneo;
 
     //elementos del repositorio
     private TorneoRepository torneoRepository;
@@ -61,6 +63,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         progressBarGoldesk = new ProgressBarGoldesk(this);
         progressBarFase = findViewById(R.id.progressBarFase);
         dialogsResponse = new DialogsResponse(this);
+        spinnerTorneo = new SpinnerTorneo();
+        //init Spinner
         spinnerChampionship = findViewById(R.id.spinnerChampionship);
         //init Texviews
         tvPartidosRestantes = findViewById(R.id.tvPartidosRestantes);
@@ -115,13 +119,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
                 progressBarGoldesk.mostrarCargando(false);
-                ArrayAdapter<SpinnerTorneoResponse> adapterSpinner = new ArrayAdapter<>(
-                        TablaPosicionesActivity.this,
-                        android.R.layout.simple_spinner_item,
-                        torneos
-                );
-                adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerChampionship.setAdapter(adapterSpinner);
+                spinnerTorneo.actualizarSpinnerTorneos(torneos, TablaPosicionesActivity.this, spinnerChampionship);
             }
             @Override
             public void onNoContent() {

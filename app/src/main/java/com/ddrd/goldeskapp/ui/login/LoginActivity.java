@@ -21,6 +21,7 @@ import com.ddrd.goldeskapp.data.model.login.LoginCodigoResponse;
 import com.ddrd.goldeskapp.data.model.login.LoginOrganizadorResponse;
 import com.ddrd.goldeskapp.data.repository.AuthRepository;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
+import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,6 +29,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private DialogsResponse dialogsResponse;
     private TextInputEditText etAccessCode, etPassword;
     private TextInputLayout tilPassword, tilAccessCode;
     private MaterialButton btnLogin, btnRegistroInvitado, btnRoleDelegado, btnRoleOrganizador;
@@ -57,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        dialogsResponse = new DialogsResponse(this);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         etAccessCode = findViewById(R.id.etAccessCode);
         etPassword = findViewById(R.id.etPassword);
@@ -153,7 +156,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         }));
         tvForgotPassword.setOnClickListener(v->{
-            sendEmailForgotPassword();
+            dialogsResponse.mostrarVentanaComprobacion(
+                    "Recuperación de Contraseña",
+                    "Esta acción hará que se genere una nueva contraseña " +
+                            "temporal que será enviada a su correo registrado",
+                    "Recuperar Contraseña",
+                    this::sendEmailForgotPassword
+            );
         });
     }
 

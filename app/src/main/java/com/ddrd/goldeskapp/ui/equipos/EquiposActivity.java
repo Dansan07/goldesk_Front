@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.model.equipo.ActualizarNombreEquipo;
 import com.ddrd.goldeskapp.data.model.equipo.SpinnerEquipoResponse;
 import com.ddrd.goldeskapp.data.model.jugador.EstadisticasJugador;
+import com.ddrd.goldeskapp.data.model.jugador.JugadorCarnet;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorCreate;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorResponse;
 import com.ddrd.goldeskapp.data.model.torneo.SpinnerTorneoResponse;
@@ -50,6 +52,7 @@ import com.ddrd.goldeskapp.data.repository.TorneoRepository;
 import com.ddrd.goldeskapp.data.repository.TraspasoRepository;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
+import com.ddrd.goldeskapp.ui.utilities.formatos.FormatearFechaHoraUser;
 import com.ddrd.goldeskapp.ui.utilities.spinnersContent.SpinnerTorneo;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -67,6 +70,7 @@ public class EquiposActivity extends AppCompatActivity {
 
     private DialogsResponse dialogsResponse;
     private ProgressBarGoldesk progressBarGoldesk;
+    private FormatearFechaHoraUser formatearFechaHoraUser;
     private TorneoRepository torneoRepository;
     private EquipoRepository equipoRepository;
     private JugadorRepository jugadorRepository;
@@ -117,6 +121,7 @@ public class EquiposActivity extends AppCompatActivity {
     private void initComponents(){
         dialogsResponse = new DialogsResponse(this);
         progressBarGoldesk = new ProgressBarGoldesk(this);
+        formatearFechaHoraUser = new FormatearFechaHoraUser();
         //init Repositorios
         torneoRepository = new TorneoRepository(this);
         equipoRepository = new EquipoRepository(this);
@@ -439,7 +444,7 @@ public class EquiposActivity extends AppCompatActivity {
 
         //CardViewCamposIncripcion.setVisibility(View.GONE);
         btnCancelar = view.findViewById(R.id.btnCancelar);
-        btnGuardar = view.findViewById(R.id.btnGuardar);
+        btnGuardar = view.findViewById(R.id.btnGuardarInsJugador);
         btnGuardar.setText(R.string.buscar);
         btnCancelar.setText(R.string.cerrar);
 
@@ -451,13 +456,8 @@ public class EquiposActivity extends AppCompatActivity {
                 return;
             }
             if (btnGuardar.getText().toString().equals(getString(R.string.Inscribir_a_mi_Equipo))){
-                if (campoIdJugador.getText().toString().trim().isEmpty()){
-                    validarCamposDatosJugador();
-                    return;
-                }else {
-                    ventanaTraspaso();
-                    return;
-                }
+                validarCamposDatosJugador();
+                return;
             }
             buscarInfoJugador(cedula);
         });
@@ -519,6 +519,7 @@ public class EquiposActivity extends AppCompatActivity {
             return;
         } else if (campoEmail.getText().toString().trim().isEmpty()) {
             campoEmail.setError("Debe escribir un email");
+            return;
         }
         obtenerDatosJuador();
     }
@@ -567,12 +568,20 @@ public class EquiposActivity extends AppCompatActivity {
             }
             @Override
             public void onNoContent() {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarVentanaComprobacion(
+                        "Jugador Inscrito",
+                        "El jugador esta actualmente inscrito en otro equipo para este torneo\n" +
+                                "¿Deseas iniciar una solicitud de traspaso?",
+                        "solicitar traspaso",
+                        ()-> ventanaTraspaso()
+                );
             }
             @Override
             public void onError(String mensaje) {
                 progressBarGoldesk.mostrarCargando(false);
                 dialogsResponse.mostrarDialogoWarning(
-                        "Jugador no Encontrado",
+                        "Error al Inscribir Jugador",
                         mensaje);
             }
         });
@@ -612,6 +621,79 @@ public class EquiposActivity extends AppCompatActivity {
         });
     }
 
+    //metodo carnet de jugador
+    public void obtenerCarnetJugador(Integer idParticipacion){
+        progressBarGoldesk.mostrarCargando(true);
+        jugadorRepository.obtenerCarnetJugador(idParticipacion, new JugadorRepository.JugadorCallback<JugadorCarnet>() {
+            @Override
+            public void onSuccess(JugadorCarnet responses) {
+                progressBarGoldesk.mostrarCargando(false);
+                llenarCarnetJugador(responses);
+            }
+
+            @Override
+            public void onNoContent() {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoWarning(
+                        "Jugador no Encontrado",
+                        "El jugador no se encuentra registrado"
+                );
+            }
+            @Override
+            public void onError(String mensaje) {
+                progressBarGoldesk.mostrarCargando(false);
+                dialogsResponse.mostrarDialogoWarning(
+                        "Jugador no Encontrado",
+                        mensaje);
+
+            }
+        });
+    }
+    private void llenarCarnetJugador(JugadorCarnet jugadorCarnet){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_carnet_digital, null);
+
+        TextView tvTorneoNombre, tvCategoria, tvNombreCompleto, tvBadgeDelegado,
+                tvCedula, tvEquipo, tvIdInscripcion, tvTelefono, tvEmail, tvFechaInscripcion;
+        ImageView imgFotoJugador;
+        Button btnCerrarCarnet;
+
+        //init views
+        tvTorneoNombre = view.findViewById(R.id.tvTorneoNombre);
+        tvCategoria = view.findViewById(R.id.tvCategoria);
+        tvNombreCompleto = view.findViewById(R.id.tvNombreCompleto);
+        tvBadgeDelegado = view.findViewById(R.id.tvBadgeDelegado);
+        tvCedula = view.findViewById(R.id.tvCedula);
+        tvEquipo = view.findViewById(R.id.tvEquipo);
+        tvIdInscripcion = view.findViewById(R.id.tvIdInscripcion);
+        tvTelefono = view.findViewById(R.id.tvTelefono);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        tvFechaInscripcion = view.findViewById(R.id.tvFechaInscripcion);
+        imgFotoJugador = view.findViewById(R.id.imgFotoJugador);
+        btnCerrarCarnet = view.findViewById(R.id.btnCerrar);
+
+        tvTorneoNombre.setText(jugadorCarnet.getNombreTorneo());
+        tvCategoria.setText(jugadorCarnet.getCategoriaTorneo());
+        String nombreCompleto = jugadorCarnet.getNombre()+jugadorCarnet.getApellidos();
+        tvNombreCompleto.setText(nombreCompleto);
+        tvBadgeDelegado.setText(jugadorCarnet.getEsDelegado()?"Delegado":"Jugador");
+        tvCedula.setText(jugadorCarnet.getCedula());
+        tvEquipo.setText(jugadorCarnet.getNombreEquipo());
+        tvIdInscripcion.setText(String.valueOf(jugadorCarnet.getIdInscripcion()));
+        tvTelefono.setText(jugadorCarnet.getTelefono());
+        tvEmail.setText(jugadorCarnet.getEmail());
+        String fechayHora = formatearFechaHoraUser.formatearFechaDesdeJSON(jugadorCarnet.getFechaInscripcion().toString());
+
+        tvFechaInscripcion.setText(fechayHora);
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        btnCerrarCarnet.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
     //metodos para crear traspasos
     public void ventanaTraspaso() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -621,6 +703,7 @@ public class EquiposActivity extends AppCompatActivity {
         Button btnAceptarTraspaso = view.findViewById(R.id.btnAceptar);
 
         campoAsuntoTraspaso = view.findViewById(R.id.editTextAsuntoTraspaso);
+        campoAsuntoTraspaso.setHint(R.string.escribe_detallada_traspaso);
 
         builder.setView(view);
         AlertDialog dialog = builder.create();

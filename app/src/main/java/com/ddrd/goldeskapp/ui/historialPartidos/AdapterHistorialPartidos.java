@@ -52,18 +52,13 @@ public class AdapterHistorialPartidos extends RecyclerView.Adapter<AdapterHistor
         holder.textViewStatus.setText(partido.getEstado());
         holder.textViewChampionship.setText(partido.getFaseTorneo());
         if (partido.getEstado().equals("FINALIZADO")){
-            holder.textViewStatus.setBackgroundColor(
-                    ContextCompat.getColor(
-                            holder.itemView.getContext(),R.color.partido_finalizado));
+            holder.textViewStatus.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(),R.drawable.bg_partido_finalizado));
             holder.btnEditMatch.setVisibility(View.GONE);
             holder.btnDeleteMatch.setVisibility(View.GONE);
         } else if (partido.getEstado().equals("PROGRAMADO")) {
-            holder.textViewStatus.setBackgroundColor(
-                    ContextCompat.getColor(
-                            holder.itemView.getContext(),R.color.partido_programado));            
+            holder.textViewStatus.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.bg_partido_programado));
         } else if (partido.getEstado().equals("EN CURSO")) {
-            holder.textViewStatus.setBackgroundColor(
-                    ContextCompat.getColor(holder.itemView.getContext(),R.color.partido_en_curso));
+            holder.textViewStatus.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.bg_partido_en_curso));
             holder.btnDeleteMatch.setVisibility(View.GONE);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -17,6 +17,7 @@
     <string name="seleccionar">Seleccionar</string>
     <string name="btn_cancelar">Cancelar</string>
     <string name="btn_guardar">Guardar</string>
+    <string name="btn_Actualizar_datos">Actualizar Datos</string>
     <string name="btn_aceptar">Aceptar</string>
     <string name="btn_rechazar">Rechazar</string>
     <string name="btn_enviar">Enviar</string>
@@ -93,6 +94,7 @@
     <!--clasificacion-->
     <string name="main_clasificacion">Clasificación</string>
     <string name="main_clasificacion_aux">Tabla Posiciones</string>
+    <string name="main_tabla_posiciones">🏆 Tabla Posiciones</string>
     <!--contabilidad-->
     <string name="main_contabilidad">Contabilidad</string>
     <string name="main_contabilidad_aux">Mis finanzas</string>
@@ -105,6 +107,41 @@
     <!--perfil-->
     <string name="main_perfil">Mi Perfil</string>
     <string name="main_perfil_aux">Configuración y preferencias</string>
+    <!-- Perfil de Usuario -->
+    <string name="perfil_usuario">Perfil de Usuario</string>
+    <string name="perfil_usuario_aux">Actualiza tu información personal</string>
+    <string name="logo_usuario">Logo del usuario</string>
+    <string name="cambiar_logo">Cambiar Logo</string>
+    <!-- Información Básica -->
+    <string name="informacion_basica">Información Básica</string>
+    <string name="nombre">Nombre</string>
+    <string name="hint_nombre">Ingrese su nombre</string>
+    <string name="cedula_organizador">Cédula del Organizador</string>
+    <string name="hint_cedula">Ingrese su número de cédula</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="hint_email">correo@ejemplo.com</string>
+    <string name="telefono">Telefono</string>
+    <string name="hint_telefono">Ingrese su número de teléfono</string>
+    <string name="cedula_no_editable">la cedula no se puede modificar</string>
+    <!-- Datos del Organizador -->
+    <string name="datos_organizador">Datos del Organizador</string>
+    <string name="nombre_organizador">Nombre del Organizador</string>
+    <string name="hint_nombre_organizador">Ingrese el nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="hint_apellidos">Ingrese los apellidos</string>
+    <!-- Seguridad -->
+    <string name="seguridad">Seguridad</string>
+    <string name="cambiar_contrasena">Cambiar Contraseña</string>
+    <string name="hint_contrasena">Nueva contraseña</string>
+    <string name="actualizar_contrasena">Actualizar Contraseña</string>
+
+    <!-- Estado de la Cuenta -->
+    <string name="estado_cuenta">Estado de la Cuenta</string>
+    <string name="cuenta_activa">Cuenta Activa</string>
+    <string name="cuenta_inactiva">Cuenta Inactiva</string>
+    <string name="estado_cuenta_info">Contacte al administrador para cambiar el estado de su cuenta</string>
+    <string name="codigo_invitado">Código de Invitado</string>
+    <string name="copiar">Copiar</string>
     <!-- Roles -->
     <string name="select_role">Selecciona tu rol:</string>
     <string name="role_organizer">Organizador</string>
@@ -167,6 +204,40 @@
     <string name="buscar">Buscar</string>
     <string name="descripcion_traspaso">Escribe aquí una breve descripción de la razón de esta solicitud.
         \nLuego se descargará un formulario que deberás firmar y presentar ante el organizador."</string>
+    <string name="rechazo_title">Rechazar Solicitud</string>
+    <string name="razon_rechazo">Deja un breve recordatorio del por qué rechazas esta solicitud</string>
+    <string name="razon_rechazo_hint">Comnetario breve (opcional)</string>
+
+    <!-- Activity Traspasos -->
+    <string name="activity_traspasos">Traspasos</string>
+    <string name="activity_traspasos_aux">Gestiona las solicitudes de traspaso</string>
+
+    <!-- Filtros -->
+    <string name="pendientes">Pendientes</string>
+    <string name="aprobados">Aprobados</string>
+    <string name="rechazados">Rechazados</string>
+
+    <!-- Contador -->
+    <string name="total_traspasos">%d traspasos encontrados</string>
+
+    <!-- Item Traspaso -->
+    <string name="equipo_origen">Origen</string>
+    <string name="equipo_destino">Destino</string>
+    <string name="transferencia">Transferencia</string>
+    <string name="asunto">Asunto</string>
+    <string name="fecha_solicitud">Fecha de Solicitud</string>
+    <string name="fecha_respuesta">Fecha de Respuesta</string>
+
+    <!-- Botones de Acción -->
+    <string name="btn_aprobar">Aprobar</string>
+
+    <!-- Estados Vacíos -->
+    <string name="sin_traspasos">No hay traspasos</string>
+    <string name="sin_traspasos_pendientes">No hay traspasos pendientes en este momento</string>
+    <string name="sin_traspasos_aprobados">No hay traspasos aprobados</string>
+    <string name="sin_traspasos_rechazados">No hay traspasos rechazados</string>
+    <string name="buscar_traspasos">Busca por Cedula, nombre o Equipo</string>
+    <string name="escribe_detallada_traspaso">Escribe una descripción detallada...</string>
 
 
 </resources>

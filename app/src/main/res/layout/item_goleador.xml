@@ -20,7 +20,7 @@
 
         <!-- Posición (rank) -->
         <TextView
-            android:id="@+id/txt_posicion"
+            android:id="@+id/txt_posicionGoleador"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:text="1"
@@ -38,7 +38,7 @@
 
             <!-- Nombre del jugador -->
             <TextView
-                android:id="@+id/txt_nombre"
+                android:id="@+id/txt_nombreGoleador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="un Nombre Jugador igual de largo"
@@ -49,7 +49,7 @@
 
             <!-- Subtexto debajo del nombre -->
             <TextView
-                android:id="@+id/txt_partidos"
+                android:id="@+id/txt_partidosGoleador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3 partidos jugados"
@@ -61,7 +61,7 @@
 
         <!-- Nombre del equipo -->
         <TextView
-            android:id="@+id/txt_equipo"
+            android:id="@+id/txt_equipoGoleador"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Nombre equipo"
@@ -82,7 +82,7 @@
             android:layout_height="40dp">
 
             <TextView
-                android:id="@+id/txt_goles"
+                android:id="@+id/txt_golesGoleador"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:text="7"

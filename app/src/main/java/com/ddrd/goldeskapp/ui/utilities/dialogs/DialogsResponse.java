@@ -23,6 +23,24 @@ public class DialogsResponse {
     public DialogsResponse(Context context) {
         this.context = context;
     }
+    public interface ComprobacionCallback{
+        void onComprobacionSuccess();
+    }
+
+    public void mostrarVentanaComprobacion(String titulo, String mensaje, String accion, ComprobacionCallback callback) {
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
+                .setTitle(titulo)
+                .setMessage(mensaje)
+                .setCancelable(false) // Obliga al usuario a elegir una opción
+                .setPositiveButton(accion, (d, which) -> {
+                    callback.onComprobacionSuccess();
+                })
+                .setNegativeButton("Cancelar", (d, which) -> {
+                    d.dismiss();
+                })
+                .create();
+        configurarYMostrar(dialog);
+    }
 
     public void mostrarDialogoNoContentTorneos(String titulo, String mensaje, String accion) {
         AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
@@ -246,7 +264,6 @@ public class DialogsResponse {
                     // startActivity(intent);
                     //Toast.makeText(context, "Navegando a creación...", Toast.LENGTH_SHORT).show();
                     ((Activity) context).finish();
-                    ((ProgramarPartidosActivity) context).limpiarTablero();
                 })
                 .setNegativeButton("No, continuar", (d, which) -> {
                     d.dismiss();
@@ -254,8 +271,6 @@ public class DialogsResponse {
                 .create();
 
         configurarYMostrar(dialog);
-
-
     }
 
     private void configurarYMostrar(AlertDialog dialog) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.ddrd.goldeskapp.data.api.ApiClient;
 import com.ddrd.goldeskapp.data.api.JugadorApiService;
 import com.ddrd.goldeskapp.data.model.jugador.EstadisticasJugador;
+import com.ddrd.goldeskapp.data.model.jugador.JugadorCarnet;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorCreate;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorResponse;
 
@@ -97,7 +98,11 @@ public class JugadorRepository {
                 }else {
                     try {
                         String error = response.errorBody().string();
-                        callback.onError(error);
+                        if (response.code() == 412){
+                            callback.onNoContent();
+                        }else {
+                            callback.onError(error);
+                        }
                     }catch (IOException e){
                         callback.onError(e.getMessage());
                     }
@@ -131,6 +136,28 @@ public class JugadorRepository {
             }
         });
 
+    }
+
+    public void obtenerCarnetJugador(Integer idInscripcion, JugadorCallback<JugadorCarnet> callback){
+        jugadorApiService.obtenerCarnetJugador(idInscripcion).enqueue(new Callback<JugadorCarnet>() {
+            @Override
+            public void onResponse(Call<JugadorCarnet> call, Response<JugadorCarnet> response) {
+                if (response.isSuccessful()){
+                    callback.onSuccess(response.body());
+                }else {
+                    try {
+                        String error_mesagge = response.errorBody().string();
+                        callback.onError(error_mesagge);
+                    }catch (IOException e){
+                        callback.onError(e.getMessage());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<JugadorCarnet> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
     }
 
     public interface JugadorCallback<T>{
