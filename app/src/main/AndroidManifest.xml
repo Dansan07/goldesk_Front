@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.torneos.TorneosActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.traspasos.TraspasosActivity"
             android:exported="false" />
         <activity

@@ -23,6 +23,7 @@ import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
 import com.ddrd.goldeskapp.ui.goleadores.GoleadoresActivity;
 import com.ddrd.goldeskapp.ui.historialPartidos.HistorialPartidosActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
+import com.ddrd.goldeskapp.ui.torneos.TorneosActivity;
 import com.ddrd.goldeskapp.ui.traspasos.TraspasosActivity;
 import com.ddrd.goldeskapp.ui.usuarios.PerfilUsuarioActivity;
 import com.ddrd.goldeskapp.util.TokenManager;
@@ -128,12 +129,25 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 4. Manejar clics del menú (Auditoría y Navegación)
+        // Navegar a traspasos menú lateral
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_traspasos) {
                 // Ir a la pantalla de traspasos
                 Intent intent = new Intent(MainActivity.this, TraspasosActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_cerrar_sesion) {
+                //cerrarSesion();
+            }
+            drawerLayout.closeDrawers(); // Cerrar el menú después de hacer clic
+            return true;
+        });
+        // navegar a torneos menú lateral
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_Creartorneos) {
+                // Ir a la pantalla de traspasos
+                Intent intent = new Intent(MainActivity.this, TorneosActivity.class);
                 startActivity(intent);
             } else if (id == R.id.nav_cerrar_sesion) {
                 //cerrarSesion();

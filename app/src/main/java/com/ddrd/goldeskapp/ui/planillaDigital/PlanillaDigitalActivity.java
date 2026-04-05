@@ -1,5 +1,6 @@
 package com.ddrd.goldeskapp.ui.planillaDigital;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.ddrd.goldeskapp.data.repository.GolRepository;
 import com.ddrd.goldeskapp.data.repository.PartidoRepository;
 import com.ddrd.goldeskapp.data.repository.TarjetaRepository;
 import com.ddrd.goldeskapp.data.repository.TorneoRepository;
+import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
 import com.ddrd.goldeskapp.ui.goles.AdapterGolesParticipacion;
 import com.ddrd.goldeskapp.ui.tarjetas.AdapterTarjetasParticipacion;
 import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
@@ -67,6 +69,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             textViewTeam1pagoArbitraje, textViewTeam2pagoArbitraje;
     private SwitchCompat switchTeam1Payment, switchTeam2Payment;
     private Button btnStartMatch, btnEndMatch;
+    private ImageButton btnAddPlayerTeam1, btnAddPlayerTeam2;
     private RecyclerView recyclerViewTeam1Players, recyclerViewTeam2Players;
     private LinearLayout layoutArbitrajeTeam1, layoutArbitrajeTeam2;
     private double valorAmarilla, valorAzul, valorRoja;
@@ -133,6 +136,9 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         //button init
         btnStartMatch = findViewById(R.id.btnStartMatch);
         btnEndMatch = findViewById(R.id.btnEndMatch);
+        //imageButton init
+        btnAddPlayerTeam1 = findViewById(R.id.btnAddPlayerTeam1);
+        btnAddPlayerTeam2 = findViewById(R.id.btnAddPlayerTeam2);
         //recycler init
         recyclerViewTeam1Players = findViewById(R.id.recyclerViewTeam1Players);
         recyclerViewTeam1Players.setLayoutManager(new LinearLayoutManager(this));
@@ -200,6 +206,18 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
         layoutArbitrajeTeam1.setOnClickListener(v -> {mostrarVentanaPagosArbitraje(planillaDigitalResponse, R.id.layoutArbitrajeTeam1);});
         layoutArbitrajeTeam2.setOnClickListener(v -> {mostrarVentanaPagosArbitraje(planillaDigitalResponse, R.id.layoutArbitrajeTeam2);});
+        btnAddPlayerTeam1.setOnClickListener(v -> {
+            String nombreEquipo = textViewTeam1Name.getText().toString();
+            Intent intent = new Intent(PlanillaDigitalActivity.this, EquiposActivity.class);
+            intent.putExtra("nombreEquipo", nombreEquipo);
+            startActivity(intent);
+        });
+        btnAddPlayerTeam2.setOnClickListener(v -> {
+            String nombreEquipo = textViewTeam2Name.getText().toString();
+            Intent intent = new Intent(PlanillaDigitalActivity.this, EquiposActivity.class);
+            intent.putExtra("nombreEquipo", nombreEquipo);
+            startActivity(intent);
+        });
     }
     public void obtenerDatosPartido(Integer idPartido){
         progressBarGoldesk.mostrarCargando(true);
@@ -256,9 +274,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
 
     private void configBotones(PlanillaDigitalResponse planillaDigitalResponse){
         if(planillaDigitalResponse.getEstado().equals("FINALIZADO")){
-            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
-                    PlanillaDigitalActivity.this,R.color.partido_finalizado
-            ));
+            textViewMatchStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_partido_finalizado));
             btnStartMatch.setEnabled(false);
             btnEndMatch.setEnabled(false);
             //ocultar boton iniciar y finalizar partido
@@ -268,9 +284,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             layoutArbitrajeTeam1.setEnabled(false);
             layoutArbitrajeTeam2.setEnabled(false);
         } else if (planillaDigitalResponse.getEstado().equals("EN CURSO")) {
-            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
-                    PlanillaDigitalActivity.this,R.color.partido_en_curso
-            ));
+            textViewMatchStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_partido_en_curso));
             btnStartMatch.setEnabled(false);
             btnEndMatch.setEnabled(true);
             //ocultar boton iniciar partido
@@ -280,9 +294,7 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
             layoutArbitrajeTeam1.setEnabled(true);
             layoutArbitrajeTeam2.setEnabled(true);
         } else if (planillaDigitalResponse.getEstado().equals("PROGRAMADO")) {
-            textViewMatchStatus.setBackgroundColor(ContextCompat.getColor(
-                    PlanillaDigitalActivity.this,R.color.partido_programado
-            ));
+            textViewMatchStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_partido_programado));
             btnStartMatch.setEnabled(true);
             btnEndMatch.setEnabled(false);
             //mostrar boton finalizar partido

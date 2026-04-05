@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -230,6 +231,15 @@ public class EquiposActivity extends AppCompatActivity {
         });
     }
 
+    //recibir intent de planilla digital
+    private void buscarIntentEquipo(){
+        String nombreEquipo = getIntent().getStringExtra("nombreEquipo");
+        if (nombreEquipo != null){
+            autoCompleteTeamSearch.setText(nombreEquipo);
+            cargarEstadisticasJugadores();
+        }
+    }
+
     //metodos para cargar datos
     private void cargarTorneos(){
         torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
@@ -272,6 +282,10 @@ public class EquiposActivity extends AppCompatActivity {
                     mapIdEquipo.put(e.getNombreEquipo(), e.getIdTorneoEquipo());
                 }
                 autoCompleteTeamSearch.setAdapter(adapter);
+
+                if (getIntent().hasExtra("nombreEquipo")){
+                    buscarIntentEquipo();
+                }
             }
             @Override
             public void onNoContent() {

@@ -14,13 +14,13 @@
 
         <item
             android:id="@+id/nav_clasificacion"
-            android:icon="@drawable/ic_trophy"
+            android:icon="@drawable/ic_clasificacion"
             android:title="Clasificación" />
 
         <item
-            android:id="@+id/nav_resultados"
-            android:icon="@drawable/ic_scoreboard"
-            android:title="Resultados" />
+            android:id="@+id/nav_Creartorneos"
+            android:icon="@drawable/ic_trophy"
+            android:title="Mis Torneos" />
 
         <item
             android:id="@+id/nav_goleadores"

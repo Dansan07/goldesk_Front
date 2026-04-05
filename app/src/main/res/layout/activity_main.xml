@@ -289,7 +289,7 @@
                                 <ImageView
                                     android:layout_width="48dp"
                                     android:layout_height="48dp"
-                                    android:src="@drawable/ic_trophy"
+                                    android:src="@drawable/ic_clasificacion"
                                     app:tint="@color/soccer_green"
                                     android:contentDescription="@string/main_clasificacion" />
 

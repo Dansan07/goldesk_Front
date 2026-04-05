@@ -23,6 +23,7 @@ public class DialogsResponse {
     public DialogsResponse(Context context) {
         this.context = context;
     }
+
     public interface ComprobacionCallback{
         void onComprobacionSuccess();
     }
