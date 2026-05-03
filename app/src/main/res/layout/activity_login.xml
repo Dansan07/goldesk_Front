@@ -70,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="24dp"
+                android:background="@color/white">
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleRoleGroup"
@@ -88,7 +89,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/role_delegate"
-                        app:icon="@drawable/ic_soccer_ball_small" />
+                        android:textColor="@color/black"
+                        app:icon="@drawable/ic_soccer_ball_small"
+                        app:iconTint="@color/black"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRoleOrganizador"
@@ -97,7 +100,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/role_organizer"
-                        app:icon="@drawable/ic_person"/>
+                        android:textColor="@color/black"
+                        app:icon="@drawable/ic_person"
+                        app:iconTint="@color/black"/>
 
                     <!--<com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRoleInvitado"
@@ -123,13 +128,15 @@
                     app:startIconTint="@color/soccer_green"
                     app:boxStrokeColor="@color/soccer_green"
                     app:hintTextColor="@color/soccer_green"
-                    android:hint="@string/email_hint">
+                    android:hint="@string/email_hint"
+                    android:textColorHint="@color/text_secondary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etAccessCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="35dp"
+                        android:textColor="@color/black"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="@string/password_hint"
+                    android:textColorHint="@color/text_secondary"
                     app:startIconDrawable="@drawable/ic_lock"
                     app:startIconTint="@color/soccer_green"
                     app:endIconMode="password_toggle"
@@ -152,6 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
+                        android:textColor="@color/black"
                         android:paddingStart="35dp"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -183,7 +192,8 @@
                     app:icon="@drawable/ic_soccer_ball_small"
                     app:iconGravity="textStart"
                     app:iconTint="@color/white"
-                    android:backgroundTint="@color/soccer_green" />
+                    android:backgroundTint="@color/soccer_green"
+                    android:textColor="@color/white"/>
 
                 <!-- Divisor -->
                 <LinearLayout
