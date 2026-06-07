@@ -28,6 +28,9 @@ public class ApiClient {
 
             // 3. Configurar el cliente OkHttp con tus interceptores
             OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS) // Tiempo máximo para conectar con el servidor
+                    .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)    // Tiempo máximo para esperar los datos
+                    .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)   // Tiempo máximo para enviar datos
                     .addInterceptor(logging) // Para ver qué pasa en consola
                     .addInterceptor(new AuthInterceptor(tokenManager)) // Tu interceptor de seguridad
                     .build();

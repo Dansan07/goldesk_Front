@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -122,11 +123,15 @@ public class LoginActivity extends AppCompatActivity {
                     InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
             tilPassword.setVisibility(View.GONE);
             tvForgotPassword.setVisibility(View.GONE);
+            btnRoleDelegado.setBackgroundColor(ContextCompat.getColor(this,R.color.partido_finalizado));
+            btnRoleOrganizador.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
         } else if (checkedId == R.id.btnRoleOrganizador) {
             tilAccessCode.setHint(getString(R.string.email_hint));
             etAccessCode.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
             tilPassword.setVisibility(View.VISIBLE);
             tvForgotPassword.setVisibility(View.VISIBLE);
+            btnRoleDelegado.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+            btnRoleOrganizador.setBackgroundColor(ContextCompat.getColor(this,R.color.partido_finalizado));
         } else if (checkedId == R.id.btnRegistroInvitado) {
             tilAccessCode.setHint(getString(R.string.invitado_hint));
             etAccessCode.setInputType(android.text.InputType.TYPE_CLASS_TEXT);

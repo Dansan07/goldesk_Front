@@ -80,8 +80,10 @@ public class TokenManager {
     public void saveCodigo(String codigo) {
         prefs.edit().putString(KEY_CODIGO, codigo).apply();
     }
+    //se configura de esta manera porque al iniciar sesión un delegado el será leido el codigo en vez de la cedula.
     public String getCodigo() {
-        return prefs.getString(KEY_CODIGO, null);
+        return prefs.getString(KEY_CODIGO, null) == null?
+                prefs.getString(KEY_CEDULA, null):prefs.getString(KEY_CODIGO, null);
     }
 
     // Limpia al cerrar sesión (Logout)

@@ -1,6 +1,7 @@
 package com.ddrd.goldeskapp.data.repository;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ddrd.goldeskapp.data.api.ApiClient;
 import com.ddrd.goldeskapp.data.api.TorneoApiService;
@@ -25,6 +26,7 @@ public class TorneoRepository {
     }
 
     public void obtenerTorneos(TorneoCallback callback) {
+        Log.d("tokenManager.getCodigo()", "obtenerTorneos: "+tokenManager.getCodigo());
         apiService.obtenerTorneosDelOrganizador(tokenManager.getCodigo()).enqueue(new Callback<List<SpinnerTorneoResponse>>() {
             @Override
             public void onResponse(Call<List<SpinnerTorneoResponse>> call, Response<List<SpinnerTorneoResponse>> response) {

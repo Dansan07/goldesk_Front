@@ -73,7 +73,6 @@ public class TorneosActivity extends AppCompatActivity {
         setConfigListeners();
         mostrarTorneos();
     }
-
     private void setConfigListeners(){
         spinnerTorneos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -87,7 +86,6 @@ public class TorneosActivity extends AppCompatActivity {
             }
         });
     }
-
     private void mostrarTorneos(){
         progressBarGoldesk.mostrarCargando(true);
         torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
