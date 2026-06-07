@@ -1,7 +1,32 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.GoldeskApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/soccer_green</item>
+        <item name="colorError">@color/error_red</item>
+        <item name="materialAlertDialogTheme">@style/CustomDialogTheme.Dark</item>
+    </style>
+
+    <style name="CustomDialogTheme.Dark" parent="CustomDialogTheme">
+        <item name="colorSurface">@color/dialog_dark_background</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/dialog_dark_text_secondary</item>
+
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Dialog.Title.Dark</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Dialog.Message.Dark</item>
+
+        <item name="buttonBarNegativeButtonStyle">@style/Dialog.Button.Negative.Dark</item>
+    </style>
+
+    <style name="TextAppearance.Dialog.Title.Dark" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.Dialog.Message.Dark" parent="TextAppearance.Dialog.Message">
+        <item name="android:textColor">@color/dialog_dark_text_secondary</item>
+    </style>
+
+    <style name="Dialog.Button.Negative.Dark" parent="Dialog.Button.Negative">
+        <item name="strokeColor">@color/dialog_dark_stroke</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="rippleColor">@color/button_ripple_negative_dark</item>
     </style>
 </resources>

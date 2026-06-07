@@ -2,6 +2,8 @@ package com.ddrd.goldeskapp.data.api;
 
 import android.content.Context;
 
+
+import com.ddrd.goldeskapp.BuildConfig;
 import com.ddrd.goldeskapp.security.AuthInterceptor;
 import com.ddrd.goldeskapp.util.TokenManager;
 
@@ -12,6 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private static Retrofit retrofit= null;
+    private static final String BASE_URL = BuildConfig.BASE_URL;
+    //private static final String IP_EMULADOR= "10.0.2.2";
 
     public static Retrofit getClient(Context context){
         if (retrofit==null){
@@ -30,7 +34,7 @@ public class ApiClient {
 
             // 4. Construir Retrofit
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8080/") // IP para el emulador de Android
+                    .baseUrl(BASE_URL) // IP para el emulador de Android
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();

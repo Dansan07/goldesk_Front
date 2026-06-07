@@ -14,6 +14,27 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // ALTERNATIVA DE EMERGENCIA CON ANT (SI LA ANTERIOR VUELVE A DAR ERROR DE PAQUETE)
+        val localPropertiesFile = rootProject.file("local.properties")
+        var apiUrl = "\"http://10.0.2.2:8080/\""
+
+        if (localPropertiesFile.exists()) {
+            val antProperties = org.apache.tools.ant.taskdefs.Property()
+            antProperties.project = ant.project
+            antProperties.setFile(localPropertiesFile)
+
+            // Ant carga las propiedades directamente en el proyecto
+            val remoteUrl = ant.project.properties["URL_REMOTA"]
+            if (remoteUrl != null) {
+                apiUrl = remoteUrl.toString()
+            }
+        }
+
+        buildConfigField("String", "BASE_URL", apiUrl)
+    }
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
