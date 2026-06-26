@@ -152,6 +152,7 @@
                     app:startIconDrawable="@drawable/ic_lock"
                     app:startIconTint="@color/soccer_green"
                     app:endIconMode="password_toggle"
+                    app:endIconTint="@color/text_secondary"
                     app:boxStrokeColor="@color/soccer_green"
                     app:hintTextColor="@color/soccer_green">
 

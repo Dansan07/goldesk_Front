@@ -138,6 +138,8 @@ public class LoginActivity extends AppCompatActivity {
             tilPassword.setVisibility(View.GONE);
             tvForgotPassword.setVisibility(View.GONE);
             toggleRoleGroup.clearChecked();
+            btnRoleDelegado.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+            btnRoleOrganizador.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
         }
     }
 

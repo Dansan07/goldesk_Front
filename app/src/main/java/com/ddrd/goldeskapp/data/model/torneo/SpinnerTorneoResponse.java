@@ -10,11 +10,14 @@ public class SpinnerTorneoResponse {
     private String nombreTorneo;
     @SerializedName("partidosInicial")
     private Integer cantPartidos;
+    @SerializedName("activo")
+    private Boolean activo;
 
-    public SpinnerTorneoResponse(Integer idTorneo, String nombreTorneo, Integer cantPartidos) {
+    public SpinnerTorneoResponse(Integer idTorneo, String nombreTorneo, Integer cantPartidos, Boolean activo) {
         this.idTorneo = idTorneo;
         this.nombreTorneo = nombreTorneo;
         this.cantPartidos = cantPartidos;
+        this.activo = activo;
     }
 
     @Override
@@ -32,5 +35,9 @@ public class SpinnerTorneoResponse {
 
     public Integer getCantPartidos() {
         return cantPartidos;
+    }
+
+    public Boolean getActivo() {
+        return activo;
     }
 }

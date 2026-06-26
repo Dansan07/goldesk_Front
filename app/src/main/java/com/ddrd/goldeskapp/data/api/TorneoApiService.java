@@ -12,9 +12,14 @@ import retrofit2.http.Path;
 
 public interface TorneoApiService {
 
+    @GET("api/organizadores/{cedula}/torneos_activos")
+    Call<List<SpinnerTorneoResponse>> obtenerTorneosActivosDelOrganizador(@Path("cedula") String cedula);
+
     @GET("api/organizadores/{cedula}/torneos")
     Call<List<SpinnerTorneoResponse>> obtenerTorneosDelOrganizador(@Path("cedula") String cedula);
-
     @GET("api/torneos/{idTorneo}")
     Call<TorneoResponse> obtenerTorneoPorId(@Path("idTorneo") Integer idTorneo);
+
+    @GET("api/torneos/categorias/{cedulaOrg}")
+    Call<List<String>> buscarCategorias(@Path("cedulaOrg") String cedulaOrg);
 }

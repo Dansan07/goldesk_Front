@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -62,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white_surface"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -226,7 +227,7 @@
                             android:layout_marginStart="6dp"
                             android:background="@drawable/btn_secondary"
                             android:text="@string/finalizar_partido"
-                            android:textColor="@color/black"
+                            android:textColor="@color/soccer_green"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             android:enabled="false"
@@ -241,6 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white_surface"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -383,6 +385,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white_surface"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp">
 

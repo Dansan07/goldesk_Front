@@ -15,7 +15,7 @@
         android:padding="5dp"
         android:weightSum="13"
         android:gravity="center_vertical"
-        android:background="@color/white">
+        android:background="@color/white_surface">
 
         <!-- Posición -->
         <TextView

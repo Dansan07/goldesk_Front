@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/white_surface"
     android:layout_gravity="center">
 
     <LinearLayout
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="Primera parte"
                 android:textSize="12sp"
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:visibility="visible"/>
 
         </LinearLayout>
@@ -62,7 +62,7 @@
             android:src="@drawable/ic_minus"
             android:layout_marginStart="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="#FF5252"
+            app:tint="@color/error_red"
             android:contentDescription="@string/eliminar"/>
     </LinearLayout>
 

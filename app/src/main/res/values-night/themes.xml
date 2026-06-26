@@ -1,32 +1,167 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ============================================================
+         MODO OSCURO - GoldeskApp
+         Mismos nombres de <style> que tu tema claro. No tocas
+         layouts ni Manifest: el padre sigue siendo DayNight, así
+         que Android elige este archivo solo cuando el sistema
+         (o el modo forzado de la app) está en oscuro.
+         ============================================================ -->
+
     <style name="Base.Theme.GoldeskApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/soccer_green</item>
         <item name="colorError">@color/error_red</item>
-        <item name="materialAlertDialogTheme">@style/CustomDialogTheme.Dark</item>
-    </style>
 
-    <style name="CustomDialogTheme.Dark" parent="CustomDialogTheme">
+        <item name="android:colorBackground">@color/background</item>
         <item name="colorSurface">@color/dialog_dark_background</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnSurfaceVariant">@color/dialog_dark_text_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
 
-        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Dialog.Title.Dark</item>
-        <item name="textAppearanceBodyMedium">@style/TextAppearance.Dialog.Message.Dark</item>
-
-        <item name="buttonBarNegativeButtonStyle">@style/Dialog.Button.Negative.Dark</item>
+        <item name="materialAlertDialogTheme">@style/CustomDialogTheme</item>
     </style>
 
-    <style name="TextAppearance.Dialog.Title.Dark" parent="TextAppearance.Material3.HeadlineSmall">
-        <item name="android:textColor">@color/white</item>
+    <style name="Theme.GoldeskApp" parent="Base.Theme.GoldeskApp" />
+
+    <style name="Widget.Goldesk.RoleButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="backgroundTint">@color/role_button_background</item>
+        <item name="android:textColor">@color/role_button_text</item>
+        <item name="strokeColor">@color/soccer_green</item>
+        <item name="rippleColor">@color/button_ripple_negative</item>
     </style>
 
-    <style name="TextAppearance.Dialog.Message.Dark" parent="TextAppearance.Dialog.Message">
-        <item name="android:textColor">@color/dialog_dark_text_secondary</item>
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/soccer_green</item>
+        <item name="android:textStyle">bold</item>
+        <item name="colorControlNormal">@color/soccer_green</item>
     </style>
 
-    <style name="Dialog.Button.Negative.Dark" parent="Dialog.Button.Negative">
-        <item name="strokeColor">@color/dialog_dark_stroke</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="rippleColor">@color/button_ripple_negative_dark</item>
+    <style name="NumberPickerTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/soccer_green</item>
+        <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="CustomDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="backgroundInsetStart">16dp</item>
+        <item name="backgroundInsetEnd">16dp</item>
+        <item name="backgroundInsetTop">48dp</item>
+        <item name="backgroundInsetBottom">48dp</item>
+
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+        <!-- Elevación reducida: en oscuro la sombra proyectada casi no
+             se percibe sobre fondo negro; Material3 indica jerarquía
+             con el tono de superficie (dialog_dark_background ya es
+             más claro que el fondo general) en vez de con sombra -->
+        <item name="android:windowElevation">8dp</item>
+
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Dialog.Rounded</item>
+
+        <!-- control de colores -->
+        <item name="colorSurface">@color/dialog_dark_background</item>
+        <item name="colorPrimary">@color/soccer_green</item>
+        <item name="colorSecondary">@color/soccer_green</item>
+
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Dialog.Title</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Dialog.Message</item>
+
+        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Dialog.Button.Negative</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Dialog.Button.Neutral</item>
+
+        <item name="dividerColor">@color/dialog_divider</item>
+    </style>
+
+    <style name="ShapeAppearance.Dialog.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="TextAppearance.Dialog.Title" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dialog_text_primary</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Dialog.Message" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dialog_text_secondary</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Dialog.Button.Positive" parent="Widget.Material3.Button">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/soccer_green</item>
+        <!-- Texto oscuro sobre verde claro da más contraste que blanco -->
+        <item name="android:textColor">#0E2611</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Dialog.Button.Rounded</item>
+        <item name="rippleColor">@color/button_ripple_positive</item>
+    </style>
+
+    <style name="Dialog.Button.Negative" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="strokeColor">@color/dialog_button_stroke</item>
+        <item name="android:textColor">@color/soccer_green</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Dialog.Button.Rounded</item>
+        <item name="rippleColor">@color/button_ripple_negative</item>
+    </style>
+
+    <style name="Dialog.Button.Neutral" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dialog_text_secondary</item>
+        <item name="rippleColor">@color/button_ripple_neutral</item>
+    </style>
+
+    <style name="ShapeAppearance.Dialog.Button.Rounded" parent="">
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="CustomDialogTheme.Destructive" parent="CustomDialogTheme">
+        <item name="colorPrimary">@color/error_red</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button.Destructive</item>
+    </style>
+
+    <style name="Dialog.Button.Destructive" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/error_red</item>
+        <item name="android:textColor">#2E0A0A</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Dialog.Button.Rounded</item>
+    </style>
+
+    <style name="CustomDialogTheme.Info" parent="CustomDialogTheme">
+        <item name="colorPrimary">@color/dialog_info_blue</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button.Blue</item>
+    </style>
+
+    <style name="Dialog.Button.Blue" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/dialog_info_blue</item>
+        <item name="android:textColor">#04182E</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Dialog.Button.Rounded</item>
+    </style>
+
+    <style name="CustomDialogTheme.Warning" parent="CustomDialogTheme">
+        <item name="colorPrimary">@color/dialog_warning_yellow</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button.Warning</item>
+    </style>
+
+    <style name="Dialog.Button.Warning" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/dialog_warning_yellow</item>
+        <item name="android:textColor">#2E2200</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Dialog.Button.Rounded</item>
+    </style>
+
 </resources>

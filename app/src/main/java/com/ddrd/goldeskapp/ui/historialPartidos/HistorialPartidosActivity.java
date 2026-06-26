@@ -157,7 +157,7 @@ public class HistorialPartidosActivity extends AppCompatActivity {
     }
 
     private void mostrarSpinnerTorneos(){
-        torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
+        torneoRepository.obtenerTorneosActivos(new TorneoRepository.TorneoCallback() {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
                 spinnerTorneo.actualizarSpinnerTorneos(torneos, HistorialPartidosActivity.this, spinnerFilterChampionship);

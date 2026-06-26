@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado seleccionado: texto claro sobre fondo verde -->
+    <item android:color="@color/white" android:state_checked="true"/>
+    <!-- Estado normal: texto que se adapta al modo -->
+    <item android:color="@color/text_primary"/>
+</selector>

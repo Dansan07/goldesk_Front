@@ -3,7 +3,6 @@ package com.ddrd.goldeskapp.ui.TablaPosiciones;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -115,7 +114,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
     private void obtenerTorneos() {
         progressBarGoldesk.mostrarCargando(true);
-        torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
+        torneoRepository.obtenerTorneosActivos(new TorneoRepository.TorneoCallback() {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
                 progressBarGoldesk.mostrarCargando(false);

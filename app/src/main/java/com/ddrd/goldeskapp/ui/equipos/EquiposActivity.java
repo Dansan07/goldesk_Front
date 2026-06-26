@@ -4,12 +4,9 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -242,7 +238,7 @@ public class EquiposActivity extends AppCompatActivity {
 
     //metodos para cargar datos
     private void cargarTorneos(){
-        torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
+        torneoRepository.obtenerTorneosActivos(new TorneoRepository.TorneoCallback() {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
                 spinnerTorneo.actualizarSpinnerTorneos(torneos, EquiposActivity.this, spinnerTournament);

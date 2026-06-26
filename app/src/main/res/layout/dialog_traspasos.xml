@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/white_surface"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Descripción"
-        android:textColor="#2E7D32"
+        android:textColor="@color/soccer_green"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_secondary"
             android:text="Cancelar"
-            android:textColor="#2E7D32"
+            android:textColor="@color/soccer_green"
             android:textSize="16sp"
             android:textStyle="bold" 
             app:backgroundTint="@null" />

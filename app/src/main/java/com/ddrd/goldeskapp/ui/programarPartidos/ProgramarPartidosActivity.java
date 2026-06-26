@@ -271,7 +271,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
     }
 
     private void cargarTorneos() {
-        torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
+        torneoRepository.obtenerTorneosActivos(new TorneoRepository.TorneoCallback() {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
                 spinnerTorneo.actualizarSpinnerTorneos(torneos, ProgramarPartidosActivity.this, spinnerChampionship);

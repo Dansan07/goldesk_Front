@@ -9,7 +9,9 @@
     <style name="Theme.GoldeskApp" parent="Base.Theme.GoldeskApp" />
 
     <style name="Widget.Goldesk.RoleButton" parent="Widget.Material3.Button.OutlinedButton">
-        <item name="backgroundTint">@color/white</item> <item name="strokeColor">@color/soccer_green</item>
+        <item name="backgroundTint">@color/role_button_background</item>
+        <item name="android:textColor">@color/role_button_text</item>
+        <item name="strokeColor">@color/soccer_green</item>
         <item name="rippleColor">@color/button_ripple_negative</item>
     </style>
 

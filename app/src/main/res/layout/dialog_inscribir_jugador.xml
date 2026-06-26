@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white_surface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Complete todos los campos del formulario"
-                android:textColor="#C8E6C9"
+                android:textColor="@color/soccer_green_light"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -70,14 +70,13 @@
             app:cardElevation="5dp"
             app:cardCornerRadius="16dp"
             android:layout_marginBottom="5dp"
-            android:background="@color/white">
+            app:cardBackgroundColor="@color/white_surface">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp"
-                android:background="@color/white">
+                android:padding="12dp">
 
                 <!-- Layout contenedor campos -->
                 <LinearLayout
@@ -267,7 +266,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
-                        app:cardBackgroundColor="#E8F5E9"
+                        app:cardBackgroundColor="@color/highlight_verde_sutil"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp">
 
@@ -295,7 +294,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Es Delegado del Equipo"
-                                    android:textColor="#1B5E20"
+                                    android:textColor="@color/highlight_verde_sutil_text_primary"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
 
@@ -304,7 +303,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="2dp"
                                     android:text="Marca esta opción si el jugador actuará como delegado"
-                                    android:textColor="#558B2F"
+                                    android:textColor="@color/highlight_verde_sutil_text_secondary"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -318,7 +317,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="16dp"
                         android:text="* Campos obligatorios"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp"
                         android:textStyle="italic" />
                 </LinearLayout>

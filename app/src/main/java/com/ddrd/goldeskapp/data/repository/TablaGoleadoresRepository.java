@@ -6,6 +6,8 @@ import com.ddrd.goldeskapp.data.api.ApiClient;
 import com.ddrd.goldeskapp.data.api.TablaGoleadoresApiService;
 import com.ddrd.goldeskapp.data.model.tablaGoleadores.TablaGoleadoresResponse;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -30,8 +32,10 @@ public class TablaGoleadoresRepository {
                 }else {
                     try {
                         String mensajeError = response.errorBody().string();
-                        callback.onError(mensajeError);
-                    }catch (IOException e){
+                        JSONObject jsonObject = new JSONObject(mensajeError);
+                        String mensajelimpio = jsonObject.getString("message");
+                        callback.onError(mensajelimpio);
+                    }catch (Exception e){
                         callback.onError(e.getMessage());
                     }
                 }

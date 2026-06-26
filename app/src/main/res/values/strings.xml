@@ -24,6 +24,7 @@
     <string name="btn_aceptar_solicitud">Aceptar Solicitud</string>
     <string name="btn_rechazar_solicitud">Rechazar Solicitud</string>
     <string name="hint_cancha">Nombre del escenario</string>
+    <string name="limpiar_Campos">Limpiar Campos</string>
     <!--Main-->
     <string name="soccer_logo">Logo Goldesk</string>
     <!--programar partidos-->
@@ -242,19 +243,26 @@
     <!-- Activity Crear Torneo -->
     <string name="activity_crear_torneo">Gestión de Torneos</string>
     <string name="activity_crear_torneo_aux">Crea o edita la información de los torneos</string>
+    <string name="solo_torneos_activos_info">Solo se muestran torneos activos</string>
+    <string name="gestionar_torneos">Gestionar Torneos</string>
+    <string name="gestionar_torneos_aux">Activa o desactiva tus torneos</string>
+    <string name="sin_torneos">No tienes torneos registrados</string>
+    <string name="desactivar">Desactivar</string>
+    <string name="activar">Activar</string>
 
     <!-- Modo de Operación -->
     <string name="modo_operacion">Modo de Operación</string>
     <string name="nuevo_torneo">Nuevo Torneo</string>
     <string name="editar_torneo">Editar Torneo</string>
 
-    <!-- Información Básica -->
+    <!-- Información Básica Torneos -->
     <string name="informacion_basica_torneo">Información Básica</string>
     <string name="id_torneo">ID del Torneo</string>
     <string name="hint_cedula_organizador">Ingrese la cédula del organizador</string>
     <string name="nombre_torneo">Nombre del Torneo</string>
     <string name="hint_nombre_torneo">Ej: Copa Primavera 2026</string>
     <string name="categoria_torneo">Categoría del Torneo</string>
+    <string name="buscar_torneo">Buscar información del torneo</string>
 
     <!-- Valores de Tarjetas -->
     <string name="valores_tarjetas">Valores de Tarjetas</string>

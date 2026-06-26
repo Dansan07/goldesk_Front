@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ============================================================
+         ESTE ARCHIVO VA EN: res/values-night/colors.xml
+         NO en res/values/colors.xml — son dos archivos DIFERENTES
+         en dos carpetas DIFERENTES. Android elige uno u otro según
+         el modo del sistema. Si los mezclas en una sola carpeta,
+         el modo oscuro deja de ser "modo oscuro" y se vuelve fijo.
+         ============================================================ -->
+
+    <color name="white_surface">#FF1E1E1E</color>
+    <!-- Blanco translúcido (70% opacidad): mismo valor que en modo
+         claro a propósito. Solo se usa sobre fondos de color fijo
+         (headers verdes, gradientes) que tampoco cambian con el
+         modo, así que no necesita una variante oscura distinta. -->
+    <color name="white_translucent_70">#B3FFFFFF</color>
+
+    <!-- Highlight verde sutil (modo oscuro): NO usamos un verde
+         pálido/claro aquí, ya que eso se vería como un parche claro
+         fuera de lugar sobre fondo oscuro. En su lugar, un gris
+         oscuro con un tinte verde leve, apenas más claro que
+         white_surface, para dar la misma sensación de seccion
+         destacada sin romper el contraste general de la pantalla. -->
+    <color name="highlight_verde_sutil">#1B2E1F</color>
+    <color name="highlight_verde_sutil_text_primary">#8FD19E</color>
+    <color name="highlight_verde_sutil_text_secondary">#6FA87D</color>
+
+    <color name="background">#121212</color>
+    <color name="divider">#3A3A3A</color>
+    <color name="divider_color">#4D4D4D</color>
+    <color name="text_primary">#F2F2F2</color>
+    <color name="text_secondary">#B0B0B0</color>
+
+    <color name="soccer_green">#4CAF50</color>
+    <color name="soccer_green_dark">#388E3C</color>
+    <color name="soccer_green_light">#6FE3A8</color>
+
+    <color name="red">#FF6B6B</color>
+    <color name="error">#FF6B6B</color>
+    <color name="error_red">#FF6B6B</color>
+    <color name="error_red_dark">#E04848</color>
+
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FFC940</color>
+    <color name="info">#4FA3F7</color>
+
+    <color name="primary">#6C7BFF</color>
+    <color name="primary_dark">#4B5BDB</color>
+    <color name="primary_light">#9AA4FF</color>
+    <color name="accent">#FF6FA0</color>
+    <color name="accent_dark">#D44E7B</color>
+    <color name="accent_light">#FF9DC0</color>
+
+    <color name="dorado_trofeo">#FFD700</color>
+    <color name="plata_trofeo">#C0C0C0</color>
+    <color name="bronce_trofeo">#CD7F32</color>
+    <color name="oro_trofeo">#FFD700</color>
+
+    <color name="clasificacion_directa">#4CAF50</color>
+    <color name="zona_eliminacion">#FF5252</color>
+
+    <color name="partido_programado">#29B6F6</color>
+    <color name="partido_en_curso">#FF7043</color>
+    <color name="partido_finalizado">#4CAF50</color>
+
+    <color name="yellowCard">#FFDE00</color>
+    <color name="blueCard">#3D5AFE</color>
+    <color name="redCard">#FF5252</color>
+
+    <!-- DIALOGS -->
+
+    <color name="dialog_text_primary">#F2F2F2</color>
+    <color name="dialog_text_secondary">#9CA3AF</color>
+
+    <color name="dialog_divider">#4B5563</color>
+    <color name="blaco_trasparente">#00FFFFFF</color>
+
+    <color name="dialog_button_stroke">#4B5563</color>
+
+    <color name="button_ripple_positive">#33FFFFFF</color>
+    <color name="button_ripple_negative">#1AFFFFFF</color>
+    <color name="button_ripple_neutral">#29FFFFFF</color>
+    <color name="button_ripple_destructive">#33FFFFFF</color>
+
+    <color name="dialog_dark_background">#1F2937</color>
+    <color name="dialog_dark_text_secondary">#9CA3AF</color>
+    <color name="dialog_dark_stroke">#4B5563</color>
+    <color name="button_ripple_negative_dark">#1AFFFFFF</color>
+
+    <!-- Superficie del diálogo: en modo oscuro, gris oscuro -->
+    <color name="dialog_surface">#1F2937</color>
+
+    <color name="dialog_info_blue">#5B9BD5</color>
+    <color name="dialog_warning_yellow">#E0B33D</color>
+    <color name="dialog_success_green">#4CAF50</color>
+
+</resources>

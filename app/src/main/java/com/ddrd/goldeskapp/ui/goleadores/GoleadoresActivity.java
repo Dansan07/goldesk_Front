@@ -3,7 +3,6 @@ package com.ddrd.goldeskapp.ui.goleadores;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,7 +23,6 @@ import com.ddrd.goldeskapp.ui.utilities.ProgressBarGoldesk;
 import com.ddrd.goldeskapp.ui.utilities.dialogs.DialogsResponse;
 import com.ddrd.goldeskapp.ui.utilities.spinnersContent.SpinnerTorneo;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class GoleadoresActivity extends AppCompatActivity {
@@ -94,7 +92,7 @@ public class GoleadoresActivity extends AppCompatActivity {
 
     private void cargarSpinnerTorneos(){
         progressBarGoldesk.mostrarCargando(true);
-        torneoRepository.obtenerTorneos(new TorneoRepository.TorneoCallback() {
+        torneoRepository.obtenerTorneosActivos(new TorneoRepository.TorneoCallback() {
             @Override
             public void onSuccess(List<SpinnerTorneoResponse> torneos) {
                 progressBarGoldesk.mostrarCargando(false);

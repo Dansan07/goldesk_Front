@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/white_surface"
     app:cardCornerRadius="6dp"
     app:cardElevation="1dp">
 
@@ -21,7 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:text="7"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold"
             android:gravity="center" />
@@ -96,7 +97,7 @@
                     android:layout_width="16dp"
                     android:layout_height="22dp"
                     android:src="@drawable/ic_card"
-                    app:tint="#FFC107"/>
+                    app:tint="@color/yellowCard"/>
 
                 <TextView
                     android:id="@+id/textViewYellowCards"
@@ -126,7 +127,7 @@
                     android:layout_width="16dp"
                     android:layout_height="22dp"
                     android:src="@drawable/ic_card"
-                    app:tint="#1861F4"/>
+                    app:tint="@color/blueCard"/>
 
                 <TextView
                     android:id="@+id/textViewBlueCards"
@@ -156,7 +157,7 @@
                     android:layout_width="16dp"
                     android:layout_height="22dp"
                     android:src="@drawable/ic_card"
-                    app:tint="#F44336"/>
+                    app:tint="@color/redCard"/>
 
                 <TextView
                     android:id="@+id/textViewRedCards"

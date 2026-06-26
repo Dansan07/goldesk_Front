@@ -136,18 +136,13 @@ public class MainActivity extends AppCompatActivity {
                 // Ir a la pantalla de traspasos
                 Intent intent = new Intent(MainActivity.this, TraspasosActivity.class);
                 startActivity(intent);
-            } else if (id == R.id.nav_cerrar_sesion) {
-                //cerrarSesion();
-            }
-            drawerLayout.closeDrawers(); // Cerrar el menú después de hacer clic
-            return true;
-        });
-        // navegar a torneos menú lateral
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_Creartorneos) {
+            }else if (id == R.id.nav_Creartorneos) {
                 // Ir a la pantalla de traspasos
                 Intent intent = new Intent(MainActivity.this, TorneosActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.nav_perfil) {
+                // Ir a la pantalla de traspasos
+                Intent intent = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
                 startActivity(intent);
             } else if (id == R.id.nav_cerrar_sesion) {
                 //cerrarSesion();
