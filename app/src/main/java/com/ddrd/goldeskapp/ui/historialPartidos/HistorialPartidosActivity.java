@@ -164,11 +164,7 @@ public class HistorialPartidosActivity extends AppCompatActivity {
             }
             @Override
             public void onNoContent() {
-                dialogsResponse.mostrarDialogoNoContentTorneos(
-                        "Torneos",
-                        "No tienes torneos activos.",
-                        "Crear Torneo"
-                );
+                dialogsResponse.mostrarDialogoNoContentTorneos();
             }
             @Override
             public void onError(String mensaje) {

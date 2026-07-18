@@ -32,6 +32,7 @@ import com.ddrd.goldeskapp.data.model.pagosArbitraje.PagoArbitrajeCreate;
 import com.ddrd.goldeskapp.data.model.pagosArbitraje.PagoArbitrajeUpdate;
 import com.ddrd.goldeskapp.data.model.planillaDigital.PlanillaDigitalResponse;
 import com.ddrd.goldeskapp.data.model.tarjeta.TarjetaCreate;
+import com.ddrd.goldeskapp.data.model.tarjeta.TarjetaTorneoResponse;
 import com.ddrd.goldeskapp.data.model.tarjeta.TarjetasResponse;
 import com.ddrd.goldeskapp.data.model.torneo.TorneoResponse;
 import com.ddrd.goldeskapp.data.repository.ArbitrajeRepository;
@@ -236,15 +237,30 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         });
 
     }
-    private void buscarDatosTorneo(PlanillaDigitalResponse planilla){
+    private void buscarDatosTorneo(PlanillaDigitalResponse planilla, TarjetaCreate tarjetaCreate, ImageButton btn, TextView tvTitulo){
         progressBarGoldesk.mostrarCargando(true);
-        torneoRepository.obtenerTorneoPorId(planilla.getIdTorneo(), new TorneoRepository.TorneoBuscarCallback() {
+        torneoRepository.obtenerTorneoPorId(planilla.getIdTorneo(), new TorneoRepository.BuscarCallback<TorneoResponse>() {
             @Override
             public void onSuccess(TorneoResponse response) {
                 progressBarGoldesk.mostrarCargando(false);
                 valorAmarilla = response.getValorAmarilla();
                 valorAzul = response.getValorAzul();
                 valorRoja = response.getValorRoja();
+                if (btn.getId() == R.id.btnSumarGol){
+                    tvTitulo.setText("⚽ Registrar Gol");
+                } else if (btn.getId() == R.id.btnSumarAmarilla) {
+                    tvTitulo.setText("\uD83D\uDFE8 Registrar Amarilla");
+                    tarjetaCreate.setTipoTarjeta("AMARILLA");
+                    tarjetaCreate.setValorTarjeta(valorAmarilla);
+                } else if (btn.getId() == R.id.btnSumarAzul) {
+                    tvTitulo.setText("\uD83D\uDFE6 Registrar Azul");
+                    tarjetaCreate.setTipoTarjeta("AZUL");
+                    tarjetaCreate.setValorTarjeta(valorAzul);
+                } else if (btn.getId() == R.id.btnSumarRoja) {
+                    tvTitulo.setText("\uD83D\uDFE5 Registrar Roja");
+                    tarjetaCreate.setTipoTarjeta("ROJA");
+                    tarjetaCreate.setValorTarjeta(valorRoja);
+                }
             }
             @Override
             public void onError(String mensaje) {
@@ -534,6 +550,12 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                         responses);
                 recyclerView.setAdapter(adapterTarjetasParticipacion);
             }
+
+            @Override
+            public void onSuccessList(List<TarjetaTorneoResponse> responses) {
+
+            }
+
             @Override
             public void onNoContent() {
                 progressBarGoldesk.mostrarCargando(false);
@@ -645,8 +667,6 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_registrar_tiempo, null);
 
-        buscarDatosTorneo(planillaDigitalResponse);
-
         //init spinner
         Spinner spinnerPeriodoPartido = view.findViewById(R.id.spinnerPeriodoPartido);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -661,37 +681,17 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
         TextView tvTitulo = view.findViewById(R.id.tvTitulo);
         TextInputEditText et_Min = view.findViewById(R.id.etMinutos);
         TextInputEditText et_Seg = view.findViewById(R.id.etSegundos);
-
         TextView tvNombreJugador = view.findViewById(R.id.tvNombreJugador);
         tvNombreJugador.setText(nombreJugador);
-
 
         //init Buttons
         Button btnCancelar = view.findViewById(R.id.btnCancelar);
         Button btnGuardar = view.findViewById(R.id.btnGuardar);
 
-        double valorTarjeta = 0.0;
-
-        if (btn.getId() == R.id.btnSumarGol){
-            tvTitulo.setText("⚽ Registrar Gol");
-        } else if (btn.getId() == R.id.btnSumarAmarilla) {
-            tvTitulo.setText("\uD83D\uDFE8 Registrar Amarilla");
-            tarjetaCreate.setTipoTarjeta("AMARILLA");
-            valorTarjeta = valorAmarilla;
-        } else if (btn.getId() == R.id.btnSumarAzul) {
-            tvTitulo.setText("\uD83D\uDFE6 Registrar Azul");
-            tarjetaCreate.setTipoTarjeta("AZUL");
-            valorTarjeta = valorAzul;
-        } else if (btn.getId() == R.id.btnSumarRoja) {
-            tvTitulo.setText("\uD83D\uDFE5 Registrar Roja");
-            tarjetaCreate.setTipoTarjeta("ROJA");
-            valorTarjeta = valorRoja;
-        }
         builder.setView(view);
         AlertDialog dialog = builder.create();
 
         //configurar botones
-        double finalValorTarjeta = valorTarjeta;
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -711,13 +711,11 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                 } else {
                     tarjetaCreate.setPeriodoPartido(periodoPartido);
                     tarjetaCreate.setTiempoEvento(tiempoEvento);
-                    tarjetaCreate.setValorTarjeta(finalValorTarjeta);
                     registrarTarjeta(tarjetaCreate);
                 }
                 dialog.dismiss();
             }
         });
-
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -725,8 +723,8 @@ public class PlanillaDigitalActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        buscarDatosTorneo(planillaDigitalResponse, tarjetaCreate, btn, tvTitulo);
         dialog.show();
-
     }
     private void mostrarVentanaListaEventos(String nombreJugador, String nombreEquipo, TextView textView, Integer idParticipacion){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

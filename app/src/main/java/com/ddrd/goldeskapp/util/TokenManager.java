@@ -23,7 +23,7 @@ public class TokenManager {
     private final SharedPreferences prefs;
 
     public TokenManager(Context context) {
-        this.prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        this.prefs = context.getApplicationContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     // Guarda el token cuando el login es exitoso
@@ -37,15 +37,19 @@ public class TokenManager {
 
     // Guardar el objeto Organizador que se obtiene
     public void saveOrganizador(OrganizadorResponse organizadorResponse){
-        prefs.edit().putString(KEY_CEDULA, organizadorResponse.getCedula()).apply();
-        prefs.edit().putString(KEY_NOMBRE, organizadorResponse.getNombre()).apply();
-        prefs.edit().putString(KEY_APELLIDOS, organizadorResponse.getApellidos()).apply();
-        prefs.edit().putString(KEY_TELEFONO, organizadorResponse.getTelefono()).apply();
-        prefs.edit().putString(KEY_EMAIL, organizadorResponse.getEmail()).apply();
-        prefs.edit().putString(KEY_CODIGO_INVITADO, organizadorResponse.getCodigoInvitado()).apply();
-        prefs.edit().putString(KEY_ROL, organizadorResponse.getRol()).apply();
-        prefs.edit().putBoolean(KEY_ACTIVO, organizadorResponse.isActivo()).apply();
-        prefs.edit().putString(KEY_URL_LOGO_ORG, organizadorResponse.getUrlLogoOrg()).apply();
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(KEY_CEDULA, organizadorResponse.getCedula());
+        editor.putString(KEY_NOMBRE, organizadorResponse.getNombre());
+        editor.putString(KEY_APELLIDOS, organizadorResponse.getApellidos());
+        editor.putString(KEY_TELEFONO, organizadorResponse.getTelefono());
+        editor.putString(KEY_EMAIL, organizadorResponse.getEmail());
+        editor.putString(KEY_CODIGO_INVITADO, organizadorResponse.getCodigoInvitado());
+        editor.putString(KEY_ROL, organizadorResponse.getRol());
+        editor.putBoolean(KEY_ACTIVO, organizadorResponse.isActivo());
+        editor.putString(KEY_URL_LOGO_ORG, organizadorResponse.getUrlLogoOrg());
+
+        editor.apply();
     }
 
     // Recuperar el objeto Organizador
@@ -77,9 +81,7 @@ public class TokenManager {
         return prefs.getString(KEY_NOMBRE, null);
     }
 
-    public void saveCodigo(String codigo) {
-        prefs.edit().putString(KEY_CODIGO, codigo).apply();
-    }
+    public void saveCodigo(String codigo) {prefs.edit().putString(KEY_CODIGO, codigo).apply();}
     //se configura de esta manera porque al iniciar sesión un delegado el será leido el codigo en vez de la cedula.
     public String getCodigo() {
         return prefs.getString(KEY_CODIGO, null) == null?

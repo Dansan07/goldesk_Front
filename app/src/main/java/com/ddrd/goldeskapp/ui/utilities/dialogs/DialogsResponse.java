@@ -11,9 +11,12 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.model.jugador.JugadorResponse;
+import com.ddrd.goldeskapp.ui.contabilidad.ContabilidadActivity;
 import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
+import com.ddrd.goldeskapp.ui.main.MainActivity;
 import com.ddrd.goldeskapp.ui.planillaDigital.PlanillaDigitalActivity;
 import com.ddrd.goldeskapp.ui.programarPartidos.ProgramarPartidosActivity;
+import com.ddrd.goldeskapp.ui.torneos.TorneosActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class DialogsResponse {
@@ -43,19 +46,20 @@ public class DialogsResponse {
         configurarYMostrar(dialog);
     }
 
-    public void mostrarDialogoNoContentTorneos(String titulo, String mensaje, String accion) {
+    public void mostrarDialogoNoContentTorneos() {
         AlertDialog dialog = new MaterialAlertDialogBuilder(context, R.style.CustomDialogTheme_Warning)
-                .setTitle(titulo)
-                .setMessage(mensaje)
+                .setTitle("Torneos")
+                .setMessage("No tienes torneos activos. \n" +
+                        "¿Quieres ir crear uno?")
                 .setCancelable(false) // Obliga al usuario a elegir una opción
-                .setPositiveButton(accion, (d, which) -> {
+                .setPositiveButton("Navegar", (d, which) -> {
                     // Aquí pones la navegación a tu actividad de creación
-                    // Intent intent = new Intent(this, CrearTorneoActivity.class);
-                    // startActivity(intent);
-                    Toast.makeText(context, "Navegando a creación de Torneos...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, TorneosActivity.class);
+                    context.startActivity(intent);
                 })
                 .setNegativeButton("Cancelar", (d, which) -> {
                     d.dismiss();
+                    ((Activity) context).finish();
                 })
 
                 .create();
@@ -75,6 +79,7 @@ public class DialogsResponse {
                 })
                 .setNegativeButton("Cancelar", (d, which) -> {
                     d.dismiss();
+                    ((Activity) context).finish();
                 })
                 .create();
         configurarYMostrar(dialog);

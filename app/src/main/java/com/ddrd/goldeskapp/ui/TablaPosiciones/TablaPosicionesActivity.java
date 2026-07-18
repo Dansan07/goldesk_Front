@@ -123,11 +123,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             @Override
             public void onNoContent() {
                 progressBarGoldesk.mostrarCargando(false);
-                dialogsResponse.mostrarDialogoNoContentTorneos(
-                        "Torneos No encontrados",
-                        "No se encontraron torneos para mostrar",
-                        "Ir a Crear Torneo"
-                );
+                dialogsResponse.mostrarDialogoNoContentTorneos();
             }
             @Override
             public void onError(String mensaje) {

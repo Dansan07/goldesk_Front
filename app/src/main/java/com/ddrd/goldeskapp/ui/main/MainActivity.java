@@ -19,6 +19,7 @@ import com.ddrd.goldeskapp.R;
 import com.ddrd.goldeskapp.data.api.AuthApiService;
 import com.ddrd.goldeskapp.data.api.TablaPosicionesApiService;
 import com.ddrd.goldeskapp.ui.TablaPosiciones.TablaPosicionesActivity;
+import com.ddrd.goldeskapp.ui.contabilidad.ContabilidadActivity;
 import com.ddrd.goldeskapp.ui.equipos.EquiposActivity;
 import com.ddrd.goldeskapp.ui.goleadores.GoleadoresActivity;
 import com.ddrd.goldeskapp.ui.historialPartidos.HistorialPartidosActivity;
@@ -126,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
         });
         cardPerfil.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
+            startActivity(intent);
+        });
+        cardContabilidad.setOnClickListener(v ->{
+            Intent intent = new Intent(MainActivity.this, ContabilidadActivity.class);
             startActivity(intent);
         });
 
