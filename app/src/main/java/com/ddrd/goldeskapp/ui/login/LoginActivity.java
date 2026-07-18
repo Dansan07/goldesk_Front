@@ -3,6 +3,7 @@ package com.ddrd.goldeskapp.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
@@ -202,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onError(String error) {
                     resetLoginButton();
+                    Log.d("ERROR_LOG_LOGIN", "onError: "+error);
                     Toast.makeText(LoginActivity.this, "Error: " + error, Toast.LENGTH_LONG).show();
                 }
             });
@@ -235,6 +237,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBarGoldesk.mostrarCargando(false);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish(); // Destruye el Login para que no puedan volver atrás (Auditoría) [cite: 2025-12-28]
+        finish(); // Destruye el Login para que no puedan volver atrás
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <!-- Ícono -->
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_money"
+        app:tint="@color/clasificacion_directa"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/abono" />
+
+    <!-- Fecha del abono -->
+    <TextView
+        android:id="@+id/tvFechaAbono"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="15/01/2026"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <!-- Monto del abono -->
+    <TextView
+        android:id="@+id/tvMontoAbono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$50.000"
+        android:textColor="@color/clasificacion_directa"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

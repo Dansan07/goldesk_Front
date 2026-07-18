@@ -10,7 +10,6 @@ public class FormatearFechaHoraUser {
 
     public FormatearFechaHoraUser() {
     }
-
     public String formatearFechaUser(String fecha){
 
         try {

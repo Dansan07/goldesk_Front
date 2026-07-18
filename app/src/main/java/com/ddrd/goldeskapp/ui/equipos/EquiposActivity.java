@@ -245,11 +245,7 @@ public class EquiposActivity extends AppCompatActivity {
             }
             @Override
             public void onNoContent() {
-                dialogsResponse.mostrarDialogoNoContentTorneos(
-                        "Torneos",
-                        "No tienes torneos activos.",
-                        "Crear Torneo"
-                );
+                dialogsResponse.mostrarDialogoNoContentTorneos();
                 cardPlayersList.setVisibility(View.GONE);
                 layoutEmptyState.setVisibility(View.VISIBLE);
             }

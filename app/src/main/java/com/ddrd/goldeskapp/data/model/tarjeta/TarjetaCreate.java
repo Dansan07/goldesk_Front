@@ -18,6 +18,18 @@ public class TarjetaCreate {
         this.tiempoEvento = tiempoEvento;
     }
 
+    @Override
+    public String toString() {
+        return "TarjetaCreate{" +
+                "idParticipacion=" + idParticipacion +
+                ", valorTarjeta=" + valorTarjeta +
+                ", tipoTarjeta='" + tipoTarjeta + '\'' +
+                ", motivoTarjeta='" + motivoTarjeta + '\'' +
+                ", periodoPartido='" + periodoPartido + '\'' +
+                ", tiempoEvento='" + tiempoEvento + '\'' +
+                '}';
+    }
+
     public Double getValorTarjeta() {
         return valorTarjeta;
     }

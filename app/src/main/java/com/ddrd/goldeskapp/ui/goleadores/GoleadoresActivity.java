@@ -101,11 +101,7 @@ public class GoleadoresActivity extends AppCompatActivity {
             @Override
             public void onNoContent() {
                 progressBarGoldesk.mostrarCargando(false);
-                dialogsResponse.mostrarDialogoNoContentTorneos(
-                        "Torneos",
-                        "No tienes torneos activos.",
-                        "Crear Torneo"
-                );
+                dialogsResponse.mostrarDialogoNoContentTorneos();
             }
             @Override
             public void onError(String mensaje) {

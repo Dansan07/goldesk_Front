@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ddrd.goldeskapp.R;
@@ -36,10 +37,25 @@ public class AdapterTorneos extends RecyclerView.Adapter<AdapterTorneos.ViewHold
         SpinnerTorneoResponse torneo = listaTorneos.get(position);
         holder.textViewNombreTorneo.setText(torneo.getNombreTorneo());
         holder.textViewEstadoTorneo.setText(torneo.getActivo()?"Activo":"Inactivo");
+        holder.btnToggleEstadoTorneo.setText(torneo.getActivo()?"Desactivar":"Activar");
+        holder.btnToggleEstadoTorneo.setTextColor(ContextCompat.getColor(context, torneo.getActivo()?R.color.error_red:R.color.clasificacion_directa));
         holder.btnToggleEstadoTorneo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //lógica para inactivar torneo.
+                if (torneo.getActivo()){
+                    torneo.setActivo(false);
+                    holder.textViewEstadoTorneo.setText("Inactivo");
+                    holder.btnToggleEstadoTorneo.setText("Activar");
+                    holder.btnToggleEstadoTorneo.setTextColor(ContextCompat.getColor(context, R.color.clasificacion_directa));
+                    ((TorneosActivity)context).desactivarTorneo(torneo.getIdTorneo());
+                }else{
+                    torneo.setActivo(true);
+                    holder.textViewEstadoTorneo.setText("Activo");
+                    holder.btnToggleEstadoTorneo.setText("Desactivar");
+                    holder.btnToggleEstadoTorneo.setTextColor(ContextCompat.getColor(context, R.color.error_red));
+                    ((TorneosActivity)context).activarTorneo(torneo.getIdTorneo());
+                }
             }
         });
 

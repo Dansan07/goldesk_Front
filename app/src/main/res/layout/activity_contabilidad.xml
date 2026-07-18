@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Header -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/soccer_green"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/main_contabilidad"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/main_contabilidad_aux"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:alpha="0.7"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Filtro de Torneo + acceso a búsqueda -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white_surface"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/seleccionar_torneo"
+                            android:textColor="@color/soccer_green"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spinnerTorneoContabilidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_spinner"
+                        android:padding="12dp" />
+
+                    <!-- Buscador expandible: Equipo y Jugador -->
+                    <LinearLayout
+                        android:id="@+id/layoutBusquedaExpandible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/equipo_jugador"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                app:boxStrokeColor="@color/soccer_green"
+                                app:hintTextColor="@color/soccer_green"
+                                app:startIconDrawable="@drawable/ic_team"
+                                app:startIconTint="@color/soccer_green"
+                                android:hint="@string/buscar_equipo_jugador"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/editTextFiltroEquipo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:textColor="@color/text_primary"
+                                    android:textColorHint="@color/text_secondary"
+                                    android:paddingStart="45dp"
+                                    android:textSize="14sp"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Tabs: Tarjetas / Inscripciones -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayoutContabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@color/white_surface"
+                app:tabIndicatorColor="@color/soccer_green"
+                app:tabSelectedTextColor="@color/soccer_green"
+                app:tabTextColor="@color/text_secondary"
+                app:tabMode="fixed">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_tarjetas" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_inscripciones" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <!-- Toggle: Deben / Pagaron -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleEstadoPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFiltroDeben"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Goldesk.RoleButton"
+                    android:text="@string/deben" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFiltroAbono"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Goldesk.RoleButton"
+                    android:text="@string/abonos" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFiltroPagaron"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Goldesk.RoleButton"
+                    android:text="@string/pagaron" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="16dp"
+                android:weightSum="2">
+
+                <!-- Total de la lista actual -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white_surface"
+                    app:cardElevation="2dp"
+                    android:layout_marginHorizontal="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textViewMontoTotalAdeudado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$0"
+                            android:textColor="@color/soccer_green"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:paddingVertical="5dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_money"
+                                app:tint="@color/soccer_green"
+                                android:contentDescription="@string/total" />
+
+                            <TextView
+                                android:id="@+id/textViewLabelTotalAdeudado"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/total_adeudado"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white_surface"
+                    app:cardElevation="2dp"
+                    android:layout_marginHorizontal="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textViewMontoTotalRecolectado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$0"
+                            android:textColor="@color/soccer_green"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:paddingVertical="5dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_money"
+                                app:tint="@color/soccer_green"
+                                android:contentDescription="@string/total" />
+
+                            <TextView
+                                android:id="@+id/textViewLabelTotalRecolectado"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/total_recolectado"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleTipoTarjeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAmarillas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Goldesk.RoleButton"
+                    android:text="@string/card_name_amarilla" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAzules"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Goldesk.RoleButton"
+                    android:text="@string/card_name_azul" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRojas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Goldesk.RoleButton"
+                    android:text="@string/card_name_roja" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- Lista de Contabilidad -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewContabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:visibility="gone"/>
+
+            <!-- Estado vacío -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyContabilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="32dp">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_money"
+                    app:tint="@color/text_secondary"
+                    android:alpha="0.3"
+                    android:contentDescription="@string/sin_registros" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/sin_registros"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

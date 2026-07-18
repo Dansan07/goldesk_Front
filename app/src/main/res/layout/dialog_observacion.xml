@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_surface"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/soccer_green"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/observacion"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnCerrarObservacion"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_clear"
+            android:contentDescription="@string/btn_cancelar"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <!-- Contenido -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/soccer_green"
+            app:hintTextColor="@color/soccer_green"
+            app:counterEnabled="true"
+            app:counterMaxLength="200"
+            android:hint="@string/observacion_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextObservacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLength="200"
+                android:minHeight="120dp"
+                android:maxLines="5"
+                android:padding="12dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnCancelarObservacion"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_secondary"
+                android:text="@string/btn_cancelar"
+                android:textColor="@color/soccer_green"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/btnAceptarObservacion"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/btn_primary"
+                android:text="@string/guardar"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

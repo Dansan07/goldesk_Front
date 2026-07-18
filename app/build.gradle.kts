@@ -32,6 +32,9 @@ android {
 //        }
 
         buildConfigField("String", "BASE_URL", "\"https://goldesk-back.onrender.com/\"")
+        buildConfigField("String", "URL_EMU", "\"http://10.0.2.2:8080/\"")
+        buildConfigField("String", "URL_TELEFONO", "\"http://192.168.100.146:8080/\"") //192.168.1.17
+        buildConfigField("String", "LOCAL_URL", "\"http://localhost:8080/\"")
     }
     buildFeatures {
         buildConfig = true

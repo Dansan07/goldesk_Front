@@ -25,6 +25,16 @@
     <string name="btn_rechazar_solicitud">Rechazar Solicitud</string>
     <string name="hint_cancha">Nombre del escenario</string>
     <string name="limpiar_Campos">Limpiar Campos</string>
+    <string name="resumen_deuda">Resumen</string>
+    <string name="monto_total">Monto total</string>
+    <string name="ya_pagado">Ya pagado</string>
+    <string name="saldo_pendiente">Saldo pendiente</string>
+    <string name="historial_abonos">Historial de abonos</string>
+    <string name="sin_abonos_registrados">Aún no hay abonos registrados</string>
+    <string name="registrar_nuevo_pago">Registrar pago</string>
+    <string name="abono">Abono</string>
+    <string name="observacion">Observación</string>
+    <string name="observacion_hint">Escribe una observación (opcional)</string>
     <!--Main-->
     <string name="soccer_logo">Logo Goldesk</string>
     <!--programar partidos-->
@@ -45,6 +55,8 @@
     <string name="limpiar_filtros">Limpiar filtros</string>
     <string name="campeonato">Campeonato</string>
     <string name="equipo">Equipo</string>
+    <string name="equipo_jugador">Equipo o Jugador</string>
+    <string name="buscar_equipo_jugador">Buscar por nombre de equipo o jugador</string>
     <string name="buscar_equipo">Buscar por nombre de equipo</string>
     <string name="rango_fechas">Rango de fechas</string>
     <string name="fecha_inicio">Fecha inicio</string>
@@ -99,6 +111,19 @@
     <!--contabilidad-->
     <string name="main_contabilidad">Contabilidad</string>
     <string name="main_contabilidad_aux">Mis finanzas</string>
+    <string name="tab_tarjetas">Tarjetas</string>
+    <string name="tab_inscripciones">Inscripciones</string>
+    <string name="deben">Deben</string>
+    <string name="abonos">Abonos</string>
+    <string name="pagaron">Pagaron</string>
+    <string name="card_name_amarilla">Amarillas</string>
+    <string name="card_name_azul">Azules</string>
+    <string name="card_name_roja">Rojas</string>
+    <string name="total_adeudado">Total adeudado</string>
+    <string name="total_recolectado">Total recolectado</string>
+    <string name="buscar_jugador">Buscar jugador</string>
+    <string name="total">Total</string>
+    <string name="sin_registros">No hay registros para mostrar</string>
     <!--goleadores-->
     <string name="main_goleadores">Goleadores</string>
     <string name="main_goleadores_aux">Ver tabla</string>

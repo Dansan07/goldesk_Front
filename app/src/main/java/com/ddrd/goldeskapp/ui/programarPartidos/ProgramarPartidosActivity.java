@@ -279,10 +279,7 @@ public class ProgramarPartidosActivity extends AppCompatActivity {
 
             @Override
             public void onNoContent() {
-                dialogsResponse.mostrarDialogoNoContentTorneos(
-                        "Torneos",
-                        "No tienes torneos activos.",
-                        "Crear Torneo");
+                dialogsResponse.mostrarDialogoNoContentTorneos();
             }
 
             @Override
